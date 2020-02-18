@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Password Bro</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Password Bro</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_privacy">Privacy</string>
+    <string name="generate_title">Generate your password</string>
+    <string name="generate_subtitle">Choose Strength: </string>
+    <string name="easy_text">Don\'t Care</string>
+    <string name="mod_text">OK&#8230; OK&#8230; </string>
+    <string name="hard_text">Oh! My God!!</string>
+    <string name="generate_btn">Generate</string>
+    <string name="hint">Enter a name for reference e.g. facebook</string>
+    <string name="save_btn">save</string>
+
+
+</resources>
