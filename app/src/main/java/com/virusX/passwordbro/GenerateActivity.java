@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -24,6 +26,7 @@ public class GenerateActivity extends AppCompatActivity {
     private boolean checked = false;
     private String password = "";
     private DatabaseHelper databaseHelper;
+    private EditText serviceNameEdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class GenerateActivity extends AppCompatActivity {
         Button generateBtn = findViewById(R.id.generateButton);
         generatedPass = findViewById(R.id.generatedPass);
         final ImageButton copyBtn = findViewById(R.id.copyBtn);
-        final EditText serviceNameEdt = findViewById(R.id.serviceNameEdt);
+        serviceNameEdt = findViewById(R.id.serviceNameEdt);
         final Button saveBtn = findViewById(R.id.saveBtn);
 
         strengthRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -98,28 +101,38 @@ public class GenerateActivity extends AppCompatActivity {
             }
         });
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
+        serviceNameEdt.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onClick(View v) {
-                String name = serviceNameEdt.getText().toString();
-                if(name.equals("")) {
-                    Toasty.info(GenerateActivity.this,
-                            "Enter the name of Service for future Reference",
-                            Toasty.LENGTH_SHORT, true).show();
-                } else {
-                    databaseHelper = new DatabaseHelper(GenerateActivity.this);
-                    boolean result = databaseHelper.addData(name, password);
-                    if(result) {
-                        Toasty.success(GenerateActivity.this,
-                                "Data Saved Successfully", Toasty.LENGTH_SHORT,
-                                true).show();
-                    } else {
-                        Toasty.error(GenerateActivity.this,
-                                "An error occurred while saving Data", Toasty.LENGTH_SHORT,
-                                true).show();
-                    }
+            public boolean onKey(View view, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    onClickSave(saveBtn);
                 }
+                return false;
             }
         });
+    }
+
+    public void onClickSave(View buttonView) {
+        String name = serviceNameEdt.getText().toString();
+        if(name.equals("")) {
+            Toasty.info(GenerateActivity.this,
+                    "Enter the name of Service for future Reference",
+                    Toasty.LENGTH_SHORT, true).show();
+        } else {
+            databaseHelper = new DatabaseHelper(GenerateActivity.this);
+            boolean result = databaseHelper.addData(name, password);
+            if(result) {
+                Toasty.success(GenerateActivity.this,
+                        "Data Saved Successfully", Toasty.LENGTH_SHORT,
+                        true).show();
+            } else {
+                Toasty.error(GenerateActivity.this,
+                        "An error occurred while saving Data", Toasty.LENGTH_SHORT,
+                        true).show();
+            }
+        }
+        Intent intent = new Intent(GenerateActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

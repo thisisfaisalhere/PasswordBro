@@ -50,7 +50,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     Cursor getData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT COL1 FROM " + TABLE_NAME;
+        String query = "SELECT * FROM " + TABLE_NAME;
         Cursor data = db.rawQuery(query, null);
         return data;
     }

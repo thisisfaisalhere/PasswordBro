@@ -16,6 +16,8 @@
     <string name="generate_btn">Generate</string>
     <string name="hint">Enter a name for reference e.g. facebook</string>
     <string name="save_btn">save</string>
+    <string name="home_title">Your Passwords</string>
+    <string name="home_subtitle">Tap on any item to copy</string>
 
 
 </resources>
