@@ -35,15 +35,14 @@
     <!-- Sync Preferences -->
     <string name="sync_title">Backup to Drive</string>
     <string name="privacy_title">Every Thing you need to know</string>
-    <string name="privacy_subtitle">1. I don\'t collect any information about you and any kind of usage data.\n
-                                    2. Every thing you do on this app stays on this app.\n
+    <string name="privacy_subtitle">1. I don\'t collect any information from you or any kind of usage data.\n
+                                    2. Every thing you do on this app, stays on this app.\n
                                     3. I am totally against AdWare and you\'ll not find a single Ad anywhere in this app.\n
                                     4. Only thing goes outside this app is your backup data and nothing more.\n</string>
     <string name="privacy">privacy_logo</string>
     <string name="share_title">Share</string>
     <string name="share_logo">share_logo</string>
     <string name="share_subtitle">Loved the app?\nShare with your friends.</string>
-    <string name="share_message">I have download this app.\n
-        It helps in managing password easy and its really secure\n
+    <string name="share_message">I have download this app.\nIt helps me in managing my passwords.\nIt is easy to use and is really secure\n
         Download it here: https://tinyurl.com/passwordbro</string>
 </resources>
