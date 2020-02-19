@@ -7,18 +7,21 @@
             app:key="easy_length"
             app:title="@string/easy_length"
             app:useSimpleSummaryProvider="true"
+            android:inputType="number"
             app:defaultValue="8"/>
 
         <EditTextPreference
             app:key="med_length"
             app:title="@string/mod_length"
             app:useSimpleSummaryProvider="true"
+            android:inputType="number"
             app:defaultValue="12"/>
 
         <EditTextPreference
             app:key="hard_length"
             app:title="@string/hard_length"
             app:useSimpleSummaryProvider="true"
+            android:inputType="number"
             app:defaultValue="16"/>
 
     </PreferenceCategory>

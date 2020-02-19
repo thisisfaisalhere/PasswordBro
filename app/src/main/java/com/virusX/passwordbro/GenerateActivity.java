@@ -2,7 +2,6 @@ package com.virusX.passwordbro;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -29,16 +28,23 @@ public class GenerateActivity extends AppCompatActivity {
     private String password = "";
     private DatabaseHelper databaseHelper;
     private EditText serviceNameEdt;
-    private final String prefName = "preferences";
     private static final String med = "med_length";
     private static final String easy = "easy_length";
     private static final String hard = "hard_length";
+    private int easyLen;
+    private int medLen;
+    private int hardLen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
-        getSupportActionBar().hide(); // hide the title bar
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        try {
+            getSupportActionBar().hide();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setContentView(R.layout.activity_generate);
 
         RadioGroup strengthRadioGroup = findViewById(R.id.strengthRadioGroup);
@@ -48,11 +54,7 @@ public class GenerateActivity extends AppCompatActivity {
         serviceNameEdt = findViewById(R.id.serviceNameEdt);
         final Button saveBtn = findViewById(R.id.saveBtn);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        final int easyLen = Integer.parseInt(preferences.getString(easy, "8"));
-        final int medLen = Integer.parseInt(preferences.getString(med, "12"));
-        final int hardLen = Integer.parseInt(preferences.getString(hard, "16"));
-
+        length();
 
         strengthRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -61,17 +63,20 @@ public class GenerateActivity extends AppCompatActivity {
                     case R.id.easyRadioBtn:
                         strength = 1;
                         checked = true;
-                        Toast.makeText(GenerateActivity.this, "Strength Level: Easy", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GenerateActivity.this,
+                                "Strength Level: Easy", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.modRadioBtn:
                         strength = 2;
                         checked = true;
-                        Toast.makeText(GenerateActivity.this, "Strength Level: Medium", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GenerateActivity.this,
+                                "Strength Level: Medium", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.hardRadioBtn:
                         strength = 3;
                         checked = true;
-                        Toast.makeText(GenerateActivity.this, "Strength Level: Tough", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GenerateActivity.this,
+                                "Strength Level: Tough", Toast.LENGTH_SHORT).show();
                         break;
 
                     default:
@@ -129,29 +134,90 @@ public class GenerateActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = serviceNameEdt.getText().toString();
+                if(name.equals("")) {
+                    Toasty.info(GenerateActivity.this,
+                            "Enter the name of Service for future Reference",
+                            Toasty.LENGTH_SHORT, true).show();
+                } else {
+                    databaseHelper = new DatabaseHelper(GenerateActivity.this);
+                    boolean result = databaseHelper.addData(name, password);
+                    if(result) {
+                        Toasty.success(GenerateActivity.this,
+                                "Data Saved Successfully", Toasty.LENGTH_SHORT,
+                                true).show();
+                    } else {
+                        Toasty.error(GenerateActivity.this,
+                                "An error occurred while saving Data", Toasty.LENGTH_SHORT,
+                                true).show();
+                    }
+                    Intent intent = new Intent(GenerateActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
-    public void onClickSave(View buttonView) {
-        String name = serviceNameEdt.getText().toString();
-        if(name.equals("")) {
-            Toasty.info(GenerateActivity.this,
-                    "Enter the name of Service for future Reference",
-                    Toasty.LENGTH_SHORT, true).show();
+    private boolean isNumber(String s){
+        for (int i = 0; i < s.length(); i++) {
+            if (!Character.isDigit(s.charAt(i)))
+                return false;
+        }
+        return true;
+    }
+
+    private void length() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String easyLenStr = preferences.getString(easy, "8").trim();
+        String medLenStr = preferences.getString(med, "8").trim();
+        String hardLenStr = preferences.getString(hard, "8").trim();
+
+        if(easyLenStr.equals("")) {
+            Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
+                    Toasty.LENGTH_LONG, true).show();
+            finish();
         } else {
-            databaseHelper = new DatabaseHelper(GenerateActivity.this);
-            boolean result = databaseHelper.addData(name, password);
-            if(result) {
-                Toasty.success(GenerateActivity.this,
-                        "Data Saved Successfully", Toasty.LENGTH_SHORT,
-                        true).show();
+            if(isNumber(easyLenStr)) {
+                easyLen = Integer.parseInt(easyLenStr);
             } else {
-                Toasty.error(GenerateActivity.this,
-                        "An error occurred while saving Data", Toasty.LENGTH_SHORT,
-                        true).show();
+                Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
+                        Toasty.LENGTH_LONG, true).show();
+                finish();
             }
-            Intent intent = new Intent(GenerateActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+        }
+
+        if(medLenStr.equals("")) {
+            Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
+                    Toasty.LENGTH_LONG, true).show();
+            finish();
+        } else {
+            if(isNumber(medLenStr)) {
+                medLen = Integer.parseInt(medLenStr);
+            } else {
+                Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
+                        Toasty.LENGTH_LONG, true).show();
+                finish();
+            }
+        }
+
+        if (hardLenStr.equals("")) {
+            Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
+                    Toasty.LENGTH_LONG, true).show();
+            finish();
+        } else {
+            if(isNumber(hardLenStr)) {
+                hardLen = Integer.parseInt(hardLenStr);
+            } else {
+                Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
+                        Toasty.LENGTH_LONG, true).show();
+                finish();
+            }
         }
     }
 }

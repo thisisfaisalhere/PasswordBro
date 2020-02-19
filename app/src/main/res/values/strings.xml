@@ -17,8 +17,8 @@
     <string name="hint">Enter a name for reference e.g. facebook</string>
     <string name="save_btn">save</string>
     <string name="home_title">Your Passwords</string>
-    <string name="home_subtitle">Tap on any item to copy</string>
-    <string name="home_subtitle_2">Add item to view them</string>
+    <string name="home_subtitle">Tap on any item to view it\'s detail\n\nLong Tap to copy password</string>
+    <string name="home_subtitle_2">Add item to view them here\n\nPress Add Button to add items</string>
     <string name="hint_2">Enter password</string>
     <string name="delete_btn">delete</string>
     <string name="title_activity_settings">Settings</string>
