@@ -9,13 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomActionBarTheme">
+        <activity android:name=".ShareActivity"></activity>
+        <activity android:name=".PrivacyActivity" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/PreferenceScreen" >
-        </activity>
-        <activity android:name=".EditActivity" />
-        <activity android:name=".ShareActivity"/>
+            android:theme="@style/PreferenceScreen" />
         <activity android:name=".GenerateActivity" />
         <activity
             android:name=".MainActivity"
