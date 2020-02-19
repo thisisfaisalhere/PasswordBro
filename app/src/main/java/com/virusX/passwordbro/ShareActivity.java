@@ -24,7 +24,7 @@ public class ShareActivity extends AppCompatActivity {
                 try {
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.setType("text/plain");
+                    sendIntent.setType("text/rtf");
                     sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Password Bro");
                     String shareMsg = getString(R.string.share_message);
                     sendIntent.putExtra(Intent.EXTRA_TEXT, shareMsg);

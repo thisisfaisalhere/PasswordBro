@@ -23,14 +23,14 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
+<!--    <PreferenceCategory app:title="@string/sync_header">-->
 
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title"
-            android:textColor="#FFFFFF"
-            app:defaultValue="false"/>
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="sync"-->
+<!--            app:title="@string/sync_title"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            app:defaultValue="false"/>-->
 
-    </PreferenceCategory>
+<!--    </PreferenceCategory>-->
 
 </PreferenceScreen>

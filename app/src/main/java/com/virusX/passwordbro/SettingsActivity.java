@@ -9,6 +9,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.Scope;
+import com.google.api.services.drive.DriveScopes;
+
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
@@ -34,6 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
