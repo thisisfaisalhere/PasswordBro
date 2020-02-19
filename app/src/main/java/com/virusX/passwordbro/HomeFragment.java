@@ -31,6 +31,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         ListView passwordList = view.findViewById(R.id.passwordList);
+        TextView homeSubtitle = view.findViewById(R.id.homeSubtitle);
 
         nameList = new ArrayList<>();
         IDList = new ArrayList<>();
@@ -69,6 +70,12 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             passwordList.setAdapter(arrayAdapter);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if(nameList.size() == 0) {
+            homeSubtitle.setText(R.string.home_subtitle_2);
+        } else {
+            homeSubtitle.setText(R.string.home_subtitle);
         }
         return view;
     }

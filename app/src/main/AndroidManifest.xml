@@ -11,8 +11,11 @@
         android:theme="@style/CustomActionBarTheme">
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings"
+            android:theme="@style/PreferenceScreen" >
+        </activity>
         <activity android:name=".EditActivity" />
+        <activity android:name=".ShareActivity"/>
         <activity android:name=".GenerateActivity" />
         <activity
             android:name=".MainActivity"

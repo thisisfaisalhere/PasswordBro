@@ -1,11 +1,13 @@
 package com.virusX.passwordbro;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import es.dmoral.toasty.Toasty;
 
 public class GenerateActivity extends AppCompatActivity {
@@ -28,6 +29,10 @@ public class GenerateActivity extends AppCompatActivity {
     private String password = "";
     private DatabaseHelper databaseHelper;
     private EditText serviceNameEdt;
+    private final String prefName = "preferences";
+    private static final String med = "med_length";
+    private static final String easy = "easy_length";
+    private static final String hard = "hard_length";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,12 @@ public class GenerateActivity extends AppCompatActivity {
         final ImageButton copyBtn = findViewById(R.id.copyBtn);
         serviceNameEdt = findViewById(R.id.serviceNameEdt);
         final Button saveBtn = findViewById(R.id.saveBtn);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final int easyLen = Integer.parseInt(preferences.getString(easy, "8"));
+        final int medLen = Integer.parseInt(preferences.getString(med, "12"));
+        final int hardLen = Integer.parseInt(preferences.getString(hard, "16"));
+
 
         strengthRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -76,7 +87,7 @@ public class GenerateActivity extends AppCompatActivity {
                     Toasty.info(GenerateActivity.this, "Choose strength first",
                             Toasty.LENGTH_SHORT, true).show();
                 } else {
-                    Generate generate = new Generate(strength);
+                    Generate generate = new Generate(strength, easyLen, medLen, hardLen);
                     password = generate.generate();
                     generatedPass.setText(password);
                     copyBtn.setVisibility(View.VISIBLE);

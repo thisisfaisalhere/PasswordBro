@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 public class PrivacyFragment extends Fragment {
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 

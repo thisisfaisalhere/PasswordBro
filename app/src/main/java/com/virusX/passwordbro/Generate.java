@@ -1,5 +1,8 @@
 package com.virusX.passwordbro;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import java.util.Random;
 
 class Generate {
@@ -15,12 +18,15 @@ class Generate {
     final private int specialCharEnd = 38;
     final private int specialChar = 64;
 
-    final private int easyLength = 8;
-    final private int modLength = 12;
-    final private int hardLength = 16;
+    private int easyLength;
+    private int modLength;
+    private int hardLength;
 
-    Generate(int strength) {
+    Generate(int strength, int easyLength, int modLength, int hardLength) {
         this.strength = strength;
+        this.easyLength = easyLength;
+        this.modLength = modLength;
+        this.hardLength = hardLength;
     }
 
     String generate(){
