@@ -149,9 +149,9 @@ public class GenerateActivity extends AppCompatActivity {
                         "An error occurred while saving Data", Toasty.LENGTH_SHORT,
                         true).show();
             }
+            Intent intent = new Intent(GenerateActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
-        Intent intent = new Intent(GenerateActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
     }
 }
