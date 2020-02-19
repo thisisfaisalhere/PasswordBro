@@ -11,6 +11,6 @@ public class PrivacyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_privacy);
 
-        setTitle("Privacy");
+        setTitle("Privacy Statement");
     }
 }

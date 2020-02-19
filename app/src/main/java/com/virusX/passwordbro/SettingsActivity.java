@@ -1,21 +1,11 @@
 package com.virusX.passwordbro;
 
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.EditText;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.Scope;
-import com.google.api.services.drive.DriveScopes;
 
 public class SettingsActivity extends AppCompatActivity {
 
