@@ -52,6 +52,20 @@ class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
         Cursor data = db.rawQuery(query, null);
+        Log.d(TAG, "DatabaseHelper: getData");
         return data;
+    }
+
+    void deleteData(int position){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE ID=" + position);
+        Log.d(TAG, "DatabaseHelper: row deleted " + position);
+    }
+    void updateDate(int position, String name, String pass){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE " + TABLE_NAME
+                + " SET " + COL1 + "='" + name + "',"
+                + COL2 + "='" + pass +"' WHERE ID=" + position);
+        Log.d(TAG, "DatabaseHelper: row update " + position);
     }
 }

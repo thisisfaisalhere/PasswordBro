@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -105,7 +106,14 @@ public class GenerateActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent event) {
                 if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    onClickSave(saveBtn);
+                    try {
+                        InputMethodManager inputMethodManager =
+                                (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                                .getWindowToken(), 0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 return false;
             }

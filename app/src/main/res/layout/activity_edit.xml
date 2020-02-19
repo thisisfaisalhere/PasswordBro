@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2D2D2D"
+    tools:context=".EditActivity">
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:ems="10"
+        android:hint="@string/hint"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#009688"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextPass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="@string/hint_2"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#009688"
+        app:layout_constraintEnd_toStartOf="@+id/buttonCopy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="#FF5E6C"
+        android:text="@string/save_btn"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPass" />
+
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#FF5E6C"
+        android:text="@string/delete_btn"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSave" />
+
+    <Button
+        android:id="@+id/buttonCancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#FF5E6C"
+        android:text="@android:string/cancel"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDelete" />
+
+    <ImageButton
+        android:id="@+id/buttonCopy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="#FF5E6C"
+        android:contentDescription="@android:string/copy"
+        android:padding="8dp"
+        android:paddingStart="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextName"
+        app:srcCompat="@drawable/ic_content_copy" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

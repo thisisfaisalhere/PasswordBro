@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF5D7"
+    android:background="#2D2D2D"
     tools:context=".GenerateActivity">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="@string/generate_title"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -35,21 +35,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/easy_text" />
+            android:buttonTint="#FF5E6C"
+            android:text="@string/easy_text"
+            android:textColor="#FFFFFF" />
 
         <RadioButton
             android:id="@+id/modRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/mod_text" />
+            android:buttonTint="#FF5E6C"
+            android:text="@string/mod_text"
+            android:textColor="#FFFFFF" />
 
         <RadioButton
             android:id="@+id/hardRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/hard_text" />
+            android:buttonTint="#FF5E6C"
+            android:text="@string/hard_text"
+            android:textColor="#FFFFFF" />
     </RadioGroup>
 
     <TextView
@@ -58,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/generate_subtitle"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +72,7 @@
 
     <Button
         android:id="@+id/generateButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="#FF5E6C"
@@ -81,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:textColor="#000"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/copyBtn"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +122,8 @@
         android:ems="10"
         android:hint="@string/hint"
         android:inputType="text"
-        android:textColorHint="#FFAAAB"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#009688"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +131,7 @@
 
     <Button
         android:id="@+id/saveBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="#FF5E6C"
