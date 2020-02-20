@@ -61,8 +61,6 @@ public class SplashActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_splash);
 
-        ParseInstallation.getCurrentInstallation().saveInBackground();
-
         Handler handler = new Handler();
         intent = new Intent(SplashActivity.this, MainActivity.class);
         appIcon = findViewById(R.id.appIconSplash);
