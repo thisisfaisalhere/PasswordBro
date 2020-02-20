@@ -50,4 +50,10 @@
     <string name="app_icon">appIcon</string>
     <string name="splash_title">Unlock Password Bro</string>
     <string name="lock_img">lockImg</string>
+
+    <string name="fingerprint_error_1">Fingerprint Scanner not Found</string>
+    <string name="fingerprint_error_2">Permission not granted</string>
+    <string name="fingerprint_error_3">Add Screen Lock on your Phone in Settings</string>
+    <string name="fingerprint_error_4">Add tt least 1 Fingerprint</string>
+    <string name="fingerprint_success">Touch the fingerprint sensor</string>
 </resources>

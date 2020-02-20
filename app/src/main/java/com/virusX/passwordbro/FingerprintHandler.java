@@ -16,16 +16,14 @@ import androidx.core.content.ContextCompat;
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
     private Context context;
-    private boolean success;
 
     FingerprintHandler(Context context){
         this.context = context;
     }
 
-    boolean startAuth(FingerprintManager fingerprintManager, FingerprintManager.CryptoObject cryptoObject){
+    void startAuth(FingerprintManager fingerprintManager, FingerprintManager.CryptoObject cryptoObject){
         CancellationSignal cancellationSignal = new CancellationSignal();
         fingerprintManager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
-        return success;
     }
 
     @Override
@@ -58,7 +56,8 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         } else {
             fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.text_color));
             fingerprintImg.setImageResource(R.drawable.ic_done);
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
         }
-        success = b;
     }
 }

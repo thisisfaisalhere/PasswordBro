@@ -101,25 +101,20 @@ public class SplashActivity extends AppCompatActivity {
                 keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
 
                 if(!fingerprintManager.isHardwareDetected()){
-                    fingerprintMessage.setText("Fingerprint Scanner not detected in Device");
+                    fingerprintMessage.setText(getString(R.string.fingerprint_error_1));
                 } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED){
-                    fingerprintMessage.setText("Permission not granted to use Fingerprint Scanner");
+                    fingerprintMessage.setText(getString(R.string.fingerprint_error_2));
                 } else if (!keyguardManager.isKeyguardSecure()){
-                    fingerprintMessage.setText("Add Lock to your Phone in Settings");
+                    fingerprintMessage.setText(getString(R.string.fingerprint_error_3));
                 } else if (!fingerprintManager.hasEnrolledFingerprints()){
-                    fingerprintMessage.setText("You should add at least 1 Fingerprint to use this Feature");
+                    fingerprintMessage.setText(getString(R.string.fingerprint_error_4));
                 } else {
-                    fingerprintMessage.setText("Touch the fingerprint sensor");
+                    fingerprintMessage.setText(getString(R.string.fingerprint_success));
                     generateKey();
                     if (cipherInit()){
                         FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
                         FingerprintHandler fingerprintHandler = new FingerprintHandler(this);
-                        boolean success = fingerprintHandler.startAuth(fingerprintManager, cryptoObject);
-                        Log.i("tag", "success: " + success);
-//                        if(!success) {
-//                            startActivity(intent);
-//                            finish();
-//                        }
+                        fingerprintHandler.startAuth(fingerprintManager, cryptoObject);
                     }
                 }
             }
