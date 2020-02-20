@@ -42,8 +42,6 @@ public class EditActivity extends AppCompatActivity {
         editTextName.setText(receivedName);
         editTextPass.setText(receivedPass);
 
-        final Intent intent = new Intent(EditActivity.this, MainActivity.class);
-
         buttonCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,8 +72,7 @@ public class EditActivity extends AppCompatActivity {
                         databaseHelper.updateDate(position, name, pass);
                         Toasty.success(EditActivity.this,
                                 "Updated successfully", Toasty.LENGTH_SHORT, true).show();
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                        finish();
                     }
                 }, 1000);
 
@@ -93,8 +90,7 @@ public class EditActivity extends AppCompatActivity {
                         databaseHelper.deleteData(position);
                         Toasty.success(EditActivity.this,
                                 "Deleted successfully", Toasty.LENGTH_SHORT, true).show();
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                        finish();
                         progressDialog.dismiss();
                     }
                 }, 1000);

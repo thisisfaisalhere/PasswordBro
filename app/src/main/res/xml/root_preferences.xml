@@ -41,7 +41,7 @@
             app:key="backup"
             app:title="@string/backup_string"
             app:defaultValue="false"/>
-
+        
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -1,5 +1,6 @@
 package com.virusX.passwordbro;
 
+import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -56,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_privacy:
                         intent = new Intent(MainActivity.this, PrivacyActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_account:
+                        intent = new Intent(MainActivity.this, AccountActivity.class);
                         startActivity(intent);
                         break;
                 }

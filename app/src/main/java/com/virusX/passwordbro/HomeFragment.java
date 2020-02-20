@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,27 +17,37 @@ import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import es.dmoral.toasty.Toasty;
+import libs.mjn.prettydialog.PrettyDialog;
+import libs.mjn.prettydialog.PrettyDialogCallback;
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private ArrayList<String> nameList, password;
     private ArrayList<Integer> IDList;
+    private ArrayAdapter<String> arrayAdapter;
+    private ListView passwordList;
+    private DatabaseHelper databaseHelper;
+    private Cursor data;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ListView passwordList = view.findViewById(R.id.passwordList);
+        passwordList = view.findViewById(R.id.passwordList);
         TextView homeSubtitle = view.findViewById(R.id.homeSubtitle);
 
         nameList = new ArrayList<>();
         IDList = new ArrayList<>();
         password = new ArrayList<>();
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+        arrayAdapter = new ArrayAdapter<String>
                 (getContext(), android.R.layout.simple_list_item_1, nameList){
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
@@ -50,9 +61,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         passwordList.setOnItemClickListener(HomeFragment.this);
         passwordList.setOnItemLongClickListener(HomeFragment.this);
 
-        DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
-        final Cursor data = databaseHelper.getData();
-
+        databaseHelper = new DatabaseHelper(getContext());
+        data = databaseHelper.getData();
         try {
             while (data.moveToNext()) {
                 IDList.add(data.getInt(0));
@@ -69,7 +79,63 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         } else {
             homeSubtitle.setText(R.string.home_subtitle);
         }
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkAccount();
+        databaseHelper = new DatabaseHelper(getContext());
+        data = databaseHelper.getData();
+        try {
+            while (data.moveToNext()) {
+                if(!IDList.contains(data.getInt(0))){
+                    IDList.add(data.getInt(0));
+                    nameList.add(data.getString(1));
+                    password.add(data.getString(2));
+                }
+            }
+            arrayAdapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void checkAccount() {
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        boolean backupPref = pref.getBoolean("backup", false);
+        ParseUser user = ParseUser.getCurrentUser();
+        if(backupPref && user == null) {
+            final PrettyDialog prettyDialog = new PrettyDialog(getContext());
+            prettyDialog.setTitle("Alert!!")
+                    .setIcon(R.drawable.ic_error)
+                    .setMessage("Cannot backup. No user Account Found..")
+                    .addButton("Add Account",
+                            R.color.pdlg_color_white,
+                            R.color.pdlg_color_green,
+                            new PrettyDialogCallback() {
+                                @Override
+                                public void onClick() {
+                                    Intent intent = new Intent(getContext(), AccountActivity.class);
+                                    startActivity(intent);
+                                    prettyDialog.dismiss();
+                                }
+                            })
+                    .addButton("Disable Backup",
+                            R.color.pdlg_color_white,
+                            R.color.pdlg_color_red,
+                            new PrettyDialogCallback() {
+                                @Override
+                                public void onClick() {
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putBoolean("backup", false);
+                                    editor.apply();
+                                    prettyDialog.dismiss();
+                                }
+                            }).show();
+        }
     }
 
     @Override

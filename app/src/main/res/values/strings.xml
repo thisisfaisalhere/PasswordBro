@@ -10,6 +10,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_share">Share</string>
     <string name="menu_privacy">Privacy Statement</string>
+    <string name="menu_account">Account</string>
     <string name="generate_title">Generate your password</string>
     <string name="generate_subtitle">Choose Strength: </string>
     <string name="easy_text">Don\'t Care</string>
@@ -64,4 +65,9 @@
     <string name="fingerprint_error_3">Add Screen Lock on your Phone in Settings</string>
     <string name="fingerprint_error_4">Add at least 1 Fingerprint</string>
     <string name="fingerprint_success">Touch the fingerprint sensor</string>
+
+    <!-- parse server data-->
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id">Mhfgk9lHtO5gHaTBYHXyYEYyJSzeMRVhzWrQX57x</string>
+    <string name="back4app_client_key">IgMMs1WLD82i9BeEcjzYYxSnjzQ68LqvpIx5er7u</string>
 </resources>
