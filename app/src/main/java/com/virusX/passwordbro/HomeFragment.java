@@ -1,5 +1,6 @@
 package com.virusX.passwordbro;
 
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -19,7 +20,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import es.dmoral.toasty.Toasty;
@@ -69,7 +73,41 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
             homeSubtitle.setText(R.string.home_subtitle);
         }
 
+        if(ParseUser.getCurrentUser() != null) {
+            backupData();
+        }
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkAccount();
+        passwordList.setAdapter(null);
+        nameList.clear();
+        password.clear();
+        IDList.clear();
+        addDataToList();
+    }
+
+    private void backupData() {
+        ParseObject parseObject = new ParseObject("userBackupData");
+        parseObject.put("username", ParseUser.getCurrentUser().getUsername());
+        parseObject.put("serviceList", nameList);
+        parseObject.put("passwordList", password);
+        parseObject.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null) {
+                    Toasty.success(getContext(), "Backup Successful",
+                            Toasty.LENGTH_SHORT, true).show();
+                } else {
+                    Toasty.error(getContext(), e.getMessage() + "",
+                            Toasty.LENGTH_SHORT, true).show();
+                }
+            }
+        });
     }
 
     private void addDataToList() {
@@ -87,17 +125,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        checkAccount();
-        passwordList.setAdapter(null);
-        nameList.clear();
-        password.clear();
-        IDList.clear();
-        addDataToList();
-    }
-
     private void checkAccount() {
         final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
         boolean backupPref = pref.getBoolean("backup", false);
@@ -113,7 +140,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                             new PrettyDialogCallback() {
                                 @Override
                                 public void onClick() {
-                                    Intent intent = new Intent(getContext(), AccountActivity.class);
+                                    Intent intent = new Intent(getContext(), AddAccountActivity.class);
                                     startActivity(intent);
                                     prettyDialog.dismiss();
                                 }

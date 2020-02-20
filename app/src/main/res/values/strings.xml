@@ -70,4 +70,8 @@
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <string name="back4app_app_id">Mhfgk9lHtO5gHaTBYHXyYEYyJSzeMRVhzWrQX57x</string>
     <string name="back4app_client_key">IgMMs1WLD82i9BeEcjzYYxSnjzQ68LqvpIx5er7u</string>
+    <string name="add_account_title">Add Account</string>
+    <string name="nickname">Nickname</string>
+    <string name="password">Ironically Type Password</string>
+    <string name="add_account">Add Account</string>
 </resources>
