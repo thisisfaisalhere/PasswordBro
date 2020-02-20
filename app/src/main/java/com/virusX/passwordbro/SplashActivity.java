@@ -3,7 +3,6 @@ package com.virusX.passwordbro;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
-
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
@@ -17,10 +16,11 @@ import android.os.Handler;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
-import android.util.Log;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.parse.ParseInstallation;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -31,7 +31,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
@@ -62,6 +61,7 @@ public class SplashActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_splash);
 
+        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         Handler handler = new Handler();
         intent = new Intent(SplashActivity.this, MainActivity.class);
