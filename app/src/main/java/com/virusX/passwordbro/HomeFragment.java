@@ -61,6 +61,18 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         passwordList.setOnItemClickListener(HomeFragment.this);
         passwordList.setOnItemLongClickListener(HomeFragment.this);
 
+        addDataToList();
+
+        if(nameList.size() == 0) {
+            homeSubtitle.setText(R.string.home_subtitle_2);
+        } else {
+            homeSubtitle.setText(R.string.home_subtitle);
+        }
+
+        return view;
+    }
+
+    private void addDataToList() {
         databaseHelper = new DatabaseHelper(getContext());
         data = databaseHelper.getData();
         try {
@@ -73,34 +85,17 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        if(nameList.size() == 0) {
-            homeSubtitle.setText(R.string.home_subtitle_2);
-        } else {
-            homeSubtitle.setText(R.string.home_subtitle);
-        }
-
-        return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
         checkAccount();
-        databaseHelper = new DatabaseHelper(getContext());
-        data = databaseHelper.getData();
-        try {
-            while (data.moveToNext()) {
-                if(!IDList.contains(data.getInt(0))){
-                    IDList.add(data.getInt(0));
-                    nameList.add(data.getString(1));
-                    password.add(data.getString(2));
-                }
-            }
-            arrayAdapter.notifyDataSetChanged();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        passwordList.setAdapter(null);
+        nameList.clear();
+        password.clear();
+        IDList.clear();
+        addDataToList();
     }
 
     private void checkAccount() {
