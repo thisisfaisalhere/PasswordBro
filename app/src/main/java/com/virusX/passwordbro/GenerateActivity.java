@@ -2,12 +2,15 @@ package com.virusX.passwordbro;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
+
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -48,11 +51,14 @@ public class GenerateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_generate);
 
         RadioGroup strengthRadioGroup = findViewById(R.id.strengthRadioGroup);
-        Button generateBtn = findViewById(R.id.generateButton);
+        final Button generateBtn = findViewById(R.id.generateButton);
         generatedPass = findViewById(R.id.generatedPass);
         final ImageButton copyBtn = findViewById(R.id.copyBtn);
         serviceNameEdt = findViewById(R.id.serviceNameEdt);
         final Button saveBtn = findViewById(R.id.saveBtn);
+
+        final ProgressDialog progressDialog = new ProgressDialog(GenerateActivity.this);
+        final Handler handler = new Handler();
 
         length();
 
@@ -88,16 +94,29 @@ public class GenerateActivity extends AppCompatActivity {
         generateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.setMessage("Generating..");
+                generatedPass.setText("");
+                copyBtn.setVisibility(View.GONE);
+                serviceNameEdt.setVisibility(View.GONE);
+                saveBtn.setVisibility(View.GONE);
                 if(!checked) {
                     Toasty.info(GenerateActivity.this, "Choose strength first",
                             Toasty.LENGTH_SHORT, true).show();
                 } else {
-                    Generate generate = new Generate(strength, easyLen, medLen, hardLen);
-                    password = generate.generate();
-                    generatedPass.setText(password);
-                    copyBtn.setVisibility(View.VISIBLE);
-                    serviceNameEdt.setVisibility(View.VISIBLE);
-                    saveBtn.setVisibility(View.VISIBLE);
+                    progressDialog.show();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Generate generate = new Generate(strength, easyLen, medLen, hardLen);
+                            password = generate.generate();
+                            generatedPass.setText(password);
+                            copyBtn.setVisibility(View.VISIBLE);
+                            serviceNameEdt.setVisibility(View.VISIBLE);
+                            saveBtn.setVisibility(View.VISIBLE);
+                            generateBtn.setText(getString(R.string.generate_btn_2));
+                            progressDialog.dismiss();
+                        }
+                    }, 500);
                 }
             }
         });

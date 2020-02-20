@@ -26,14 +26,13 @@
 
     </PreferenceCategory>
 
-<!--    <PreferenceCategory app:title="@string/sync_header">-->
+    <PreferenceCategory app:title="@string/security_header">
 
-<!--        <SwitchPreferenceCompat-->
-<!--            app:key="sync"-->
-<!--            app:title="@string/sync_title"-->
-<!--            android:textColor="#FFFFFF"-->
-<!--            app:defaultValue="false"/>-->
+        <SwitchPreferenceCompat
+            app:key="fingerprint"
+            app:title="@string/fingerprint"
+            app:defaultValue="false"/>
 
-<!--    </PreferenceCategory>-->
+    </PreferenceCategory>
 
 </PreferenceScreen>
