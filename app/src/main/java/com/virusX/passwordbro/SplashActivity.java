@@ -19,7 +19,6 @@ import android.security.keystore.KeyProperties;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;

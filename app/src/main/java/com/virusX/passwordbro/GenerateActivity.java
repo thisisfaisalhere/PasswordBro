@@ -2,7 +2,6 @@ package com.virusX.passwordbro;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
-
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;

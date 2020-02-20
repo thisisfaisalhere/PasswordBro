@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.CancellationSignal;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.core.content.ContextCompat;
 
 @TargetApi(Build.VERSION_CODES.M)
@@ -28,7 +27,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationError(int errorCode, CharSequence errString) {
-        this.update("There was an Auth Error. " + errString, false);
+        this.update(errString + "", false);
     }
 
     @Override
@@ -38,7 +37,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationHelp(int helpCode, CharSequence helpString) {
-        this.update("Error: " + helpString, false);
+        this.update(helpString + "", false);
     }
 
     @Override
@@ -58,6 +57,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
             fingerprintImg.setImageResource(R.drawable.ic_done);
             Intent intent = new Intent(context, MainActivity.class);
             context.startActivity(intent);
+            ((Activity) context).finish();
         }
     }
 }

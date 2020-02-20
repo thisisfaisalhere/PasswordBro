@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
@@ -41,16 +40,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
                 (getContext(), android.R.layout.simple_list_item_1, nameList){
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
-                // Get the Item from ListView
                 View view = super.getView(position, convertView, parent);
-
-                // Initialize a TextView for ListView each Item
                 TextView tv = view.findViewById(android.R.id.text1);
-
-                // Set the text color of TextView (ListView Item)
                 tv.setTextColor(Color.WHITE);
-
-                // Generate ListView Item using TextView
                 return view;
             }
         };

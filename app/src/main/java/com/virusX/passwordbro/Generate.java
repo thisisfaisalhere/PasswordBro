@@ -1,8 +1,5 @@
 package com.virusX.passwordbro;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import java.util.Random;
 
 class Generate {
