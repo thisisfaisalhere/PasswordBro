@@ -44,7 +44,14 @@ public class AddAccountActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent event) {
                 if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    onClickButton(button);
+                    try {
+                        InputMethodManager inputMethodManager =
+                                (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                                .getWindowToken(), 0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 return false;
             }

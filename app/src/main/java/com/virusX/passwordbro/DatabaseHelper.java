@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
@@ -67,5 +69,28 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 + " SET " + COL1 + "='" + name + "',"
                 + COL2 + "='" + pass +"' WHERE ID=" + position);
         Log.d(TAG, "DatabaseHelper: row update " + position);
+    }
+
+
+    void matchDataSet(ArrayList<String> nameList, ArrayList<String> passwordList) {
+        Cursor data = getData();
+        if(data != null && data.getCount() > 0) {
+            for(int i = 0; i < nameList.size(); i++) {
+                String service = nameList.get(i);
+                String key = passwordList.get(i);
+
+                SQLiteDatabase db = this.getWritableDatabase();
+                String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL1 + "='" + service + "'" ;
+                Cursor cursor = db.rawQuery(query, null);
+                if(cursor == null) {
+                    addData(service, key);
+                }
+                data.moveToNext();
+            }
+        } else {
+            for(int i = 0; i < nameList.size(); i++) {
+                addData(nameList.get(i), passwordList.get(i));
+            }
+        }
     }
 }

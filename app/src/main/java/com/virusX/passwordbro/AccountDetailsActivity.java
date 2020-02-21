@@ -13,6 +13,7 @@ public class AccountDetailsActivity extends AppCompatActivity {
 
         setTitle("Account Details");
 
-
+        DataBackupHelper helper = new DataBackupHelper(this);
+        helper.retrieveData();
     }
 }
