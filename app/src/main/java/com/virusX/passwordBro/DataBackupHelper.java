@@ -77,7 +77,7 @@ class DataBackupHelper {
     }
 
     void deleteAccount() {
-        ParseUser.getCurrentUser().logOut();
+        //ParseUser.getCurrentUser().logOut();
         parseUser.deleteInBackground(new DeleteCallback() {
             @Override
             public void done(ParseException e) {
