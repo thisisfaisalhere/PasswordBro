@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomActionBarTheme">
-        <activity android:name=".AccountDetailsActivity"></activity>
+        <activity android:name=".QnActivity"></activity>
+        <activity android:name=".AccountDetailsActivity" />
         <activity android:name=".AddAccountActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>

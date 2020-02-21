@@ -1,18 +1,11 @@
 package com.virusX.passwordbro;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.util.Log;
-
-import com.parse.FindCallback;
-import com.parse.GetCallback;
+import com.parse.DeleteCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import java.util.ArrayList;
-import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -22,6 +15,7 @@ class DataBackupHelper {
     private Context context;
     private final String COL1 = "services";
     private final String COL2 = "key";
+    private ParseUser parseUser = ParseUser.getCurrentUser();
 
     DataBackupHelper(ArrayList<String> nameList, ArrayList<String> passwordList, Context context) {
         this.nameList = nameList;
@@ -34,7 +28,6 @@ class DataBackupHelper {
     }
 
     void backupData() {
-        ParseUser parseUser = ParseUser.getCurrentUser();
         parseUser.put(COL1, nameList);
         parseUser.put(COL2, passwordList);
 
@@ -55,7 +48,6 @@ class DataBackupHelper {
     void retrieveData() {
         nameList = new ArrayList<>();
         passwordList = new ArrayList<>();
-        ParseUser parseUser = ParseUser.getCurrentUser();
         if(parseUser.getList(COL1) != null) {
             try {
                 nameList.addAll(parseUser.<String>getList(COL1));
@@ -68,5 +60,25 @@ class DataBackupHelper {
             DatabaseHelper databaseHelper = new DatabaseHelper(context);
             databaseHelper.matchDataSet(nameList, passwordList);
         }
+    }
+
+    void deleteBackup() {
+        //working
+    }
+
+    void deleteAccount() {
+        ParseUser.getCurrentUser().logOut();
+        parseUser.deleteInBackground(new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null) {
+                    Toasty.info(context, "Account Deleted.",
+                            Toasty.LENGTH_SHORT, true).show();
+                } else {
+                    Toasty.error(context, e.getMessage() + "",
+                            Toasty.LENGTH_SHORT, true).show();
+                }
+            }
+        });
     }
 }
