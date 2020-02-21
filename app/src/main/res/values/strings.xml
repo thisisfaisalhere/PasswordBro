@@ -51,8 +51,7 @@
     <string name="share_title">Share</string>
     <string name="share_logo">share_logo</string>
     <string name="share_subtitle">Loved the app?\nShare with your friends.</string>
-    <string name="share_message">I have download this app.\nIt helps me in managing my passwords.\nIt is easy to use and is really secure\n
-        Download it here: https://tinyurl.com/passwordbro</string>
+    <string name="share_message">I have download this app.\nIt helps me in managing my passwords.\nIt is easy to use and is really secure\nDownload it here: https://tinyurl.com/passwordbro</string>
 
     <!-- splash string -->
     <string name="app_icon">appIcon</string>
@@ -70,6 +69,8 @@
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <string name="back4app_app_id">Mhfgk9lHtO5gHaTBYHXyYEYyJSzeMRVhzWrQX57x</string>
     <string name="back4app_client_key">IgMMs1WLD82i9BeEcjzYYxSnjzQ68LqvpIx5er7u</string>
+
+    <!-- add account -->
     <string name="add_account_title">Add Account</string>
     <string name="nickname">Nickname</string>
     <string name="password">Ironically Type Password</string>
@@ -78,4 +79,7 @@
     <string name="delete_backup">Delete Backup</string>
     <string name="add_backup_questions">Add Backup Questions</string>
     <string name="delete_account">Delete Account</string>
+    <string name="logout">Logout</string>
+    <string name="delete">Do you really want to Delete your Backup?\nThis step is irreversible and I will not be able to provide any assistance</string>
+    <string name="delete_2">Do you really want to Delete your Account?\nThis step is irreversible and I will not be able to provide any assistance\n</string>
 </resources>

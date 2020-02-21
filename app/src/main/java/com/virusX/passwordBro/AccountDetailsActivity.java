@@ -2,13 +2,13 @@ package com.virusX.passwordBro;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.parse.ParseUser;
 
+import es.dmoral.toasty.Toasty;
 import libs.mjn.prettydialog.PrettyDialog;
 import libs.mjn.prettydialog.PrettyDialogCallback;
 
@@ -28,6 +28,7 @@ public class AccountDetailsActivity extends AppCompatActivity {
         Button fillQA = findViewById(R.id.fill_q_btn);
         Button delAccount = findViewById(R.id.delAccountBtn);
         TextView ac_details = findViewById(R.id.ac_details_txt);
+        Button logoutBtn = findViewById(R.id.logoutBtn);
 
         helper = new DataBackupHelper(this);
 
@@ -49,8 +50,7 @@ public class AccountDetailsActivity extends AppCompatActivity {
                 final PrettyDialog prettyDialog = new PrettyDialog(AccountDetailsActivity.this);
                 prettyDialog.setIcon(R.drawable.ic_error)
                         .setTitle("Alert")
-                        .setMessage("Do you really want to Delete your Backup?\n" +
-                                "This step is irreversible and I will not be able to provide any assistance")
+                        .setMessage(getString(R.string.delete))
                         .addButton("Delete Backup",
                                 R.color.pdlg_color_white,
                                 R.color.pdlg_color_red,
@@ -74,14 +74,33 @@ public class AccountDetailsActivity extends AppCompatActivity {
             }
         });
 
+        fillQA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(AccountDetailsActivity.this, QnActivity.class);
+//                startActivity(intent);
+                Toasty.info(AccountDetailsActivity.this, "under development",
+                        Toasty.LENGTH_SHORT, true).show();
+            }
+        });
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.getCurrentUser().logOut();
+                Toasty.info(AccountDetailsActivity.this, "User Logged out",
+                        Toasty.LENGTH_SHORT, true).show();
+                finish();
+            }
+        });
+
         delAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final PrettyDialog prettyDialog = new PrettyDialog(AccountDetailsActivity.this);
                 prettyDialog.setIcon(R.drawable.ic_error)
                         .setTitle("Alert")
-                        .setMessage("Do you really want to Delete your Account?\n" +
-                                "This step is irreversible and I will not be able to provide any assistance\n")
+                        .setMessage(getString(R.string.delete_2))
                         .addButton("Delete Account",
                         R.color.pdlg_color_white,
                         R.color.pdlg_color_red,
@@ -104,14 +123,6 @@ public class AccountDetailsActivity extends AppCompatActivity {
                                 }).show();
 
 
-            }
-        });
-
-        fillQA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AccountDetailsActivity.this, QnActivity.class);
-                startActivity(intent);
             }
         });
     }
