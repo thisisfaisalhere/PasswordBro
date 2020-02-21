@@ -55,10 +55,20 @@ class DataBackupHelper {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            Toasty.info(context, "No Backup Found",
+                    Toasty.LENGTH_SHORT, true).show();
         }
         if(nameList.size() > 0 && passwordList.size() > 0) {
             DatabaseHelper databaseHelper = new DatabaseHelper(context);
-            databaseHelper.matchDataSet(nameList, passwordList);
+            boolean b = databaseHelper.matchDataSet(nameList, passwordList);
+            if(b) {
+                Toasty.success(context, "Data Restored Successfully",
+                        Toasty.LENGTH_SHORT, true).show();
+            } else {
+                Toasty.info(context, "Nothing to restore",
+                        Toasty.LENGTH_SHORT, true).show();
+            }
         }
     }
 

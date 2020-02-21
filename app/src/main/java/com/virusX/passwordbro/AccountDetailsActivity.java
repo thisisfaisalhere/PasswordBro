@@ -2,8 +2,10 @@ package com.virusX.passwordbro;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,25 +35,52 @@ public class AccountDetailsActivity extends AppCompatActivity {
 
         ac_details.setText(text);
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        final Handler handler = new Handler();
         restoreBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helper.retrieveData();
+                progressDialog.setMessage("Restoring data...");
+                progressDialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        helper.retrieveData();
+                    }
+                }, 1000);
+                progressDialog.dismiss();
             }
         });
 
         deleteBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helper.deleteBackup();
+                progressDialog.setMessage("Deleting data...");
+                progressDialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        helper.deleteBackup();
+                    }
+                }, 1000);
+                progressDialog.dismiss();
             }
         });
 
         delAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helper.deleteAccount();
-                finish();
+                progressDialog.setMessage("Deleting Account...");
+                progressDialog.show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        helper.deleteAccount();
+                        finish();
+                    }
+                }, 1000);
+                progressDialog.dismiss();
+
             }
         });
 

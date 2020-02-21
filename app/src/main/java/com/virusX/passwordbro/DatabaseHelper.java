@@ -9,6 +9,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
@@ -72,7 +74,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    void matchDataSet(ArrayList<String> nameList, ArrayList<String> passwordList) {
+    boolean matchDataSet(ArrayList<String> nameList, ArrayList<String> passwordList) {
+        int returnValue = -1;
         Cursor data = getData();
         if(data != null && data.getCount() > 0) {
             for(int i = 0; i < nameList.size(); i++) {
@@ -84,13 +87,20 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 Cursor cursor = db.rawQuery(query, null);
                 if(cursor == null) {
                     addData(service, key);
+                    returnValue++;
                 }
                 data.moveToNext();
             }
         } else {
             for(int i = 0; i < nameList.size(); i++) {
                 addData(nameList.get(i), passwordList.get(i));
+                returnValue++;
             }
+        }
+        if(returnValue == -1) {
+            return false;
+        } else {
+            return true;
         }
     }
 }
