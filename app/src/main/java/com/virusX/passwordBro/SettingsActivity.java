@@ -1,4 +1,4 @@
-package com.virusX.passwordbro;
+package com.virusX.passwordBro;
 
 import android.os.Bundle;
 import android.view.MenuItem;

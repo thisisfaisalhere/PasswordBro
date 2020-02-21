@@ -1,4 +1,4 @@
-package com.virusX.passwordbro;
+package com.virusX.passwordBro;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.CancellationSignal;
+import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
@@ -32,7 +33,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationFailed() {
-        this.update("Auth Failed. ", false);
+        this.update("Authentication Failed. ", false);
     }
 
     @Override
@@ -46,12 +47,21 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     }
 
     private void update(String s, boolean b) {
-        TextView fingerprintMessage = ((Activity)context).findViewById(R.id.fingerprintMessage);
-        ImageView fingerprintImg = ((Activity)context).findViewById(R.id.fingerprintImg);
+        final TextView fingerprintMessage = ((Activity)context).findViewById(R.id.fingerprintMessage);
+        final ImageView fingerprintImg = ((Activity)context).findViewById(R.id.fingerprintImg);
         fingerprintMessage.setText(s);
         if(!b){
             fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
             fingerprintImg.setImageResource(R.drawable.ic_error);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    fingerprintMessage.setText(context.getString(R.string.fingerprint_success));
+                    fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.text_color));
+                    fingerprintImg.setImageResource(R.drawable.ic_fingerprint);
+                }
+            }, 1000);
         } else {
             fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.text_color));
             fingerprintImg.setImageResource(R.drawable.ic_done);

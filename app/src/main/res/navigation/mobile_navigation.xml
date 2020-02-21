@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.virusX.passwordbro.HomeFragment"
+        android:name="com.virusX.passwordBro.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <activity
         android:id="@+id/nav_share"
-        android:name="com.virusX.passwordbro.ShareActivity"
+        android:name="com.virusX.passwordBro.ShareActivity"
         android:label="@string/menu_share"
         tools:layout="@layout/activity_share" />
     <activity
         android:id="@+id/nav_privacy"
-        android:name="com.virusX.passwordbro.PrivacyActivity"
+        android:name="com.virusX.passwordBro.PrivacyActivity"
         android:label="@string/menu_privacy"
         tools:layout="@layout/activity_privacy" />
 </navigation>

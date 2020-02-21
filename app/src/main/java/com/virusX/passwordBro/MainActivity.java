@@ -1,4 +1,4 @@
-package com.virusX.passwordbro;
+package com.virusX.passwordBro;
 
 import android.content.Intent;
 import android.os.Bundle;

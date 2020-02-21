@@ -1,15 +1,11 @@
-package com.virusX.passwordbro;
+package com.virusX.passwordBro;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.parse.ParseUser;
 
 public class AccountDetailsActivity extends AppCompatActivity {
@@ -35,52 +31,26 @@ public class AccountDetailsActivity extends AppCompatActivity {
 
         ac_details.setText(text);
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        final Handler handler = new Handler();
         restoreBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setMessage("Restoring data...");
-                progressDialog.show();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        helper.retrieveData();
-                    }
-                }, 1000);
-                progressDialog.dismiss();
+                helper.retrieveData();
+
             }
         });
 
         deleteBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setMessage("Deleting data...");
-                progressDialog.show();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        helper.deleteBackup();
-                    }
-                }, 1000);
-                progressDialog.dismiss();
+                helper.deleteBackup();
             }
         });
 
         delAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setMessage("Deleting Account...");
-                progressDialog.show();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        helper.deleteAccount();
-                        finish();
-                    }
-                }, 1000);
-                progressDialog.dismiss();
-
+                helper.deleteAccount();
+                finish();
             }
         });
 

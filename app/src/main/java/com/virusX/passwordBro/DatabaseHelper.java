@@ -1,4 +1,4 @@
-package com.virusX.passwordbro;
+package com.virusX.passwordBro;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
-
-import es.dmoral.toasty.Toasty;
 
 class DatabaseHelper extends SQLiteOpenHelper {
 

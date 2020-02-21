@@ -1,4 +1,4 @@
-package com.virusX.passwordbro;
+package com.virusX.passwordBro;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;

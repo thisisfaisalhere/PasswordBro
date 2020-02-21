@@ -1,4 +1,4 @@
-package com.virusX.passwordbro;
+package com.virusX.passwordBro;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -97,7 +97,9 @@ public class SplashActivity extends AppCompatActivity {
 
                 if(!fingerprintManager.isHardwareDetected()){
                     fingerprintMessage.setText(getString(R.string.fingerprint_error_1));
-                } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED){
+                } else if (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.USE_FINGERPRINT)
+                        != PackageManager.PERMISSION_GRANTED){
                     fingerprintMessage.setText(getString(R.string.fingerprint_error_2));
                 } else if (!keyguardManager.isKeyguardSecure()){
                     fingerprintMessage.setText(getString(R.string.fingerprint_error_3));
