@@ -8,7 +8,6 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.CancellationSignal;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
@@ -17,9 +16,6 @@ import androidx.core.content.ContextCompat;
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
     private Context context;
-    private TextView fingerprintMessage;
-    private ImageView fingerprintImg;
-    private static final String TAG = "fingerprint";
 
     FingerprintHandler(Context context){
         this.context = context;
@@ -32,52 +28,46 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationError(int errorCode, CharSequence errString) {
-        fingerprintMessage = ((Activity)context).findViewById(R.id.fingerprintMessage);
-        fingerprintImg = ((Activity)context).findViewById(R.id.fingerprintImg);
-        fingerprintMessage.setText(errString);
-        fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
-        fingerprintImg.setImageResource(R.drawable.ic_error);
-        Log.d(TAG, "onAuthenticationError");
+        this.update(errString + "", false);
     }
 
     @Override
     public void onAuthenticationFailed() {
-        Log.d(TAG, "onAuthenticationFailed");
-        fingerprintMessage = ((Activity)context).findViewById(R.id.fingerprintMessage);
-        fingerprintImg = ((Activity)context).findViewById(R.id.fingerprintImg);
-        fingerprintMessage.setText("Authentication Failed");
-        fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
-        fingerprintImg.setImageResource(R.drawable.ic_error);
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                fingerprintMessage.setText(context.getString(R.string.fingerprint_success));
-                fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.text_color));
-                fingerprintImg.setImageResource(R.drawable.ic_fingerprint);
-            }
-        }, 1000);
+        this.update("Authentication Failed. ", false);
     }
 
     @Override
     public void onAuthenticationHelp(int helpCode, CharSequence helpString) {
-        Log.d(TAG, "onAuthenticationHelp");
-        fingerprintMessage = ((Activity)context).findViewById(R.id.fingerprintMessage);
-        fingerprintImg = ((Activity)context).findViewById(R.id.fingerprintImg);
-        fingerprintMessage.setText(helpString);
-        fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
-        fingerprintImg.setImageResource(R.drawable.ic_error);
+        this.update(helpString + "", false);
     }
 
     @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
-        Log.d(TAG, "onAuthenticationSucceeded");
-        fingerprintMessage = ((Activity)context).findViewById(R.id.fingerprintMessage);
-        fingerprintImg = ((Activity)context).findViewById(R.id.fingerprintImg);
-        fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.text_color));
-        fingerprintImg.setImageResource(R.drawable.ic_done);
-        Intent intent = new Intent(context, MainActivity.class);
-        context.startActivity(intent);
-        ((Activity) context).finish();
+        this.update("You can now access the app.", true);
+    }
+
+    private void update(String s, boolean b) {
+        final TextView fingerprintMessage = ((Activity)context).findViewById(R.id.fingerprintMessage);
+        final ImageView fingerprintImg = ((Activity)context).findViewById(R.id.fingerprintImg);
+        fingerprintMessage.setText(s);
+        if(!b){
+            fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+            fingerprintImg.setImageResource(R.drawable.ic_error);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    fingerprintMessage.setText(context.getString(R.string.fingerprint_success));
+                    fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.text_color));
+                    fingerprintImg.setImageResource(R.drawable.ic_fingerprint);
+                }
+            }, 1000);
+        } else {
+            fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.text_color));
+            fingerprintImg.setImageResource(R.drawable.ic_done);
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
+            ((Activity) context).finish();
+        }
     }
 }
