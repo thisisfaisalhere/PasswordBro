@@ -74,4 +74,8 @@
     <string name="nickname">Nickname</string>
     <string name="password">Ironically Type Password</string>
     <string name="add_account">Add Account</string>
+    <string name="restore_backup">Restore Backup</string>
+    <string name="delete_backup">Delete Backup</string>
+    <string name="add_backup_questions">Add Backup Questions</string>
+    <string name="delete_account">Delete Account</string>
 </resources>

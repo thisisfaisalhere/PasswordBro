@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,151 +7,154 @@
     android:background="#2D2D2D"
     tools:context=".GenerateActivity">
 
-    <TextView
-        android:id="@+id/generate_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="@string/generate_title"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/generate_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/generate_subtitle"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/generate_title" />
-
-    <RadioGroup
-        android:id="@+id/strengthRadioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/generate_subtitle">
-
-        <RadioButton
-            android:id="@+id/easyRadioBtn"
+        <TextView
+            android:id="@+id/generate_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:buttonTint="#FF5E6C"
-            android:text="@string/easy_text"
-            android:textColor="#FFFFFF" />
+            android:layout_marginTop="50dp"
+            android:text="@string/generate_title"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioButton
-            android:id="@+id/modRadioBtn"
+        <TextView
+            android:id="@+id/generate_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:buttonTint="#FF5E6C"
-            android:text="@string/mod_text"
-            android:textColor="#FFFFFF" />
+            android:layout_marginTop="40dp"
+            android:text="@string/generate_subtitle"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generate_title" />
 
-        <RadioButton
-            android:id="@+id/hardRadioBtn"
+        <RadioGroup
+            android:id="@+id/strengthRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:buttonTint="#FF5E6C"
-            android:text="@string/hard_text"
-            android:textColor="#FFFFFF" />
-    </RadioGroup>
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generate_subtitle">
 
-    <Button
-        android:id="@+id/generateButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="10dp"
-        android:background="#FF5E6C"
-        android:text="@string/generate_btn"
-        android:textColor="#fff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/strengthRadioGroup" />
+            <RadioButton
+                android:id="@+id/easyRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="#FF5E6C"
+                android:text="@string/easy_text"
+                android:textColor="#FFFFFF" />
 
-    <TextView
-        android:id="@+id/generatedPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="30dp"
-        android:padding="3dp"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/serviceNameEdt"
-        app:layout_constraintEnd_toStartOf="@+id/copyBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/generateButton" />
+            <RadioButton
+                android:id="@+id/modRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="#FF5E6C"
+                android:text="@string/mod_text"
+                android:textColor="#FFFFFF" />
 
-    <ImageButton
-        android:id="@+id/copyBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
-        android:background="#FF5E6C"
-        android:contentDescription="@android:string/copy"
-        android:padding="3dp"
-        android:paddingStart="3dp"
-        android:paddingLeft="3dp"
-        android:paddingTop="3dp"
-        android:paddingEnd="3dp"
-        android:paddingRight="3dp"
-        android:paddingBottom="3dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/generateButton"
-        app:srcCompat="@drawable/ic_content_copy" />
+            <RadioButton
+                android:id="@+id/hardRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="#FF5E6C"
+                android:text="@string/hard_text"
+                android:textColor="#FFFFFF" />
+        </RadioGroup>
 
-    <EditText
-        android:id="@+id/serviceNameEdt"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="10dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/hint"
-        android:inputType="text"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#009688"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/generatedPass" />
+        <Button
+            android:id="@+id/generateButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:background="#FF5E6C"
+            android:text="@string/generate_btn"
+            android:textColor="#fff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/strengthRadioGroup" />
 
-    <Button
-        android:id="@+id/saveBtn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="10dp"
-        android:background="#FF5E6C"
-        android:text="@string/save_btn"
-        android:textColor="#fff"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/serviceNameEdt" />
+        <TextView
+            android:id="@+id/generatedPass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="10dp"
+            android:padding="3dp"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/copyBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generateButton" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/copyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="10dp"
+            android:background="#FF5E6C"
+            android:contentDescription="@android:string/copy"
+            android:padding="5dp"
+            android:paddingStart="5dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generateButton"
+            app:srcCompat="@drawable/ic_content_copy" />
+
+        <EditText
+            android:id="@+id/serviceNameEdt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:ems="10"
+            android:hint="@string/hint"
+            android:inputType="text"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#009688"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generatedPass"
+            android:importantForAutofill="no" />
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:background="#FF5E6C"
+            android:text="@string/save_btn"
+            android:textColor="#fff"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/serviceNameEdt" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

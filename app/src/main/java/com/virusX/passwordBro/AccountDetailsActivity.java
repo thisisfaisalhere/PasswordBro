@@ -2,11 +2,15 @@ package com.virusX.passwordBro;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.parse.ParseUser;
+
+import libs.mjn.prettydialog.PrettyDialog;
+import libs.mjn.prettydialog.PrettyDialogCallback;
 
 public class AccountDetailsActivity extends AppCompatActivity {
 
@@ -35,22 +39,71 @@ public class AccountDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 helper.retrieveData();
-
+                finish();
             }
         });
 
         deleteBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helper.deleteBackup();
+                final PrettyDialog prettyDialog = new PrettyDialog(AccountDetailsActivity.this);
+                prettyDialog.setIcon(R.drawable.ic_error)
+                        .setTitle("Alert")
+                        .setMessage("Do you really want to Delete your Backup?\n" +
+                                "This step is irreversible and I will not be able to provide any assistance")
+                        .addButton("Delete Backup",
+                                R.color.pdlg_color_white,
+                                R.color.pdlg_color_red,
+                                new PrettyDialogCallback() {
+                                    @Override
+                                    public void onClick() {
+                                        helper.deleteBackup();
+                                        finish();
+                                        prettyDialog.dismiss();
+                                    }
+                                })
+                        .addButton("Cancel",
+                                R.color.pdlg_color_white,
+                                R.color.pdlg_color_green,
+                                new PrettyDialogCallback() {
+                                    @Override
+                                    public void onClick() {
+                                        prettyDialog.dismiss();
+                                    }
+                                }).show();
             }
         });
 
         delAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helper.deleteAccount();
-                finish();
+                final PrettyDialog prettyDialog = new PrettyDialog(AccountDetailsActivity.this);
+                prettyDialog.setIcon(R.drawable.ic_error)
+                        .setTitle("Alert")
+                        .setMessage("Do you really want to Delete your Account?\n" +
+                                "This step is irreversible and I will not be able to provide any assistance\n")
+                        .addButton("Delete Account",
+                        R.color.pdlg_color_white,
+                        R.color.pdlg_color_red,
+                        new PrettyDialogCallback() {
+                            @Override
+                            public void onClick() {
+                                helper.deleteAccount();
+                                finish();
+                                prettyDialog.dismiss();
+                            }
+                        })
+                        .addButton("Cancel",
+                                R.color.pdlg_color_white,
+                                R.color.pdlg_color_green,
+                                new PrettyDialogCallback() {
+                                    @Override
+                                    public void onClick() {
+                                        prettyDialog.dismiss();
+                                    }
+                                }).show();
+
+
             }
         });
 
@@ -61,7 +114,5 @@ public class AccountDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 }
