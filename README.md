@@ -3,7 +3,7 @@
 This is an App targeted towards Uncles and Aunties who has problem with remembering password
 
 ### Download the app here: 
-              https://tinyurl.com/passwordbro
+                    [apk link](https://tinyurl.com/passwordbro)
 
 ### Screenshots:
 <img src="img/img1.png" width="300">   <img src="img/img2.png" width="300">
