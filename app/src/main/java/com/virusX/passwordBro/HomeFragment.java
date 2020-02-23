@@ -24,14 +24,13 @@ import es.dmoral.toasty.Toasty;
 import libs.mjn.prettydialog.PrettyDialog;
 import libs.mjn.prettydialog.PrettyDialogCallback;
 
-public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class HomeFragment extends Fragment
+        implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private ArrayList<String> nameList, password;
     private ArrayList<Integer> IDList;
     private ArrayAdapter<String> arrayAdapter;
     private ListView passwordList;
-    private DatabaseHelper databaseHelper;
-    private Cursor data;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +67,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         }
 
         if(ParseUser.getCurrentUser() != null) {
+
             DataBackupHelper helper = new DataBackupHelper(nameList, password, getContext());
             helper.backupData();
         }
@@ -87,8 +87,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     }
 
     private void addDataToList() {
-        databaseHelper = new DatabaseHelper(getContext());
-        data = databaseHelper.getData();
+        DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+        Cursor data = databaseHelper.getData();
         try {
             while (data.moveToNext()) {
                 IDList.add(data.getInt(0));

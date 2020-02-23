@@ -1,16 +1,12 @@
 package com.virusX.passwordBro;
 
 import android.content.Context;
-import android.util.Log;
-
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.io.File;
 import java.util.ArrayList;
-
 import es.dmoral.toasty.Toasty;
 
 class DataBackupHelper {
@@ -100,8 +96,7 @@ class DataBackupHelper {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    ParseUser.getCurrentUser().logOut();
-                    Toasty.info(context, "Account Deleted.",
+                    Toasty.info(context, "Account Deleted",
                             Toasty.LENGTH_SHORT, true).show();
                 } else {
                     Toasty.error(context, e.getMessage() + "",

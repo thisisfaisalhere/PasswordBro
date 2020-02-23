@@ -88,9 +88,7 @@ public class AccountDetailsActivity extends AppCompatActivity {
                 ParseUser.logOut();
                 Toasty.info(AccountDetailsActivity.this, "User Logged out",
                         Toasty.LENGTH_SHORT, true).show();
-                Intent intent = new Intent(AccountDetailsActivity.this, AddAccountActivity.class);
-                intent.getFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                finish();
             }
         });
 
