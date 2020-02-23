@@ -8,9 +8,9 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -22,9 +22,10 @@ import es.dmoral.toasty.Toasty;
 public class AddAccountActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
-    private EditText usernameEdt,passwordEdt;
+    private TextView forgotPasswordTxt;
+    private EditText usernameEdt,passwordEdt, confirmPasswordEdt;
     private CheckBox checkBox;
-    private Button button;
+    private boolean checked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,32 +38,66 @@ public class AddAccountActivity extends AppCompatActivity {
 
         usernameEdt = findViewById(R.id.usernameEdt);
         passwordEdt = findViewById(R.id.passwordEdt);
+        confirmPasswordEdt = findViewById(R.id.confirmPasswordEdt);
         checkBox = findViewById(R.id.checkBox);
-        button = findViewById(R.id.button);
+        forgotPasswordTxt = findViewById(R.id.forgotPasswordTxt);
 
-        passwordEdt.setOnKeyListener(new View.OnKeyListener() {
+        forgotPasswordTxt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(View view, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    try {
-                        InputMethodManager inputMethodManager =
-                                (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
-                                .getWindowToken(), 0);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                return false;
+            public void onClick(View v) {
+                Intent intent = new Intent(AddAccountActivity.this, GetUsernameActivity.class);
+                startActivity(intent);
             }
         });
+    }
 
+    public void checked(View view) {
+        checked = checkBox.isChecked();
+        confirmPasswordEdt.setVisibility(View.VISIBLE);
+        if(checked) {
+            confirmPasswordEdt.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View view, int keyCode, KeyEvent event) {
+                    if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                        try {
+                            InputMethodManager inputMethodManager =
+                                    (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                                    .getWindowToken(), 0);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    return false;
+                }
+            });
+            forgotPasswordTxt.setVisibility(View.GONE);
+        } else {
+            confirmPasswordEdt.setVisibility(View.GONE);
+            passwordEdt.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View view, int keyCode, KeyEvent event) {
+                    if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                        try {
+                            InputMethodManager inputMethodManager =
+                                    (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                                    .getWindowToken(), 0);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    return false;
+                }
+            });
+            forgotPasswordTxt.setVisibility(View.VISIBLE);
+        }
     }
 
     public void onClickButton(View button) {
         String username = usernameEdt.getText().toString().trim();
         String password = passwordEdt.getText().toString().trim();
-        boolean checked = checkBox.isChecked();
+        String confirmPassword = confirmPasswordEdt.getText().toString().trim();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Adding Account...");
@@ -72,29 +107,38 @@ public class AddAccountActivity extends AppCompatActivity {
                     Toasty.LENGTH_SHORT ,true).show();
         } else {
             if(checked) {
-                try {
-                    ParseUser parseUser = new ParseUser();
-                    parseUser.setUsername(username);
-                    parseUser.setPassword(password);
-                    progressDialog.show();
-                    parseUser.signUpInBackground(new SignUpCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e == null) {
-                                Toasty.success(AddAccountActivity.this, "Account Added Successfully",
-                                        Toasty.LENGTH_SHORT, true).show();
-                                transitionToNextActivity();
-                            } else {
-                                Toasty.error(AddAccountActivity.this, e.getMessage() + "",
-                                        Toasty.LENGTH_SHORT, true).show();
-                            }
-                            progressDialog.dismiss();
+                if(confirmPassword.equals("")) {
+                    Toasty.error(this, "confirm password cannot be empty",
+                            Toasty.LENGTH_SHORT ,true).show();
+                } else {
+                    if(!confirmPassword.equals(password)) {
+                        Toasty.error(this, "Password and confirm password did not matched",
+                                Toasty.LENGTH_SHORT ,true).show();
+                    } else {
+                        try {
+                            ParseUser parseUser = new ParseUser();
+                            parseUser.setUsername(username);
+                            parseUser.setPassword(password);
+                            progressDialog.show();
+                            parseUser.signUpInBackground(new SignUpCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Toasty.success(AddAccountActivity.this, "Account Added Successfully",
+                                                Toasty.LENGTH_SHORT, true).show();
+                                        transitionToNextActivity();
+                                    } else {
+                                        Toasty.error(AddAccountActivity.this, e.getMessage() + "",
+                                                Toasty.LENGTH_SHORT, true).show();
+                                    }
+                                    progressDialog.dismiss();
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    }
                 }
-
             } else {
                 try {
                     progressDialog.show();

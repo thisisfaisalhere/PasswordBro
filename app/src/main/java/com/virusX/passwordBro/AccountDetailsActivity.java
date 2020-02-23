@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.parse.ParseUser;
-
 import es.dmoral.toasty.Toasty;
 import libs.mjn.prettydialog.PrettyDialog;
 import libs.mjn.prettydialog.PrettyDialogCallback;
@@ -77,20 +76,21 @@ public class AccountDetailsActivity extends AppCompatActivity {
         fillQA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(AccountDetailsActivity.this, QnActivity.class);
-//                startActivity(intent);
-                Toasty.info(AccountDetailsActivity.this, "under development",
-                        Toasty.LENGTH_SHORT, true).show();
+                Intent intent = new Intent(AccountDetailsActivity.this, QnActivity.class);
+                intent.putExtra("fromAddAcActivity", false);
+                startActivity(intent);
             }
         });
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseUser.getCurrentUser().logOut();
+                ParseUser.logOut();
                 Toasty.info(AccountDetailsActivity.this, "User Logged out",
                         Toasty.LENGTH_SHORT, true).show();
-                finish();
+                Intent intent = new Intent(AccountDetailsActivity.this, AddAccountActivity.class);
+                intent.getFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 

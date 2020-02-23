@@ -7,34 +7,37 @@
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <application
-        android:name="com.virusX.passwordBro.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.virusX.passwordBro.QnActivity"></activity>
-        <activity android:name="com.virusX.passwordBro.AccountDetailsActivity" />
-        <activity android:name="com.virusX.passwordBro.AddAccountActivity" />
-        <activity android:name="com.virusX.passwordBro.SplashActivity">
+        <activity android:name=".SetPasswordActivity"></activity>
+        <activity android:name=".GetUsernameActivity" />
+        <activity android:name=".QnActivity" />
+        <activity android:name=".AccountDetailsActivity" />
+        <activity android:name=".AddAccountActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.virusX.passwordBro.ShareActivity" />
-        <activity android:name="com.virusX.passwordBro.PrivacyActivity" />
+        <activity android:name=".ShareActivity" />
+        <activity android:name=".PrivacyActivity" />
         <activity
-            android:name="com.virusX.passwordBro.SettingsActivity"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/PreferenceScreen" />
-        <activity android:name="com.virusX.passwordBro.GenerateActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.virusX.passwordBro.EditActivity" />
         <activity
-            android:name="com.virusX.passwordBro.MainActivity"
+            android:name=".GenerateActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".EditActivity" />
+        <activity
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
 

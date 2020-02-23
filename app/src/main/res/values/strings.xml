@@ -74,7 +74,10 @@
     <string name="add_account_title">Add Account</string>
     <string name="nickname">Nickname</string>
     <string name="password">Ironically Type Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="add_account">Add Account</string>
+    <string name="checkboxTxt">I don\'t have an Account</string>
+    <string name="forgot_password">Forgot Password?</string>
     <string name="restore_backup">Restore Backup</string>
     <string name="delete_backup">Delete Backup</string>
     <string name="add_backup_questions">Add Backup Questions</string>
@@ -82,4 +85,18 @@
     <string name="logout">Logout</string>
     <string name="delete">Do you really want to Delete your Backup?\nThis step is irreversible and I will not be able to provide any assistance</string>
     <string name="delete_2">Do you really want to Delete your Account?\nThis step is irreversible and I will not be able to provide any assistance\n</string>
+
+    <!-- security question-->
+    <string name="security_questions_title">Backup Questions</string>
+    <string name="security_question_subtitle">Fill out the Questions Below\n\nThis will come in handy if you forget Password Bro\'s password</string>
+    <string name="security_question_subtitle_2">Answer these questions to make sure its really you</string>
+    <string name="question_1">Your Mother\'s Father\'s name</string>
+    <string name="question_2">Your Hobby</string>
+    <string name="question_3">Your First pet name</string>
+    <string name="question_4">Your Guilty Pleasure</string>
+    <string name="question_5">Place you call Home</string>
+    <string name="ice_cream">Ice Cream</string>
+    <string name="chocolate">Chocolate</string>
+    <string name="continueBtn">continue</string>
+    <string name="check">check</string>
 </resources>
