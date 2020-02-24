@@ -14,6 +14,8 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.RequestPasswordResetCallback;
 
 import es.dmoral.toasty.Toasty;
 
@@ -67,14 +69,15 @@ class MatchSecurityAns {
                     ans5 = object.getString("ans5");
                     choice = object.getInt("choice");
                     setter(ans1, ans2, ans3, ans4, ans5, choice);
-                    Log.i("ans1 inside", ans1 + "");
+                } else {
+                    Toasty.error(context, e.getMessage() + "",
+                            Toasty.LENGTH_SHORT, true).show();
                 }
             }
         });
-        Log.i("ans1", ans1 + "");
     }
 
-    void getUserAns(final String username) {
+    void getUserAns(final String username, final String email) {
         initContextData();
         getAns(username);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -127,15 +130,24 @@ class MatchSecurityAns {
                         countAns++;
                     }
                     if(countAns >= 5) {
-                        Intent intent = new Intent(context, SetPasswordActivity.class);
-                        intent.putExtra("username", username);
-                        context.startActivity(intent);
-                        ((Activity)context).finish();
+                        ParseUser.requestPasswordResetInBackground(email, new RequestPasswordResetCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e == null) {
+                                    Toasty.success(context, "Reset Password Email Sent Successfully",
+                                            Toasty.LENGTH_SHORT, true).show();
+                                    ((Activity)context).finish();
+                                } else {
+                                    Toasty.error(context, e.getMessage() + "",
+                                            Toasty.LENGTH_SHORT, true).show();
+                                }
+                            }
+                        });
                     } else {
                         Toasty.error(context, "Answers did not Match.\nTry Again.",
                                 Toasty.LENGTH_SHORT, true).show();
-                        progressBar.setVisibility(View.GONE);
                     }
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });

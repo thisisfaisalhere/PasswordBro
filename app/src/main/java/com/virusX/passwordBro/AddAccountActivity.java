@@ -23,7 +23,7 @@ public class AddAccountActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
     private TextView forgotPasswordTxt;
-    private EditText usernameEdt,passwordEdt, confirmPasswordEdt;
+    private EditText usernameEdt,passwordEdt, confirmPasswordEdt, emailEdt;
     private CheckBox checkBox;
     private boolean checked;
 
@@ -41,6 +41,7 @@ public class AddAccountActivity extends AppCompatActivity {
         confirmPasswordEdt = findViewById(R.id.confirmPasswordEdt);
         checkBox = findViewById(R.id.checkBox);
         forgotPasswordTxt = findViewById(R.id.forgotPasswordTxt);
+        emailEdt = findViewById(R.id.emailEdt);
 
         forgotPasswordTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +55,7 @@ public class AddAccountActivity extends AppCompatActivity {
     public void checked(View view) {
         checked = checkBox.isChecked();
         confirmPasswordEdt.setVisibility(View.VISIBLE);
+        emailEdt.setVisibility(View.VISIBLE);
         if(checked) {
             confirmPasswordEdt.setOnKeyListener(new View.OnKeyListener() {
                 @Override
@@ -73,7 +75,9 @@ public class AddAccountActivity extends AppCompatActivity {
             });
             forgotPasswordTxt.setVisibility(View.GONE);
         } else {
+            checked = checkBox.isChecked();
             confirmPasswordEdt.setVisibility(View.GONE);
+            emailEdt.setVisibility(View.GONE);
             passwordEdt.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View view, int keyCode, KeyEvent event) {
@@ -97,6 +101,7 @@ public class AddAccountActivity extends AppCompatActivity {
     public void onClickButton(View button) {
         String username = usernameEdt.getText().toString().trim();
         String password = passwordEdt.getText().toString().trim();
+        String mail = emailEdt.getText().toString();
         String confirmPassword = confirmPasswordEdt.getText().toString().trim();
 
         progressDialog = new ProgressDialog(this);
@@ -114,9 +119,13 @@ public class AddAccountActivity extends AppCompatActivity {
                     if(!confirmPassword.equals(password)) {
                         Toasty.error(this, "Password and confirm password did not matched",
                                 Toasty.LENGTH_SHORT ,true).show();
+                    } else if(!mail.contains("@")) {
+                        Toasty.error(this, "Invalid email",
+                                Toasty.LENGTH_SHORT ,true).show();
                     } else {
                         try {
                             ParseUser parseUser = new ParseUser();
+                            parseUser.setEmail(mail);
                             parseUser.setUsername(username);
                             parseUser.setPassword(password);
                             progressDialog.show();

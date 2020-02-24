@@ -61,20 +61,14 @@ public class GenerateActivity extends AppCompatActivity {
                     case R.id.easyRadioBtn:
                         strength = 1;
                         checked = true;
-                        Toast.makeText(GenerateActivity.this,
-                                "Strength Level: Easy", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.modRadioBtn:
                         strength = 2;
                         checked = true;
-                        Toast.makeText(GenerateActivity.this,
-                                "Strength Level: Medium", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.hardRadioBtn:
                         strength = 3;
                         checked = true;
-                        Toast.makeText(GenerateActivity.this,
-                                "Strength Level: Tough", Toast.LENGTH_SHORT).show();
                         break;
 
                     default:

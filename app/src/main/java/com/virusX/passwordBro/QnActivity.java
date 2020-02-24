@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -11,11 +12,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.List;
+
 public class QnActivity extends AppCompatActivity {
 
     private TextView textView;
     private Button button;
-    private String username = "";
+    private String username = "", email = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,7 @@ public class QnActivity extends AppCompatActivity {
         Intent receivedData = getIntent();
         boolean fromAddAc = receivedData.getBooleanExtra("fromAddAcActivity", false);
         username = receivedData.getStringExtra("username");
+        email = receivedData.getStringExtra("email");
 
         textView = findViewById(R.id.security_subtitle);
         EditText q5Edt = findViewById(R.id.q5Edt);
@@ -68,7 +79,7 @@ public class QnActivity extends AppCompatActivity {
         textView.setText(getText(R.string.security_question_subtitle_2));
         button.setText(getText(R.string.check));
         MatchSecurityAns matchSecurityAns = new MatchSecurityAns(this);
-        matchSecurityAns.getUserAns(username);
+        matchSecurityAns.getUserAns(username, email);
     }
 
     public void qnTapped(View view) {

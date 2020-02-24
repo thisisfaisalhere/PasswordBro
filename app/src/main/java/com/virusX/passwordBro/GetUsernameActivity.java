@@ -15,12 +15,14 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.RequestPasswordResetCallback;
 
 import es.dmoral.toasty.Toasty;
 
 public class GetUsernameActivity extends AppCompatActivity {
 
-    private EditText usernameEdt;
+    private EditText usernameEdt, emailEdt;
     private ProgressBar progressBar;
 
     @Override
@@ -31,6 +33,7 @@ public class GetUsernameActivity extends AppCompatActivity {
         setTitle("Forgot Password");
 
         usernameEdt = findViewById(R.id.forgotUsername);
+        emailEdt = findViewById(R.id.forgotEmailEdt);
         progressBar = findViewById(R.id.pBar);
 
         usernameEdt.setOnKeyListener(new View.OnKeyListener() {
@@ -53,8 +56,12 @@ public class GetUsernameActivity extends AppCompatActivity {
 
     public void getBtnTapped(View view) {
         final String username = usernameEdt.getText().toString().trim();
-        if(username.equals("")) {
+        final String mail = emailEdt.getText().toString();
+        if(username.equals("") || mail.equals("")) {
             Toasty.error(GetUsernameActivity.this, "Enter Nickname",
+                    Toasty.LENGTH_SHORT, true).show();
+        } else if (!mail.contains("@")) {
+            Toasty.error(GetUsernameActivity.this, "Invalid Email",
                     Toasty.LENGTH_SHORT, true).show();
         } else {
             ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("backupAns");
@@ -67,6 +74,7 @@ public class GetUsernameActivity extends AppCompatActivity {
                         Intent intent = new Intent(GetUsernameActivity.this, QnActivity.class);
                         intent.putExtra("fromAddAcActivity", true );
                         intent.putExtra("username", username);
+                        intent.putExtra("email", mail);
                         startActivity(intent);
                         progressBar.setVisibility(View.GONE);
                     } else {

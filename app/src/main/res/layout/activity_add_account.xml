@@ -17,7 +17,7 @@
             android:id="@+id/appImg"
             android:layout_width="166dp"
             android:layout_height="173dp"
-            android:layout_marginTop="108dp"
+            android:layout_marginTop="50dp"
             android:contentDescription="@string/app_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,11 +37,29 @@
             app:layout_constraintTop_toBottomOf="@+id/appImg" />
 
         <EditText
-            android:id="@+id/usernameEdt"
+            android:id="@+id/emailEdt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:ems="10"
+            android:hint="@string/email"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#009688"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addAccountTitle" />
+
+        <EditText
+            android:id="@+id/usernameEdt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
             android:ems="10"
             android:hint="@string/nickname"
@@ -51,7 +69,7 @@
             android:textColorHint="#009688"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addAccountTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/emailEdt" />
 
         <EditText
             android:id="@+id/passwordEdt"
@@ -112,12 +130,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="30dp"
             android:background="#FF5E6C"
             android:onClick="onClickButton"
             android:text="@string/add_account"
             android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

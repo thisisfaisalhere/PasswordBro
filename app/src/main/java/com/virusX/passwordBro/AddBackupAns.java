@@ -3,18 +3,24 @@ package com.virusX.passwordBro;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import java.util.List;
+
 import es.dmoral.toasty.Toasty;
 
 class AddBackupAns {
@@ -27,7 +33,6 @@ class AddBackupAns {
     private String ans1 = "", ans2 = "", ans3 = "", ans4 = "", ans5 = "", username, objectId;
     private ProgressBar progressBar;
     private Button saveBtn;
-    private SharedPreferences preferences;
     private ParseQuery<ParseObject> query;
 
     AddBackupAns(Context context) {
@@ -45,9 +50,6 @@ class AddBackupAns {
         chocolate = ((Activity)context).findViewById(R.id.chocolate_radio);
         progressBar = ((Activity) context).findViewById(R.id.progressBar);
         saveBtn = ((Activity) context).findViewById(R.id.qnBtn);
-
-        preferences = context.getSharedPreferences("objectId", Context.MODE_PRIVATE);
-        objectId = preferences.getString("objectId", "");
     }
 
     void addAns() {
@@ -85,33 +87,37 @@ class AddBackupAns {
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
                     username = ParseUser.getCurrentUser().getUsername();
-                    query.getInBackground(objectId, new GetCallback<ParseObject>() {
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("backupAns");
+                    query.whereEqualTo("username", username);
+                    progressBar.setVisibility(View.VISIBLE);
+                    query.findInBackground(new FindCallback<ParseObject>() {
                         @Override
-                        public void done(ParseObject object, ParseException e) {
-                            if(object != null && e == null) {
-                                object.put("username", username);
-                                object.put("ans1", ans1);
-                                object.put("ans2", ans2);
-                                object.put("ans3", ans3);
-                                object.put("ans4", ans4);
-                                object.put("ans5", ans5);
-                                object.put("choice", choice);
-                                progressBar.setVisibility(View.VISIBLE);
-                                object.saveInBackground(new SaveCallback() {
-                                    @Override
-                                    public void done(ParseException e) {
-                                        if(e == null) {
-                                            Toasty.success(context, "Saved",
-                                                    Toasty.LENGTH_SHORT, true).show();
-                                            progressBar.setVisibility(View.GONE);
-                                        } else {
-                                            Toasty.error(context, e.getMessage() + "",
-                                                    Toasty.LENGTH_SHORT, true).show();
-                                            progressBar.setVisibility(View.GONE);
+                        public void done(List<ParseObject> objects, ParseException e) {
+                            if(objects.size() > 0 && e == null) {
+                                for (ParseObject object : objects) {
+                                    object.put("username", username);
+                                    object.put("ans1", ans1);
+                                    object.put("ans2", ans2);
+                                    object.put("ans3", ans3);
+                                    object.put("ans4", ans4);
+                                    object.put("ans5", ans5);
+                                    object.put("choice", choice);
+                                    object.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if(e == null) {
+                                                Toasty.success(context, "Saved",
+                                                        Toasty.LENGTH_SHORT, true).show();
+                                                progressBar.setVisibility(View.GONE);
+                                            } else {
+                                                Toasty.error(context, e.getMessage() + "",
+                                                        Toasty.LENGTH_SHORT, true).show();
+                                                progressBar.setVisibility(View.GONE);
+                                            }
                                         }
-                                    }
-                                });
-                            } else if (object == null) {
+                                    });
+                                }
+                            } else if (objects.size() == 0 && e == null) {
                                 final ParseObject parseObject = new ParseObject("backupAns");
                                 parseObject.put("username", username);
                                 parseObject.put("ans1", ans1);
@@ -125,23 +131,19 @@ class AddBackupAns {
                                     @Override
                                     public void done(ParseException e) {
                                         if(e == null) {
-                                            String objectId = parseObject.getObjectId();
-                                            SharedPreferences.Editor editor = preferences.edit();
-                                            editor.putString("objectId", objectId);
-                                            editor.apply();
                                             Toasty.success(context, "Saved",
                                                     Toasty.LENGTH_SHORT, true).show();
-                                            progressBar.setVisibility(View.GONE);
                                         } else {
                                             Toasty.error(context, e.getMessage() + "",
                                                     Toasty.LENGTH_SHORT, true).show();
-                                            progressBar.setVisibility(View.GONE);
                                         }
                                     }
                                 });
                             } else {
-                                e.printStackTrace();
+                                Toasty.error(context, e.getMessage() + "",
+                                        Toasty.LENGTH_SHORT, true).show();
                             }
+                            progressBar.setVisibility(View.GONE);
                         }
                     });
                 }
@@ -151,30 +153,32 @@ class AddBackupAns {
 
     void checkAns() {
         initContextData();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("backupAns");
-        objectId = preferences.getString("objectId", "");
-        query.whereEqualTo("objectId", objectId);
         progressBar.setVisibility(View.VISIBLE);
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
+        username = ParseUser.getCurrentUser().getUsername();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("backupAns");
+        query.whereEqualTo("username", username);
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(ParseObject object, ParseException e) {
-                if(object != null && e == null) {
-                    q1Edt.setText(object.getString("ans1"));
-                    q2Edt.setText(object.getString("ans2"));
-                    q3Edt.setText(object.getString("ans3"));
-                    q4Edt.setText(object.getString("ans4"));
-                    q5Edt.setText(object.getString("ans5"));
-                    choice = object.getInt("choice");
-                    if(choice == 1) {
-                        iceCream.setChecked(true);
-                    } else if (choice == 2) {
-                        chocolate.setChecked(true);
-                    } else {
-                        iceCream.setChecked(false);
-                        chocolate.setChecked(false);
+            public void done(List<ParseObject> objects, ParseException e) {
+                if(objects.size() > 0 && e == null) {
+                    for (ParseObject object : objects) {
+                        q1Edt.setText(object.getString("ans1"));
+                        q2Edt.setText(object.getString("ans2"));
+                        q3Edt.setText(object.getString("ans3"));
+                        q4Edt.setText(object.getString("ans4"));
+                        q5Edt.setText(object.getString("ans5"));
+                        choice = object.getInt("choice");
+                        if(choice == 1) {
+                            iceCream.setChecked(true);
+                        } else if (choice == 2) {
+                            chocolate.setChecked(true);
+                        } else {
+                            iceCream.setChecked(false);
+                            chocolate.setChecked(false);
+                        }
                     }
-                    progressBar.setVisibility(View.GONE);
                 } else e.printStackTrace();
+                progressBar.setVisibility(View.GONE);
             }
         });
     }

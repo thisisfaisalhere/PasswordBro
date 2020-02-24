@@ -99,4 +99,5 @@
     <string name="chocolate">Chocolate</string>
     <string name="continueBtn">continue</string>
     <string name="check">check</string>
+    <string name="email">Email e.g. example@example.com</string>
 </resources>
