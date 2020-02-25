@@ -26,6 +26,16 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/autoFill">
+
+        <SwitchPreferenceCompat
+            app:key="autoFill"
+            app:title="@string/autoFill"
+            android:summary="@string/autoFill_description"
+            app:defaultValue="false"/>
+
+    </PreferenceCategory>
+
     <PreferenceCategory app:title="@string/security_header">
 
         <SwitchPreferenceCompat

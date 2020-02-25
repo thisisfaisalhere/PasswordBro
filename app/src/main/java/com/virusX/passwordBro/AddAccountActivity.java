@@ -54,9 +54,10 @@ public class AddAccountActivity extends AppCompatActivity {
 
     public void checked(View view) {
         checked = checkBox.isChecked();
-        confirmPasswordEdt.setVisibility(View.VISIBLE);
-        emailEdt.setVisibility(View.VISIBLE);
         if(checked) {
+            emailEdt.setVisibility(View.VISIBLE);
+            confirmPasswordEdt.setVisibility(View.VISIBLE);
+            forgotPasswordTxt.setVisibility(View.GONE);
             confirmPasswordEdt.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View view, int keyCode, KeyEvent event) {
@@ -73,11 +74,10 @@ public class AddAccountActivity extends AppCompatActivity {
                     return false;
                 }
             });
-            forgotPasswordTxt.setVisibility(View.GONE);
         } else {
-            checked = checkBox.isChecked();
             confirmPasswordEdt.setVisibility(View.GONE);
             emailEdt.setVisibility(View.GONE);
+            forgotPasswordTxt.setVisibility(View.VISIBLE);
             passwordEdt.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View view, int keyCode, KeyEvent event) {
@@ -94,7 +94,6 @@ public class AddAccountActivity extends AppCompatActivity {
                     return false;
                 }
             });
-            forgotPasswordTxt.setVisibility(View.VISIBLE);
         }
     }
 

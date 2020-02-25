@@ -36,6 +36,8 @@
     <string name="easy_length">Length of easy password</string>
     <string name="mod_length">Length of medium password</string>
     <string name="hard_length">Length of hard password</string>
+    <string name="autoFill">Auto fill</string>
+    <string name="autoFill_description">Auto Fill saved password while Login in to services</string>
     <string name="fingerprint">Fingerprint Lock</string>
     <string name="backup_string">Backup Data</string>
 
@@ -100,4 +102,5 @@
     <string name="continueBtn">continue</string>
     <string name="check">check</string>
     <string name="email">Email e.g. example@example.com</string>
+    <string name="backup_now">backup now</string>
 </resources>

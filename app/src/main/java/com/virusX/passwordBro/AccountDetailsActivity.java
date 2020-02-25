@@ -2,11 +2,16 @@ package com.virusX.passwordBro;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
+
 import es.dmoral.toasty.Toasty;
 import libs.mjn.prettydialog.PrettyDialog;
 import libs.mjn.prettydialog.PrettyDialogCallback;
@@ -28,6 +33,7 @@ public class AccountDetailsActivity extends AppCompatActivity {
         Button delAccount = findViewById(R.id.delAccountBtn);
         TextView ac_details = findViewById(R.id.ac_details_txt);
         Button logoutBtn = findViewById(R.id.logoutBtn);
+        Button backupBtn = findViewById(R.id.backupBtn);
 
         helper = new DataBackupHelper(this);
 
@@ -39,7 +45,6 @@ public class AccountDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 helper.retrieveData();
-                finish();
             }
         });
 
@@ -57,7 +62,6 @@ public class AccountDetailsActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick() {
                                         helper.deleteBackup();
-                                        finish();
                                         prettyDialog.dismiss();
                                     }
                                 })
@@ -70,6 +74,28 @@ public class AccountDetailsActivity extends AppCompatActivity {
                                         prettyDialog.dismiss();
                                     }
                                 }).show();
+            }
+        });
+
+        backupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseHelper databaseHelper = new DatabaseHelper(AccountDetailsActivity.this);
+                Cursor data = databaseHelper.getData();
+                ArrayList<String> nameList = new ArrayList<>();
+                ArrayList<String> keyList = new ArrayList<>();
+                try {
+                    while(data.moveToNext()) {
+                        nameList.add(data.getString(1));
+                        keyList.add(data.getString(2));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    DataBackupHelper dataBackupHelper =
+                            new DataBackupHelper(nameList, keyList, AccountDetailsActivity.this);
+                    dataBackupHelper.backupData();
+                }
             }
         });
 

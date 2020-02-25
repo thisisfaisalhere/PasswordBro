@@ -64,18 +64,33 @@
             app:layout_constraintTop_toBottomOf="@+id/ac_details_txt" />
 
         <Button
-            android:id="@+id/fill_q_btn"
+            android:id="@+id/backupBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
-            android:background="#009688"
-            android:text="@string/add_backup_questions"
+            android:background="#FF5E6C"
+            android:text="@string/backup_now"
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/restoreBackupBtn" />
+
+        <Button
+            android:id="@+id/fill_q_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:background="#FF5E6C"
+            android:text="@string/add_backup_questions"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/backupBtn" />
 
         <Button
             android:id="@+id/logoutBtn"
