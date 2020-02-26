@@ -16,7 +16,7 @@ class DataBackupHelper {
     private Context context;
     private final String COL1 = "services";
     private final String COL2 = "key";
-    private final String COL3 = "username";
+    private final String COL3 = "backupUsername";
     private ParseUser parseUser = ParseUser.getCurrentUser();
 
     DataBackupHelper(ArrayList<String> nameList, ArrayList<String> passwordList,
@@ -71,23 +71,29 @@ class DataBackupHelper {
                 nameList.addAll(Objects.requireNonNull(parseUser.<String>getList(COL1)));
                 passwordList.addAll(Objects.requireNonNull(parseUser.<String>getList(COL2)));
                 usernameList.addAll(Objects.requireNonNull(parseUser.<String>getList(COL3)));
+                if (nameList.size() == 0) {
+                    Toasty.info(context, "No Backup Found",
+                            Toasty.LENGTH_SHORT, true).show();
+                } else {
+                    nameList.size();
+                    if (passwordList.size() > 0) {
+                        DatabaseHelper databaseHelper = new DatabaseHelper(context);
+                        boolean b = databaseHelper.matchDataSet(nameList, passwordList, usernameList);
+                        if (b) {
+                            Toasty.success(context, "Data Restored Successfully",
+                                    Toasty.LENGTH_SHORT, true).show();
+                        } else {
+                            Toasty.info(context, "Nothing to restore",
+                                    Toasty.LENGTH_SHORT, true).show();
+                        }
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
             Toasty.info(context, "No Backup Found",
                     Toasty.LENGTH_SHORT, true).show();
-        }
-        if (nameList.size() > 0 && passwordList.size() > 0) {
-            DatabaseHelper databaseHelper = new DatabaseHelper(context);
-            boolean b = databaseHelper.matchDataSet(nameList, passwordList, usernameList);
-            if (b) {
-                Toasty.success(context, "Data Restored Successfully",
-                        Toasty.LENGTH_SHORT, true).show();
-            } else {
-                Toasty.info(context, "Nothing to restore",
-                        Toasty.LENGTH_SHORT, true).show();
-            }
         }
     }
 

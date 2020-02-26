@@ -148,33 +148,38 @@ class AddBackupAns {
 
     void checkAns() {
         initContextData();
-        progressBar.setVisibility(View.VISIBLE);
         username = ParseUser.getCurrentUser().getUsername();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("backupAns");
-        query.whereEqualTo("username", username);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if(objects.size() > 0 && e == null) {
-                    for (ParseObject object : objects) {
-                        q1Edt.setText(object.getString("ans1"));
-                        q2Edt.setText(object.getString("ans2"));
-                        q3Edt.setText(object.getString("ans3"));
-                        q4Edt.setText(object.getString("ans4"));
-                        q5Edt.setText(object.getString("ans5"));
-                        choice = object.getInt("choice");
-                        if(choice == 1) {
-                            iceCream.setChecked(true);
-                        } else if (choice == 2) {
-                            chocolate.setChecked(true);
-                        } else {
-                            iceCream.setChecked(false);
-                            chocolate.setChecked(false);
+        try {
+            progressBar.setVisibility(View.VISIBLE);
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("backupAns");
+            query.whereEqualTo("username", username);
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> objects, ParseException ex) {
+                    if(objects.size() > 0 && ex == null) {
+                        for (ParseObject object : objects) {
+                            q1Edt.setText(object.getString("ans1"));
+                            q2Edt.setText(object.getString("ans2"));
+                            q3Edt.setText(object.getString("ans3"));
+                            q4Edt.setText(object.getString("ans4"));
+                            q5Edt.setText(object.getString("ans5"));
+                            choice = object.getInt("choice");
+                            if(choice == 1) {
+                                iceCream.setChecked(true);
+                            } else if (choice == 2) {
+                                chocolate.setChecked(true);
+                            } else {
+                                iceCream.setChecked(false);
+                                chocolate.setChecked(false);
+                            }
                         }
                     }
-                } else e.printStackTrace();
-                progressBar.setVisibility(View.GONE);
-            }
-        });
+                }
+            });
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } finally {
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }

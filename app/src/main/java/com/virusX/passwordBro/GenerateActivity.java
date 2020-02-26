@@ -43,8 +43,9 @@ public class GenerateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_generate);
+
+        setTitle("Generate Password");
 
         RadioGroup strengthRadioGroup = findViewById(R.id.strengthRadioGroup);
         generateBtn = findViewById(R.id.generateButton);
@@ -177,8 +178,8 @@ public class GenerateActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         String easyLenStr = preferences.getString(easy, "8").trim();
-        String medLenStr = preferences.getString(med, "8").trim();
-        String hardLenStr = preferences.getString(hard, "8").trim();
+        String medLenStr = preferences.getString(med, "12").trim();
+        String hardLenStr = preferences.getString(hard, "16").trim();
 
         if(easyLenStr.equals("") || medLenStr.equals("") || hardLenStr.equals("")) {
             Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",

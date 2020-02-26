@@ -98,6 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
         android:background="#4CAF50"
         android:focusableInTouchMode="false"
         android:text="@string/save_btn"
@@ -110,13 +111,13 @@
         android:id="@+id/buttonDelete"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
         android:background="#D11A2A"
         android:focusableInTouchMode="false"
         android:text="@string/delete_btn"
         android:textColor="#FFFFFF"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonSave"
         app:layout_constraintTop_toBottomOf="@+id/editTextPass" />
@@ -135,7 +136,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonDelete" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonSave" />
 
     <ProgressBar
         android:id="@+id/editPgBar"

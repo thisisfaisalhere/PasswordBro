@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intent = new Intent(MainActivity.this, EditActivity.class);
+                intent.putExtra("fromMain", true);
                 startActivity(intent);
                 isOpen = !isOpen;
                 fabAnimation();

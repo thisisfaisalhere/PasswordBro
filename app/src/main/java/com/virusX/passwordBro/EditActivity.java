@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -36,9 +37,14 @@ public class EditActivity extends AppCompatActivity {
         String receivedName = receivedIntentData.getStringExtra("name");
         String receivedPass = receivedIntentData.getStringExtra("password");
         String receivedUsername = receivedIntentData.getStringExtra("username");
+        boolean fromMain = receivedIntentData.getBooleanExtra("fromMain", false);
         position = receivedIntentData.getIntExtra("position", -1);
 
-        setTitle(receivedName + "\'s details");
+        if(fromMain) {
+            setTitle("Add record");
+        }else {
+            setTitle(receivedName + "\'s details");
+        }
 
         editTextName = findViewById(R.id.editTextName);
         editTextPass = findViewById(R.id.editTextPass);
@@ -50,12 +56,35 @@ public class EditActivity extends AppCompatActivity {
         Button buttonDelete = findViewById(R.id.buttonDelete);
         progressBar = findViewById(R.id.editPgBar);
 
+        if(fromMain) {
+            buttonDelete.setVisibility(View.GONE);
+        }
+
         databaseHelper = new DatabaseHelper(this);
         handler = new Handler();
 
         editTextName.setText(receivedName);
         editTextPass.setText(receivedPass);
         editTextUser.setText(receivedUsername);
+        final boolean[] check = {true};
+
+        editTextPass.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    try {
+                        InputMethodManager inputMethodManager =
+                                (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                        assert inputMethodManager != null;
+                        inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus())
+                                .getWindowToken(), 0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                return false;
+            }
+        });
 
         buttonShow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,20 +115,29 @@ public class EditActivity extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String name = editTextName.getText().toString();
+                final String pass = editTextPass.getText().toString();
+                final String user = editTextUser.getText().toString();
                 progressBar.setVisibility(View.VISIBLE);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        String name = editTextName.getText().toString();
-                        String pass = editTextPass.getText().toString();
-                        String user = editTextUser.getText().toString();
-                        databaseHelper.updateDate(position, name, pass, user);
-                        Toasty.success(EditActivity.this,
-                                "Updated successfully", Toasty.LENGTH_SHORT, true).show();
-                        progressBar.setVisibility(View.GONE);
-                    }
-                }, 1000);
-
+                if(name.equals("") || pass.equals("") || user.equals("")) {
+                    Toasty.error(EditActivity.this, "Field is empty",
+                            Toasty.LENGTH_SHORT, true).show();
+                } else {
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(position == -1 && check[0]) {
+                                databaseHelper.addData(name, pass, user);
+                                check[0] = false;
+                            } else if (position != -1) {
+                                databaseHelper.updateDate(position, name, pass, user);
+                            }
+                            Toasty.success(EditActivity.this,
+                                    "Saved successfully", Toasty.LENGTH_SHORT, true).show();
+                        }
+                    }, 1000);
+                }
+                progressBar.setVisibility(View.GONE);
             }
         });
 
