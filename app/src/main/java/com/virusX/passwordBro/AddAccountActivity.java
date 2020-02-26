@@ -17,6 +17,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import java.util.Objects;
+
 import es.dmoral.toasty.Toasty;
 
 public class AddAccountActivity extends AppCompatActivity {
@@ -65,7 +67,8 @@ public class AddAccountActivity extends AppCompatActivity {
                         try {
                             InputMethodManager inputMethodManager =
                                     (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                            assert inputMethodManager != null;
+                            inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus())
                                     .getWindowToken(), 0);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -85,7 +88,8 @@ public class AddAccountActivity extends AppCompatActivity {
                         try {
                             InputMethodManager inputMethodManager =
                                     (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                            assert inputMethodManager != null;
+                            inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus())
                                     .getWindowToken(), 0);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -175,7 +179,8 @@ public class AddAccountActivity extends AppCompatActivity {
         try {
             InputMethodManager inputMethodManager =
                     (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+            assert inputMethodManager != null;
+            inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus())
                     .getWindowToken(), 0);
         } catch (Exception e) {
             e.printStackTrace();

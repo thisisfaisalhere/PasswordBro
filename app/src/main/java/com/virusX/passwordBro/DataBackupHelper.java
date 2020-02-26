@@ -7,19 +7,23 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 import es.dmoral.toasty.Toasty;
 
 class DataBackupHelper {
 
-    private ArrayList<String> nameList, passwordList;
+    private ArrayList<String> nameList, passwordList, usernameList;
     private Context context;
     private final String COL1 = "services";
     private final String COL2 = "key";
+    private final String COL3 = "username";
     private ParseUser parseUser = ParseUser.getCurrentUser();
 
-    DataBackupHelper(ArrayList<String> nameList, ArrayList<String> passwordList, Context context) {
+    DataBackupHelper(ArrayList<String> nameList, ArrayList<String> passwordList,
+                     ArrayList<String> usernameList, Context context) {
         this.nameList = nameList;
         this.passwordList = passwordList;
+        this.usernameList = usernameList;
         this.context = context;
     }
 
@@ -27,31 +31,46 @@ class DataBackupHelper {
         this.context = context;
     }
 
-    void backupData() {
+    void backupData(boolean showMsg) {
         parseUser.put(COL1, nameList);
         parseUser.put(COL2, passwordList);
+        parseUser.put(COL3, usernameList);
 
-        parseUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Toasty.success(context, "Backup Successful",
-                            Toasty.LENGTH_SHORT, true).show();
-                } else {
-                    Toasty.error(context, e.getMessage() + "",
-                            Toasty.LENGTH_SHORT, true).show();
+        if(showMsg) {
+            parseUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Toasty.success(context, "Backup Successful",
+                                Toasty.LENGTH_SHORT, true).show();
+                    } else {
+                        Toasty.error(context, e.getMessage() + "",
+                                Toasty.LENGTH_SHORT, true).show();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            parseUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Toasty.error(context, e.getMessage() + "",
+                                Toasty.LENGTH_SHORT, true).show();
+                    }
+                }
+            });
+        }
     }
 
     void retrieveData() {
         nameList = new ArrayList<>();
         passwordList = new ArrayList<>();
+        usernameList = new ArrayList<>();
         if (parseUser.getList(COL1) != null) {
             try {
-                nameList.addAll(parseUser.<String>getList(COL1));
-                passwordList.addAll(parseUser.<String>getList(COL2));
+                nameList.addAll(Objects.requireNonNull(parseUser.<String>getList(COL1)));
+                passwordList.addAll(Objects.requireNonNull(parseUser.<String>getList(COL2)));
+                usernameList.addAll(Objects.requireNonNull(parseUser.<String>getList(COL3)));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -61,7 +80,7 @@ class DataBackupHelper {
         }
         if (nameList.size() > 0 && passwordList.size() > 0) {
             DatabaseHelper databaseHelper = new DatabaseHelper(context);
-            boolean b = databaseHelper.matchDataSet(nameList, passwordList);
+            boolean b = databaseHelper.matchDataSet(nameList, passwordList, usernameList);
             if (b) {
                 Toasty.success(context, "Data Restored Successfully",
                         Toasty.LENGTH_SHORT, true).show();
@@ -76,6 +95,7 @@ class DataBackupHelper {
         ArrayList<String> emptyList = new ArrayList<>();
         parseUser.put(COL1, emptyList);
         parseUser.put(COL2, emptyList);
+        parseUser.put(COL3, emptyList);
 
         parseUser.saveInBackground(new SaveCallback() {
             @Override
@@ -115,8 +135,9 @@ class DataBackupHelper {
     private boolean deleteDir(File dir) throws NullPointerException {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
+            assert children != null;
+            for (String child : children) {
+                boolean success = deleteDir(new File(dir, child));
                 if (!success) {
                     return false;
                 }

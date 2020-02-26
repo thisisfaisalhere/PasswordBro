@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import com.parse.ParseUser;
 import java.util.ArrayList;
+import java.util.Objects;
 import es.dmoral.toasty.Toasty;
 import libs.mjn.prettydialog.PrettyDialog;
 import libs.mjn.prettydialog.PrettyDialogCallback;
@@ -27,36 +28,38 @@ import libs.mjn.prettydialog.PrettyDialogCallback;
 public class HomeFragment extends Fragment
         implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-    private ArrayList<String> nameList, password;
+    private ArrayList<String> nameList, passwordList, usernameList;
     private ArrayList<Integer> IDList;
     private ArrayAdapter<String> arrayAdapter;
-    private ListView passwordList;
+    private ListView listView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        passwordList = view.findViewById(R.id.passwordList);
+        listView = view.findViewById(R.id.listView);
         TextView homeSubtitle = view.findViewById(R.id.homeSubtitle);
 
-        nameList = new ArrayList<>();
         IDList = new ArrayList<>();
-        password = new ArrayList<>();
+        nameList = new ArrayList<>();
+        passwordList = new ArrayList<>();
+        usernameList = new ArrayList<>();
 
         arrayAdapter = new ArrayAdapter<String>
-                (getContext(), android.R.layout.simple_list_item_1, nameList){
+                (Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, nameList){
+            @NonNull
             @Override
-            public View getView(int position, View convertView, ViewGroup parent){
+            public View getView(int position, View convertView, @NonNull ViewGroup parent){
                 View view = super.getView(position, convertView, parent);
-                TextView tv = view.findViewById(android.R.id.text1);
-                tv.setTextColor(Color.WHITE);
+                TextView textView = view.findViewById(android.R.id.text1);
+                textView.setTextColor(Color.WHITE);
                 return view;
             }
         };
 
-        passwordList.setOnItemClickListener(HomeFragment.this);
-        passwordList.setOnItemLongClickListener(HomeFragment.this);
+        listView.setOnItemClickListener(HomeFragment.this);
+        listView.setOnItemLongClickListener(HomeFragment.this);
 
         addDataToList();
 
@@ -67,9 +70,8 @@ public class HomeFragment extends Fragment
         }
 
         if(ParseUser.getCurrentUser() != null) {
-
-            DataBackupHelper helper = new DataBackupHelper(nameList, password, getContext());
-            helper.backupData();
+            DataBackupHelper helper = new DataBackupHelper(nameList,passwordList,usernameList,getContext());
+            helper.backupData(false);
         }
 
         return view;
@@ -79,10 +81,11 @@ public class HomeFragment extends Fragment
     public void onResume() {
         super.onResume();
         checkAccount();
-        passwordList.setAdapter(null);
+        listView.setAdapter(null);
         nameList.clear();
-        password.clear();
+        passwordList.clear();
         IDList.clear();
+        usernameList.clear();
         addDataToList();
     }
 
@@ -93,16 +96,18 @@ public class HomeFragment extends Fragment
             while (data.moveToNext()) {
                 IDList.add(data.getInt(0));
                 nameList.add(data.getString(1));
-                password.add(data.getString(2));
+                passwordList.add(data.getString(2));
+                usernameList.add(data.getString(3));
             }
-            passwordList.setAdapter(arrayAdapter);
+            listView.setAdapter(arrayAdapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void checkAccount() {
-        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        final SharedPreferences pref =
+                PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
         boolean backupPref = pref.getBoolean("backup", false);
         ParseUser user = ParseUser.getCurrentUser();
         if(backupPref && user == null) {
@@ -140,7 +145,8 @@ public class HomeFragment extends Fragment
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getContext(), EditActivity.class);
         intent.putExtra("name", nameList.get(position));
-        intent.putExtra("password", password.get(position));
+        intent.putExtra("password", passwordList.get(position));
+        intent.putExtra("username", usernameList.get(position));
         intent.putExtra("position", IDList.get(position));
         startActivity(intent);
     }
@@ -148,12 +154,13 @@ public class HomeFragment extends Fragment
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
         ClipboardManager clipboard = (ClipboardManager)
-                getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                Objects.requireNonNull(getContext()).getSystemService(Context.CLIPBOARD_SERVICE);
 
-        String pass = password.get(position);
+        String pass = passwordList.get(position);
 
         ClipData clip = ClipData.newPlainText("Copied Password", pass);
         try {
+            assert clipboard != null;
             clipboard.setPrimaryClip(clip);
             Toasty.info(getContext(), "Password Copied to Clipboard",
                     Toasty.LENGTH_SHORT, true).show();

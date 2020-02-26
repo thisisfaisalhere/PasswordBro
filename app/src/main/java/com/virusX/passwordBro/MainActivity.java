@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(MainActivity.this, AddRecordActivity.class);
+                intent = new Intent(MainActivity.this, EditActivity.class);
                 startActivity(intent);
                 isOpen = !isOpen;
                 fabAnimation();

@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="actionbar_background">#2D2D2A</color>
     <color name="text_color">#ffffff</color>
+    <color name="transparent">#6C6C6C</color>
 </resources>

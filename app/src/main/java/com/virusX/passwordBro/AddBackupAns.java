@@ -2,17 +2,13 @@ package com.virusX.passwordBro;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -30,7 +26,7 @@ class AddBackupAns {
     private RadioGroup radioGroup;
     private RadioButton iceCream, chocolate;
     private int choice;
-    private String ans1 = "", ans2 = "", ans3 = "", ans4 = "", ans5 = "", username, objectId;
+    private String ans1 = "", ans2 = "", ans3 = "", ans4 = "", ans5 = "", username;
     private ProgressBar progressBar;
     private Button saveBtn;
     private ParseQuery<ParseObject> query;
@@ -87,7 +83,6 @@ class AddBackupAns {
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
                     username = ParseUser.getCurrentUser().getUsername();
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("backupAns");
                     query.whereEqualTo("username", username);
                     progressBar.setVisibility(View.VISIBLE);
                     query.findInBackground(new FindCallback<ParseObject>() {

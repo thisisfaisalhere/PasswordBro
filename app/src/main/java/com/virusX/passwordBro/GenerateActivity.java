@@ -17,6 +17,9 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import java.util.Objects;
+
 import es.dmoral.toasty.Toasty;
 
 public class GenerateActivity extends AppCompatActivity {
@@ -26,7 +29,7 @@ public class GenerateActivity extends AppCompatActivity {
     private boolean checked = false;
     private String password = "";
     private DatabaseHelper databaseHelper;
-    private EditText serviceNameEdt;
+    private EditText serviceNameEdt, usernameHintEdt;
     private ProgressBar progressBar;
     private Handler handler;
     private Button generateBtn;
@@ -49,7 +52,7 @@ public class GenerateActivity extends AppCompatActivity {
         ImageButton copyBtn = findViewById(R.id.copyBtn);
         serviceNameEdt = findViewById(R.id.serviceNameEdt);
         Button saveBtn = findViewById(R.id.saveBtn);
-        EditText usernameHintEdt = findViewById(R.id.usernameHintEdt);
+        usernameHintEdt = findViewById(R.id.usernameHintEdt);
         progressBar = findViewById(R.id.generatePgBar);
         handler = new Handler();
 
@@ -107,6 +110,7 @@ public class GenerateActivity extends AppCompatActivity {
                         getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Copied Password", password);
                 try {
+                    assert clipboard != null;
                     clipboard.setPrimaryClip(clip);
                     Toasty.info(GenerateActivity.this, "Password Copied to Clipboard",
                             Toasty.LENGTH_SHORT, true).show();
@@ -123,7 +127,8 @@ public class GenerateActivity extends AppCompatActivity {
                     try {
                         InputMethodManager inputMethodManager =
                                 (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                        assert inputMethodManager != null;
+                        inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus())
                                 .getWindowToken(), 0);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -136,14 +141,15 @@ public class GenerateActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = serviceNameEdt.getText().toString();
-                if(name.equals("")) {
+                String serviceName = serviceNameEdt.getText().toString();
+                String username = usernameHintEdt.getText().toString();
+                if(serviceName.equals("")) {
                     Toasty.info(GenerateActivity.this,
                             "Enter the name of Service for future Reference",
                             Toasty.LENGTH_SHORT, true).show();
                 } else {
                     databaseHelper = new DatabaseHelper(GenerateActivity.this);
-                    boolean result = databaseHelper.addData(name, password);
+                    boolean result = databaseHelper.addData(serviceName, password, username);
                     if(result) {
                         Toasty.success(GenerateActivity.this,
                                 "Data Saved Successfully", Toasty.LENGTH_SHORT,

@@ -8,56 +8,33 @@
 
     <application
         android:name=".App"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddRecordActivity"></activity>
-        <activity
-            android:name=".GetUsernameActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".QnActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".AccountDetailsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".AddAccountActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SplashActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".GetUsernameActivity"/>
+        <activity android:name=".QnActivity"/>
+        <activity android:name=".AccountDetailsActivity"/>
+        <activity android:name=".AddAccountActivity" />
+        <activity android:name=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ShareActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PrivacyActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SettingsActivity"
+        <activity android:name=".ShareActivity" />
+        <activity android:name=".PrivacyActivity"/>
+        <activity android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:screenOrientation="portrait"
             android:theme="@style/PreferenceScreen" />
-        <activity
-            android:name=".GenerateActivity"
-            android:screenOrientation="portrait"
+        <activity android:name=".GenerateActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".EditActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".MainActivity"
+        <activity android:name=".EditActivity"/>
+        <activity android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data

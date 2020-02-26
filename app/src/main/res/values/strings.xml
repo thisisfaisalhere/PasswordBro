@@ -106,4 +106,5 @@
     <string name="add_record">Add Record</string>
     <string name="hint_3">email/username</string>
     <string name="text_img">text img</string>
+    <string name="show_password">show password</string>
 </resources>

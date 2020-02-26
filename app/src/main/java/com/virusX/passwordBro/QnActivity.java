@@ -1,10 +1,8 @@
 package com.virusX.passwordBro;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -12,14 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
-import java.util.List;
+import java.util.Objects;
 
 public class QnActivity extends AppCompatActivity {
 
@@ -50,7 +41,8 @@ public class QnActivity extends AppCompatActivity {
                     try {
                         InputMethodManager inputMethodManager =
                                 (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+                        assert inputMethodManager != null;
+                        inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus())
                                 .getWindowToken(), 0);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -86,7 +78,8 @@ public class QnActivity extends AppCompatActivity {
         try {
             InputMethodManager inputMethodManager =
                     (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()
+            assert inputMethodManager != null;
+            inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus())
                     .getWindowToken(), 0);
         } catch (Exception e) {
             e.printStackTrace();

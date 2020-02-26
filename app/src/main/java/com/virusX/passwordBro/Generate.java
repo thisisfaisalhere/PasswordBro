@@ -50,7 +50,7 @@ class Generate {
         int specialCharCount = 0, charCount = 0;
         while (pass.length() != easyLength) {
             if(charCount == easyLength - 2 && specialCharCount == 0) {
-                pass.append(Character.toString((char) specialChar));
+                pass.append((char) specialChar);
                 break;
             }
 
@@ -59,14 +59,14 @@ class Generate {
 
             if(caseValue == 0) {
                 int asciiValue = getRandom(numericStart, numericEnd, false);
-                pass.append(Character.toString((char) asciiValue));
+                pass.append((char) asciiValue);
                 charCount++;
             } else if(caseValue == 1) {
                 int asciiValue = getRandom(lowerCaseStart, lowerCaseEnd, false);
-                pass.append(Character.toString((char) asciiValue));
+                pass.append((char) asciiValue);
                 charCount++;
             } else if(caseValue == 2 && specialCharCount < 1) {
-                pass.append(Character.toString((char) specialChar));
+                pass.append((char) specialChar);
                 specialCharCount++;
                 charCount++;
             }
@@ -79,7 +79,7 @@ class Generate {
         int specialCharCount = 0, charCount = 0;
         while (pass.length() != modLength) {
             if(charCount == modLength - 1 && specialCharCount == 0) {
-                pass.append(Character.toString((char) specialChar));
+                pass.append((char) specialChar);
                 break;
             }
 
@@ -88,18 +88,18 @@ class Generate {
 
             if(caseValue == 0) {
                 int asciiValue = getRandom(numericStart, numericEnd, false);
-                pass.append(Character.toString((char) asciiValue));
+                pass.append((char) asciiValue);
                 charCount++;
             } else if(caseValue == 1) {
                 int asciiValue = getRandom(lowerCaseStart, lowerCaseEnd, false);
-                pass.append(Character.toString((char) asciiValue));
+                pass.append((char) asciiValue);
                 charCount++;
             } else if(caseValue == 2) {
                 int asciiValue = getRandom(upperCaseStart, upperCaseEnd, false);
-                pass.append(Character.toString((char) asciiValue));
+                pass.append((char) asciiValue);
                 charCount++;
             } else if(caseValue == 3 && specialCharCount < 1) {
-                pass.append(Character.toString((char) specialChar));
+                pass.append((char) specialChar);
                 specialCharCount++;
                 charCount++;
             }
@@ -116,21 +116,21 @@ class Generate {
 
             if(caseValue == 0) {
                 int asciiValue = getRandom(numericStart, numericEnd, false);
-                pass.append(Character.toString((char) asciiValue));
+                pass.append((char) asciiValue);
             } else if(caseValue == 1) {
                 int asciiValue = getRandom(lowerCaseStart, lowerCaseEnd, false);
-                pass.append(Character.toString((char) asciiValue));
+                pass.append((char) asciiValue);
             } else if(caseValue == 2) {
                 int asciiValue = getRandom(upperCaseStart, upperCaseEnd, false);
-                pass.append(Character.toString((char) asciiValue));
+                pass.append((char) asciiValue);
             } else if(caseValue == 3 && specialCharCount < 1) {
-                pass.append(Character.toString((char) specialChar));
+                pass.append((char) specialChar);
                 specialCharCount++;
             } else {
                 int specialCharEnd = 38;
                 int specialCharStart = 35;
                 int asciiValue = getRandom(specialCharStart, specialCharEnd, false);
-                pass.append(Character.toString((char) asciiValue));
+                pass.append((char) asciiValue);
             }
         }
         return pass.toString();

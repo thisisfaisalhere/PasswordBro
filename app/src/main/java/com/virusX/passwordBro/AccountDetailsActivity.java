@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
-
 import es.dmoral.toasty.Toasty;
 import libs.mjn.prettydialog.PrettyDialog;
 import libs.mjn.prettydialog.PrettyDialogCallback;
@@ -84,17 +81,19 @@ public class AccountDetailsActivity extends AppCompatActivity {
                 Cursor data = databaseHelper.getData();
                 ArrayList<String> nameList = new ArrayList<>();
                 ArrayList<String> keyList = new ArrayList<>();
+                ArrayList<String> usernameList = new ArrayList<>();
                 try {
                     while(data.moveToNext()) {
                         nameList.add(data.getString(1));
                         keyList.add(data.getString(2));
+                        usernameList.add(data.getString(3));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
                     DataBackupHelper dataBackupHelper =
-                            new DataBackupHelper(nameList, keyList, AccountDetailsActivity.this);
-                    dataBackupHelper.backupData();
+                            new DataBackupHelper(nameList, keyList, usernameList, AccountDetailsActivity.this);
+                    dataBackupHelper.backupData(true);
                 }
             }
         });
