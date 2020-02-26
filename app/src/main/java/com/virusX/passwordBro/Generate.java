@@ -1,18 +1,15 @@
 package com.virusX.passwordBro;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 class Generate {
     private int strength;
-
     final private int numericStart = 48;
     final private int numericEnd = 57;
     final private int lowerCaseStart = 97;
     final private int lowerCaseEnd = 122;
     final private int upperCaseStart = 65;
     final private int upperCaseEnd = 90;
-    final private int specialCharStart = 35;
-    final private int specialCharEnd = 38;
     final private int specialChar = 64;
 
     private int easyLength;
@@ -39,7 +36,7 @@ class Generate {
     }
 
     private int getRandom(int start, int end, boolean caseValue) {
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
         if(caseValue) {
             return random.nextInt(end);
         } else {
@@ -49,11 +46,11 @@ class Generate {
     }
 
     private String generatePassEasy() {
-        String pass = "";
+        StringBuilder pass = new StringBuilder();
         int specialCharCount = 0, charCount = 0;
         while (pass.length() != easyLength) {
             if(charCount == easyLength - 2 && specialCharCount == 0) {
-                pass += Character.toString((char) specialChar);
+                pass.append(Character.toString((char) specialChar));
                 break;
             }
 
@@ -62,27 +59,27 @@ class Generate {
 
             if(caseValue == 0) {
                 int asciiValue = getRandom(numericStart, numericEnd, false);
-                pass += Character.toString((char) asciiValue);
+                pass.append(Character.toString((char) asciiValue));
                 charCount++;
             } else if(caseValue == 1) {
                 int asciiValue = getRandom(lowerCaseStart, lowerCaseEnd, false);
-                pass += Character.toString((char) asciiValue);
+                pass.append(Character.toString((char) asciiValue));
                 charCount++;
             } else if(caseValue == 2 && specialCharCount < 1) {
-                pass += Character.toString((char) specialChar);
+                pass.append(Character.toString((char) specialChar));
                 specialCharCount++;
                 charCount++;
             }
         }
-        return pass;
+        return pass.toString();
     }
 
     private String generatePassMod() {
-        String pass = "";
+        StringBuilder pass = new StringBuilder();
         int specialCharCount = 0, charCount = 0;
         while (pass.length() != modLength) {
             if(charCount == modLength - 1 && specialCharCount == 0) {
-                pass += Character.toString((char) specialChar);
+                pass.append(Character.toString((char) specialChar));
                 break;
             }
 
@@ -91,27 +88,27 @@ class Generate {
 
             if(caseValue == 0) {
                 int asciiValue = getRandom(numericStart, numericEnd, false);
-                pass += Character.toString((char) asciiValue);
+                pass.append(Character.toString((char) asciiValue));
                 charCount++;
             } else if(caseValue == 1) {
                 int asciiValue = getRandom(lowerCaseStart, lowerCaseEnd, false);
-                pass += Character.toString((char) asciiValue);
+                pass.append(Character.toString((char) asciiValue));
                 charCount++;
             } else if(caseValue == 2) {
                 int asciiValue = getRandom(upperCaseStart, upperCaseEnd, false);
-                pass += Character.toString((char) asciiValue);
+                pass.append(Character.toString((char) asciiValue));
                 charCount++;
             } else if(caseValue == 3 && specialCharCount < 1) {
-                pass += Character.toString((char) specialChar);
+                pass.append(Character.toString((char) specialChar));
                 specialCharCount++;
                 charCount++;
             }
         }
-        return pass;
+        return pass.toString();
     }
 
     private String generatePassHard() {
-        String pass = "";
+        StringBuilder pass = new StringBuilder();
         int specialCharCount = 0;
         while(pass.length() != hardLength) {
             int caseValue = getRandom(0,5, true);
@@ -119,21 +116,23 @@ class Generate {
 
             if(caseValue == 0) {
                 int asciiValue = getRandom(numericStart, numericEnd, false);
-                pass += Character.toString((char) asciiValue);
+                pass.append(Character.toString((char) asciiValue));
             } else if(caseValue == 1) {
                 int asciiValue = getRandom(lowerCaseStart, lowerCaseEnd, false);
-                pass += Character.toString((char) asciiValue);
+                pass.append(Character.toString((char) asciiValue));
             } else if(caseValue == 2) {
                 int asciiValue = getRandom(upperCaseStart, upperCaseEnd, false);
-                pass += Character.toString((char) asciiValue);
+                pass.append(Character.toString((char) asciiValue));
             } else if(caseValue == 3 && specialCharCount < 1) {
-                pass += Character.toString((char) specialChar);
+                pass.append(Character.toString((char) specialChar));
                 specialCharCount++;
             } else {
+                int specialCharEnd = 38;
+                int specialCharStart = 35;
                 int asciiValue = getRandom(specialCharStart, specialCharEnd, false);
-                pass += Character.toString((char) asciiValue);
+                pass.append(Character.toString((char) asciiValue));
             }
         }
-        return pass;
+        return pass.toString();
     }
 }

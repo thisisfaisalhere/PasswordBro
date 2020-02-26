@@ -13,9 +13,9 @@
     <string name="menu_account">Account</string>
     <string name="generate_title">Generate your password</string>
     <string name="generate_subtitle">Choose Strength: </string>
-    <string name="easy_text">Don\'t Care</string>
-    <string name="mod_text">OK&#8230; OK&#8230; </string>
-    <string name="hard_text">Oh! My God!!</string>
+    <string name="easy_text">Easy</string>
+    <string name="mod_text">Medium</string>
+    <string name="hard_text">Hard</string>
     <string name="generate_btn">Generate</string>
     <string name="generate_btn_2">Generate Again</string>
     <string name="hint">Enter a name for reference e.g. facebook</string>
@@ -103,4 +103,7 @@
     <string name="check">check</string>
     <string name="email">Email e.g. example@example.com</string>
     <string name="backup_now">backup now</string>
+    <string name="add_record">Add Record</string>
+    <string name="hint_3">email/username</string>
+    <string name="text_img">text img</string>
 </resources>

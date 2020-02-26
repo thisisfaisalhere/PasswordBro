@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -29,7 +30,66 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="#FF5E6C"
-        app:rippleColor="#FF5E6C"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:rippleColor="#FF5E40"
+        android:src="@drawable/ic_fab_add" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabGenerate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="90dp"
+        android:src="@drawable/ic_fab_generate"
+        android:visibility="gone"
+        app:backgroundTint="#009688"
+        app:fabSize="mini"
+        app:rippleColor="#FF5E40" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="140dp"
+        android:src="@drawable/ic_fab_edit"
+        android:visibility="gone"
+        app:backgroundTint="#009688"
+        app:fabSize="mini"
+        app:rippleColor="#FF5E40" />
+
+    <TextView
+        android:id="@+id/fabTxtGenerate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="75dp"
+        android:layout_marginBottom="92dp"
+        android:background="#009688"
+        android:padding="5dp"
+        android:shadowRadius="30"
+        android:text="@string/generate_btn"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/fabTxtAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="75dp"
+        android:layout_marginBottom="142dp"
+        android:background="#009688"
+        android:padding="5dp"
+        android:shadowRadius="30"
+        android:text="@string/add_record"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:visibility="gone"
+        app:layout_anchor="@+id/fabTxtGenerate"
+        app:layout_anchorGravity="center" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

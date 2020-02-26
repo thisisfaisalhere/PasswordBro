@@ -15,11 +15,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private Intent intent;
+    private FloatingActionButton fab, fabGenerate, fabAdd;
+    private Animation fabOpen, fabClose, fabRotateForward, fabRotateBackward;
+    private TextView fabTxtGenerate, fabTxtAdd;
+    private boolean isOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +34,42 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+
+        fab = findViewById(R.id.fab);
+        fabGenerate = findViewById(R.id.fabGenerate);
+        fabAdd = findViewById(R.id.fabAdd);
+        fabTxtAdd = findViewById(R.id.fabTxtAdd);
+        fabTxtGenerate = findViewById(R.id.fabTxtGenerate);
+        fabOpen = AnimationUtils.loadAnimation(this, R.anim.fab_open);
+        fabClose = AnimationUtils.loadAnimation(this, R.anim.fab_close);
+        fabRotateBackward = AnimationUtils.loadAnimation(this, R.anim.fab_rotate_backward);
+        fabRotateForward = AnimationUtils.loadAnimation(this, R.anim.fab_rotate_forward);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, GenerateActivity.class);
-                startActivity(intent);
+                isOpen = !isOpen;
+                fabAnimation();
             }
         });
+        fabGenerate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(MainActivity.this, GenerateActivity.class);
+                startActivity(intent);
+                isOpen = !isOpen;
+                fabAnimation();
+            }
+        });
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(MainActivity.this, AddRecordActivity.class);
+                startActivity(intent);
+                isOpen = !isOpen;
+                fabAnimation();
+            }
+        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -66,6 +101,34 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void fabAnimation() {
+        if(isOpen) {
+            fab.startAnimation(fabRotateForward);
+            fabGenerate.startAnimation(fabOpen);
+            fabAdd.startAnimation(fabOpen);
+            fabTxtAdd.startAnimation(fabOpen);
+            fabTxtGenerate.startAnimation(fabOpen);
+            fabGenerate.setVisibility(View.VISIBLE);
+            fabAdd.setVisibility(View.VISIBLE);
+            fabTxtGenerate.setVisibility(View.VISIBLE);
+            fabTxtAdd.setVisibility(View.VISIBLE);
+            fabGenerate.setClickable(true);
+            fabAdd.setClickable(true);
+        } else {
+            fab.startAnimation(fabRotateBackward);
+            fabGenerate.startAnimation(fabClose);
+            fabAdd.startAnimation(fabClose);
+            fabTxtAdd.startAnimation(fabClose);
+            fabTxtGenerate.startAnimation(fabClose);
+            fabGenerate.setVisibility(View.GONE);
+            fabAdd.setVisibility(View.GONE);
+            fabTxtGenerate.setVisibility(View.GONE);
+            fabTxtAdd.setVisibility(View.GONE);
+            fabGenerate.setClickable(false);
+            fabAdd.setClickable(false);
+        }
     }
 
     @Override

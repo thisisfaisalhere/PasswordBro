@@ -16,6 +16,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,9 @@ public class GenerateActivity extends AppCompatActivity {
     private String password = "";
     private DatabaseHelper databaseHelper;
     private EditText serviceNameEdt;
+    private ProgressBar progressBar;
+    private Handler handler;
+    private Button generateBtn;
     private static final String med = "med_length";
     private static final String easy = "easy_length";
     private static final String hard = "hard_length";
@@ -43,14 +48,14 @@ public class GenerateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_generate);
 
         RadioGroup strengthRadioGroup = findViewById(R.id.strengthRadioGroup);
-        final Button generateBtn = findViewById(R.id.generateButton);
+        generateBtn = findViewById(R.id.generateButton);
         generatedPass = findViewById(R.id.generatedPass);
-        final ImageButton copyBtn = findViewById(R.id.copyBtn);
+        ImageButton copyBtn = findViewById(R.id.copyBtn);
         serviceNameEdt = findViewById(R.id.serviceNameEdt);
-        final Button saveBtn = findViewById(R.id.saveBtn);
-
-        final ProgressDialog progressDialog = new ProgressDialog(GenerateActivity.this);
-        final Handler handler = new Handler();
+        Button saveBtn = findViewById(R.id.saveBtn);
+        EditText usernameHintEdt = findViewById(R.id.usernameHintEdt);
+        progressBar = findViewById(R.id.generatePgBar);
+        handler = new Handler();
 
         length();
 
@@ -70,7 +75,6 @@ public class GenerateActivity extends AppCompatActivity {
                         strength = 3;
                         checked = true;
                         break;
-
                     default:
                         strength = -1;
                 }
@@ -80,27 +84,20 @@ public class GenerateActivity extends AppCompatActivity {
         generateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setMessage("Generating..");
                 generatedPass.setText("");
-                copyBtn.setVisibility(View.GONE);
-                serviceNameEdt.setVisibility(View.GONE);
-                saveBtn.setVisibility(View.GONE);
                 if(!checked) {
                     Toasty.info(GenerateActivity.this, "Choose strength first",
                             Toasty.LENGTH_SHORT, true).show();
                 } else {
-                    progressDialog.show();
+                    progressBar.setVisibility(View.VISIBLE);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             Generate generate = new Generate(strength, easyLen, medLen, hardLen);
                             password = generate.generate();
                             generatedPass.setText(password);
-                            copyBtn.setVisibility(View.VISIBLE);
-                            serviceNameEdt.setVisibility(View.VISIBLE);
-                            saveBtn.setVisibility(View.VISIBLE);
                             generateBtn.setText(getString(R.string.generate_btn_2));
-                            progressDialog.dismiss();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }, 500);
                 }
@@ -123,7 +120,7 @@ public class GenerateActivity extends AppCompatActivity {
             }
         });
 
-        serviceNameEdt.setOnKeyListener(new View.OnKeyListener() {
+        usernameHintEdt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent event) {
                 if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -181,40 +178,14 @@ public class GenerateActivity extends AppCompatActivity {
         String medLenStr = preferences.getString(med, "8").trim();
         String hardLenStr = preferences.getString(hard, "8").trim();
 
-        if(easyLenStr.equals("")) {
+        if(easyLenStr.equals("") || medLenStr.equals("") || hardLenStr.equals("")) {
             Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
                     Toasty.LENGTH_LONG, true).show();
             finish();
         } else {
-            if(isNumber(easyLenStr)) {
+            if(isNumber(easyLenStr) && isNumber(hardLenStr) && isNumber(medLenStr)) {
                 easyLen = Integer.parseInt(easyLenStr);
-            } else {
-                Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
-                        Toasty.LENGTH_LONG, true).show();
-                finish();
-            }
-        }
-
-        if(medLenStr.equals("")) {
-            Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
-                    Toasty.LENGTH_LONG, true).show();
-            finish();
-        } else {
-            if(isNumber(medLenStr)) {
                 medLen = Integer.parseInt(medLenStr);
-            } else {
-                Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
-                        Toasty.LENGTH_LONG, true).show();
-                finish();
-            }
-        }
-
-        if (hardLenStr.equals("")) {
-            Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
-                    Toasty.LENGTH_LONG, true).show();
-            finish();
-        } else {
-            if(isNumber(hardLenStr)) {
                 hardLen = Integer.parseInt(hardLenStr);
             } else {
                 Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
