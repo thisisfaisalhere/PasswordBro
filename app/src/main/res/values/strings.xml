@@ -107,4 +107,13 @@
     <string name="hint_3">email/username</string>
     <string name="text_img">text img</string>
     <string name="show_password">show password</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
