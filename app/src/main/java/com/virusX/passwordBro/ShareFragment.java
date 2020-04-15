@@ -1,4 +1,4 @@
-package com.virusX.passwordBro.ui;
+package com.virusX.passwordBro;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import com.virusX.passwordBro.R;
 
 public class ShareFragment extends Fragment {
 

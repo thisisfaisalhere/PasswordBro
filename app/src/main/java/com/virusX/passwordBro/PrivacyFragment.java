@@ -1,4 +1,4 @@
-package com.virusX.passwordBro.ui;
+package com.virusX.passwordBro;
 
 import android.os.Bundle;
 
@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.virusX.passwordbro.R;
 
 public class PrivacyFragment extends Fragment {
 

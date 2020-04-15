@@ -26,15 +26,25 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/autoFill">
+<!--    <PreferenceCategory app:title="@string/autoFill">-->
 
-        <SwitchPreferenceCompat
-            app:key="autoFill"
-            app:title="@string/autoFill"
-            android:summary="@string/autoFill_description"
-            app:defaultValue="false"/>
+<!--        <SwitchPreferenceCompat-->
+<!--            app:key="autoFill"-->
+<!--            app:title="@string/autoFill"-->
+<!--            android:summary="@string/autoFill_description"-->
+<!--            app:defaultValue="false"/>-->
 
-    </PreferenceCategory>
+<!--    </PreferenceCategory>-->
+
+<!--    <PreferenceCategory app:title="Theme">-->
+<!--        <ListPreference-->
+<!--            android:defaultValue="light"-->
+<!--            android:entries="@array/theme"-->
+<!--            android:entryValues="@array/theme"-->
+<!--            android:key="theme"-->
+<!--            android:title="Theme"-->
+<!--            app:useSimpleSummaryProvider="true"/>-->
+<!--    </PreferenceCategory>-->
 
     <PreferenceCategory app:title="@string/security_header">
 
@@ -51,7 +61,7 @@
             app:key="backup"
             app:title="@string/backup_string"
             app:defaultValue="false"/>
-        
+
     </PreferenceCategory>
 
 </PreferenceScreen>

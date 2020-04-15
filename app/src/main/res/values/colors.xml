@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="actionbar_background">#2D2D2A</color>
-    <color name="text_color">#ffffff</color>
-    <color name="transparent">#6C6C6C</color>
+
+    <!--    light theme colors-->
+    <color name="primaryColor">#2196F3</color>
+    <color name="primaryColorDark">#1976D2</color>
+    <color name="backgroundColor">#FCFCFC</color>
+    <color name="primaryAccent">#2A57C6</color>
+    <color name="textColor">#808080</color>
+    <color name="tintColor">#000000</color>
+    <color name="buttonColor">#2196F3</color>
+
+    <!--    dark theme colors-->
+    <color name="primaryColor_dark">#1B262C</color>
+    <color name="primaryColorDark_dark">#1B2620</color>
+    <color name="backgroundColor_dark">#2D2D2D</color>
+    <color name="textColor_dark">#FFFFFF</color>
+    <color name="tintColor_dark">#FFFFFF</color>
+    <color name="buttonColor_dark">#2196F3</color>
 </resources>

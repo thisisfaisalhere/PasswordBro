@@ -1,48 +1,58 @@
 <resources>
 
-    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
-        <item name="android:actionBarTabTextStyle">@style/MyActionBarTabText</item>
-        <item name="android:actionMenuTextColor">@color/text_color</item>
-        <item name="android:statusBarColor">@color/colorAccent</item>
-        <item name="actionBarStyle">@style/MyActionBar</item>
-        <item name="actionBarTabTextStyle">@style/MyActionBarTabText</item>
-        <item name="actionMenuTextColor">@color/text_color</item>
-    </style>
-    <style name="MyActionBar"
-        parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse" >
-        <item name="android:background">@color/actionbar_background</item>
-        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
-        <item name="background">@color/actionbar_background</item>
-        <item name="titleTextStyle">@style/MyActionBarTitleText</item>
-    </style>
-    <style name="MyActionBarTitleText"
-        parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/text_color</item>
-    </style>
-    <style name="MyActionBarTabText"
-        parent="@style/Widget.AppCompat.ActionBar.TabText">
-        <item name="android:textColor">@color/text_color</item>
-    </style>
-
-    <style name="PreferenceScreen" parent="Theme.AppCompat">
-        <item name="android:textColor">@color/text_color</item>
-        <item name="android:statusBarColor">@color/colorAccent</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <!--    light theme-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark</item>
+        <item name="colorAccent">@color/primaryAccent</item>
+        <item name="backgroundColor">@color/backgroundColor</item>
+        <item name="textColor">@color/textColor</item>
+        <item name="tintColor">@color/tintColor</item>
+        <item name="buttonColor">@color/buttonColor</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@color/colorAccent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="progressBarTheme">
-        <item name="colorAccent">@color/colorAccent</item>
+    <!--    Dark theme-->
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primaryColor_dark</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark_dark</item>
+        <item name="colorAccent">@color/primaryAccent</item>
+        <item name="backgroundColor">@color/backgroundColor_dark</item>
+        <item name="textColor">@color/textColor_dark</item>
+        <item name="tintColor">@color/tintColor_dark</item>
+        <item name="buttonColor">@color/buttonColor_dark</item>
+    </style>
+
+    <style name="DarkTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="MenuLabelsStyle">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="MenuButtonsStyle">
+        <item name="fab_size">mini</item>
+        <item name="fab_showAnimation">@anim/jump_from_down</item>
+        <item name="fab_hideAnimation">@anim/jump_to_down</item>
+        <item name="fab_shadowColor">#444</item>
+        <item name="fab_colorNormal">#FFB805</item>
+        <item name="fab_colorPressed">#F2AB00</item>
+        <item name="fab_colorRipple">#D99200</item>
+    </style>
 </resources>
