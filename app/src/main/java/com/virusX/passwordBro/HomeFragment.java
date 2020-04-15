@@ -14,19 +14,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
-
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
 import java.util.Objects;
-
 import es.dmoral.toasty.Toasty;
 import libs.mjn.prettydialog.PrettyDialog;
 import libs.mjn.prettydialog.PrettyDialogCallback;
@@ -43,7 +39,31 @@ public class HomeFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        listView = view.findViewById(R.id.listView);
+        TextView homeSubtitle = view.findViewById(R.id.homeSubtitle);
+
+        IDList = new ArrayList<>();
+        nameList = new ArrayList<>();
+        passwordList = new ArrayList<>();
+        usernameList = new ArrayList<>();
+
+        arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, nameList);
+        listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(HomeFragment.this);
+        listView.setOnItemLongClickListener(HomeFragment.this);
+
+        addDataToList();
+
+        if(nameList.size() == 0) {
+            homeSubtitle.setText(R.string.home_subtitle_2);
+        } else {
+            homeSubtitle.setText(R.string.home_subtitle);
+        }
+        return view;
     }
 
     @Override
@@ -80,35 +100,6 @@ public class HomeFragment extends Fragment
                 }
             }
         });
-
-        listView = view.findViewById(R.id.listView);
-        TextView homeSubtitle = view.findViewById(R.id.homeSubtitle);
-
-        IDList = new ArrayList<>();
-        nameList = new ArrayList<>();
-        passwordList = new ArrayList<>();
-        usernameList = new ArrayList<>();
-
-        arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()),
-                android.R.layout.simple_list_item_1,
-                nameList);
-        listView.setAdapter(arrayAdapter);
-
-        listView.setOnItemClickListener(HomeFragment.this);
-        listView.setOnItemLongClickListener(HomeFragment.this);
-
-        addDataToList();
-
-        if(nameList.size() == 0) {
-            homeSubtitle.setText(R.string.home_subtitle_2);
-        } else {
-            homeSubtitle.setText(R.string.home_subtitle);
-        }
-
-        if(ParseUser.getCurrentUser() != null) {
-            DataBackupHelper helper = new DataBackupHelper(nameList,passwordList,usernameList,getContext());
-            helper.backupData(false);
-        }
     }
 
     @Override

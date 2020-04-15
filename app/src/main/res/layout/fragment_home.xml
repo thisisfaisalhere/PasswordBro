@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -16,46 +16,37 @@
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/homeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="94dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="96dp"
-        android:text="@string/home_title"
-        android:textAlignment="center"
-        android:textColor="?attr/textColor"
-        android:textSize="24sp" />
-
-    <TextView
         android:id="@+id/homeSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/homeTitle"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="207dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="204dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/home_subtitle_2"
         android:textAlignment="center"
         android:textColor="?attr/textColor"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        fab:layout_constraintEnd_toEndOf="parent"
+        fab:layout_constraintHorizontal_bias="0.496"
+        fab:layout_constraintStart_toStartOf="parent"
+        fab:layout_constraintTop_toTopOf="parent" />
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/homeSubtitle"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp" >
+        android:orientation="vertical"
+        fab:layout_constraintBottom_toBottomOf="parent"
+        fab:layout_constraintEnd_toEndOf="parent"
+        fab:layout_constraintStart_toStartOf="parent"
+        fab:layout_constraintTop_toBottomOf="@+id/homeSubtitle">
 
-    </ListView>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab"
@@ -63,10 +54,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="18dp"
+        fab:layout_constraintBottom_toBottomOf="parent"
+        fab:layout_constraintEnd_toEndOf="parent"
         fab:menu_animationDelayPerItem="0"
         fab:menu_colorNormal="#1565C0"
         fab:menu_colorPressed="#2272CD"
@@ -77,20 +68,20 @@
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fabAdd"
+            style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_fab_edit"
-            fab:fab_label="Add Record"
-            style="@style/MenuButtonsStyle" />
+            fab:fab_label="Add Record" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fabGenerate"
+            style="@style/MenuButtonsStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_fab_generate"
-            fab:fab_label="Generate"
-            style="@style/MenuButtonsStyle" />
+            fab:fab_label="Generate" />
 
     </com.github.clans.fab.FloatingActionMenu>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
