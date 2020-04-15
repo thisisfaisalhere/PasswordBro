@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment
     public void onResume() {
         super.onResume();
         checkAccount();
-        listView.setAdapter(null);
+        listView.setAdapter(arrayAdapter);
         nameList.clear();
         passwordList.clear();
         IDList.clear();
