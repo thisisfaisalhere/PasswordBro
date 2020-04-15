@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
+
+import java.util.Objects;
 
 public class ShareFragment extends Fragment {
 
@@ -15,6 +18,7 @@ public class ShareFragment extends Fragment {
             ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_share, container, false);
+        Objects.requireNonNull(getActivity()).setTitle("Share");
         Button shareBtn = view.findViewById(R.id.shareBtn);
 
         shareBtn.setOnClickListener(new View.OnClickListener() {
@@ -33,6 +37,7 @@ public class ShareFragment extends Fragment {
                 }
             }
         });
+
         return view;
     }
 }

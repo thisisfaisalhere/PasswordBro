@@ -17,6 +17,10 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.statusBarTrue">
+        <item name="android:statusBarColor">@color/primaryColorDark</item>
+    </style>
+
     <!--    Dark theme-->
     <style name="DarkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primaryColor_dark</item>
@@ -32,6 +36,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="DarkTheme.NoActionBar.statusBarTrue">
+        <item name="android:statusBarColor">@color/primaryColorDark_dark</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -54,5 +62,9 @@
         <item name="fab_colorNormal">#FFB805</item>
         <item name="fab_colorPressed">#F2AB00</item>
         <item name="fab_colorRipple">#D99200</item>
+    </style>
+
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 </resources>

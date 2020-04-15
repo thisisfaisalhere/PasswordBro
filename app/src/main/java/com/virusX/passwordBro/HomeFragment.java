@@ -35,14 +35,21 @@ public class HomeFragment extends Fragment
     private ArrayList<Integer> IDList;
     private ArrayAdapter arrayAdapter;
     private ListView listView;
+    private FloatingActionMenu fab;
+    private FloatingActionButton fabGenerate,fabAdd;
+    private View backgroundDimmer;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
 
-
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        Objects.requireNonNull(getActivity()).setTitle("Home");
 
         listView = view.findViewById(R.id.listView);
+        fab = view.findViewById(R.id.fab);
+        fabGenerate = view.findViewById(R.id.fabGenerate);
+        fabAdd = view.findViewById(R.id.fabAdd);
+        backgroundDimmer = view.findViewById(R.id.background_dimmer);
         TextView homeSubtitle = view.findViewById(R.id.homeSubtitle);
 
         IDList = new ArrayList<>();
@@ -70,15 +77,12 @@ public class HomeFragment extends Fragment
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FloatingActionMenu fab = view.findViewById(R.id.fab);
-        FloatingActionButton fabGenerate = view.findViewById(R.id.fabGenerate);
-        FloatingActionButton fabAdd = view.findViewById(R.id.fabAdd);
-        final View backgroundDimmer = view.findViewById(R.id.background_dimmer);
         fabGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getContext(), GenerateActivity.class);
                 startActivity(intent);
+                fab.toggle(true);
             }
         });
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +90,7 @@ public class HomeFragment extends Fragment
             public void onClick(View v) {
                 intent = new Intent(getContext(), EditActivity.class);
                 startActivity(intent);
+                fab.toggle(true);
             }
         });
         fab.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
