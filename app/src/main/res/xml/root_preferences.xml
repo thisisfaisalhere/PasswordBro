@@ -36,16 +36,6 @@
 
 <!--    </PreferenceCategory>-->
 
-<!--    <PreferenceCategory app:title="Theme">-->
-<!--        <ListPreference-->
-<!--            android:defaultValue="light"-->
-<!--            android:entries="@array/theme"-->
-<!--            android:entryValues="@array/theme"-->
-<!--            android:key="theme"-->
-<!--            android:title="Theme"-->
-<!--            app:useSimpleSummaryProvider="true"/>-->
-<!--    </PreferenceCategory>-->
-
     <PreferenceCategory app:title="@string/security_header">
 
         <SwitchPreferenceCompat

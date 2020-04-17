@@ -19,4 +19,5 @@ public class PrivacyFragment extends Fragment {
         Objects.requireNonNull(getActivity()).setTitle("Privacy Statement");
         return inflater.inflate(R.layout.fragment_privacy, container, false);
     }
+
 }

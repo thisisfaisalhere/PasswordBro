@@ -1,7 +1,9 @@
 package com.virusX.passwordBro;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -12,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -41,6 +44,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(TAG, "onResume: setAppTheme called");
+        super.onResume();
     }
 
     @Override

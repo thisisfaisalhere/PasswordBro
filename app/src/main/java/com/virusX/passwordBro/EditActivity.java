@@ -2,11 +2,13 @@ package com.virusX.passwordBro;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
@@ -146,6 +148,7 @@ public class EditActivity extends AppCompatActivity {
                     }, 1000);
                 }
                 progressBar.setVisibility(View.GONE);
+                finish();
             }
         });
 
@@ -162,6 +165,7 @@ public class EditActivity extends AppCompatActivity {
                     }
                 }, 1000);
                 progressBar.setVisibility(View.GONE);
+                finish();
             }
         });
 

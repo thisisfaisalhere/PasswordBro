@@ -35,6 +35,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/backgroundColor"
+        app:itemTextColor="@color/textColor"
+        app:itemIconTint="#808080"
+        app:theme="@style/ThemeOverlay.AppCompat.navTheme"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu" />
 

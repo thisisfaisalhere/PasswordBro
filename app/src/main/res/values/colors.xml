@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!--    light theme colors-->
-    <color name="primaryColor">#2196F3</color>
-    <color name="primaryColorDark">#1976D2</color>
-    <color name="backgroundColor">#FCFCFC</color>
-    <color name="primaryAccent">#2A57C6</color>
-    <color name="textColor">#808080</color>
-    <color name="tintColor">#000000</color>
-    <color name="buttonColor">#2196F3</color>
-
     <!--    dark theme colors-->
-    <color name="primaryColor_dark">#1B262C</color>
-    <color name="primaryColorDark_dark">#1B2620</color>
-    <color name="backgroundColor_dark">#2D2D2D</color>
-    <color name="textColor_dark">#FFFFFF</color>
-    <color name="tintColor_dark">#FFFFFF</color>
-    <color name="buttonColor_dark">#2196F3</color>
+    <color name="primaryColor">#1B262C</color>
+    <color name="primaryColorDark">#1B2620</color>
+    <color name="backgroundColor">#2D2D2D</color>
+    <color name="primaryAccent">#2A57C6</color>
+    <color name="textColor">#FFFFFF</color>
+    <color name="tintColor">#2295EF</color>
+    <color name="buttonColor">#2196F3</color>
+    <color name="overlayColor">#33FFFFFF</color>
+    <color name="selectedItemColor">#332196F3</color>
+    <color name="errorColor">#FF0033</color>
 </resources>

@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 

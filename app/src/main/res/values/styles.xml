@@ -1,6 +1,6 @@
 <resources>
 
-    <!--    light theme-->
+    <!--    App theme-->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryColorDark</item>
@@ -21,25 +21,14 @@
         <item name="android:statusBarColor">@color/primaryColorDark</item>
     </style>
 
-    <!--    Dark theme-->
-    <style name="DarkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/primaryColor_dark</item>
-        <item name="colorPrimaryDark">@color/primaryColorDark_dark</item>
+    <style name="ThemeOverlay.AppCompat.navTheme">
+        <item name="colorControlHighlight">@color/selectedItemColor</item>
+    </style>
+
+    <style name="PreferenceScreen" parent="Theme.AppCompat">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:statusBarColor">@color/primaryColorDark</item>
         <item name="colorAccent">@color/primaryAccent</item>
-        <item name="backgroundColor">@color/backgroundColor_dark</item>
-        <item name="textColor">@color/textColor_dark</item>
-        <item name="tintColor">@color/tintColor_dark</item>
-        <item name="buttonColor">@color/buttonColor_dark</item>
-    </style>
-
-    <style name="DarkTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
-    <style name="DarkTheme.NoActionBar.statusBarTrue">
-        <item name="android:statusBarColor">@color/primaryColorDark_dark</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

@@ -5,14 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.virusX.passwordBro.HomeFragment" >
+    android:background="@color/backgroundColor"
+    tools:context=".HomeFragment" >
 
     <View
         android:id="@+id/background_dimmer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0"
-        android:background="#55000000"
+        android:background="@color/overlayColor"
         android:visibility="gone" />
 
     <TextView
@@ -24,7 +25,7 @@
         android:layout_marginTop="30dp"
         android:text="@string/home_subtitle_2"
         android:textAlignment="center"
-        android:textColor="?attr/textColor"
+        android:textColor="@color/textColor"
         android:textSize="18sp"
         fab:layout_constraintEnd_toEndOf="parent"
         fab:layout_constraintHorizontal_bias="0.496"

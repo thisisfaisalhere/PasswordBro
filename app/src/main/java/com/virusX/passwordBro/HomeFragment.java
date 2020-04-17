@@ -57,7 +57,21 @@ public class HomeFragment extends Fragment
         passwordList = new ArrayList<>();
         usernameList = new ArrayList<>();
 
-        arrayAdapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, nameList);
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
+        final String theme = sharedPreferences.getString("theme", "light");
+
+        arrayAdapter = new ArrayAdapter<String>
+                (Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, nameList){
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, @NonNull ViewGroup parent){
+                View view = super.getView(position, convertView, parent);
+                TextView textView = view.findViewById(android.R.id.text1);
+                textView.setTextColor(getContext().getColor(R.color.textColor));
+                return view;
+            }
+        };
         listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener(HomeFragment.this);

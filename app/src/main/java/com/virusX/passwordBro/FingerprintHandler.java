@@ -55,7 +55,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
                 @Override
                 public void run() {
                     fingerprintMessage.setText(context.getString(R.string.fingerprint_success));
-                    fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.textColor));
+                    fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.errorColor));
                     fingerprintImg.setImageResource(R.drawable.ic_fingerprint);
                 }
             }, 1000);
