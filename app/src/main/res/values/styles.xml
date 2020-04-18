@@ -28,6 +28,7 @@
     <style name="PreferenceScreen" parent="Theme.AppCompat">
         <item name="android:textColor">@color/textColor</item>
         <item name="android:statusBarColor">@color/primaryColorDark</item>
+        <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorAccent">@color/primaryAccent</item>
     </style>
 

@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:buttonTint="@color/textColor"
+                android:buttonTint="@color/buttonColor"
                 android:text="@string/easy_text"
                 android:textColor="@color/textColor" />
 
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:buttonTint="@color/textColor"
+                android:buttonTint="@color/buttonColor"
                 android:text="@string/mod_text"
                 android:textColor="@color/textColor" />
 
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:buttonTint="@color/textColor"
+                android:buttonTint="@color/buttonColor"
                 android:text="@string/hard_text"
                 android:textColor="@color/textColor" />
         </RadioGroup>
@@ -119,6 +119,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/buttonColor"
             android:ems="10"
             android:hint="@string/hint"
             android:importantForAutofill="no"
@@ -149,6 +150,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/buttonColor"
             android:ems="10"
             android:hint="@string/hint_3"
             android:importantForAutofill="no"

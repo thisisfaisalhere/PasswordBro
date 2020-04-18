@@ -14,13 +14,21 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.navigation.NavigationView;
+import com.parse.ParseUser;
+
+import java.util.Objects;
+
+import libs.mjn.prettydialog.PrettyDialog;
+import libs.mjn.prettydialog.PrettyDialogCallback;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    private static final String TAG = "passwordBro";
+    public static final String TAG = "passwordBro";
+    public static String PACKAGE_NAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        PACKAGE_NAME = getApplicationContext().getPackageName();
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -47,12 +57,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    protected void onResume() {
-        Log.d(TAG, "onResume: setAppTheme called");
-        super.onResume();
-    }
-
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home:
@@ -60,16 +64,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new HomeFragment()).commit();
                 break;
             case R.id.nav_account:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new AccountFragment()).commit();
+                if(ParseUser.getCurrentUser() == null) {
+                    final PrettyDialog prettyDialog = new PrettyDialog(this);
+                    prettyDialog.setIcon(R.drawable.ic_warning)
+                            .setTitle("Alert!!")
+                            .setMessage("You don't have an account added...")
+                            .addButton("Add Account",
+                                    R.color.pdlg_color_white,
+                                    R.color.pdlg_color_green,
+                                    new PrettyDialogCallback() {
+                                        @Override
+                                        public void onClick() {
+                                            startAddAccountActivity();
+                                            prettyDialog.dismiss();
+                                        }
+                                    })
+                            .addButton("Cancel",
+                                    R.color.pdlg_color_white,
+                                    R.color.pdlg_color_gray,
+                                    new PrettyDialogCallback() {
+                                        @Override
+                                        public void onClick() {
+                                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                                    new HomeFragment()).commit();
+                                            prettyDialog.dismiss();
+                                        }
+                                    }).show();
+                } else {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new AccountFragment()).addToBackStack("myStack").commit();
+                }
                 break;
             case R.id.nav_privacy:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new PrivacyFragment()).commit();
+                        new PrivacyFragment()).addToBackStack("myStack").commit();
                 break;
             case R.id.nav_share:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ShareFragment()).commit();
+                        new ShareFragment()).addToBackStack("myStack").commit();
                 break;
         }
 
@@ -77,11 +109,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    private void startAddAccountActivity() {
+        startActivity(new Intent(this, AddAccountActivity.class));
+    }
+
     @Override
     public void onBackPressed() {
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (getFragmentManager().getBackStackEntryCount() > 0)
+            getFragmentManager().popBackStack();
+        else {
             super.onBackPressed();
         }
     }
@@ -94,9 +133,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.action_settings){
+        if (item.getItemId() == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
+        }
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0)
+        {
+            if (item.getItemId() == android.R.id.home) {
+                onBackPressed();
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }

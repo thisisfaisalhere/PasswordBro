@@ -2,9 +2,11 @@ package com.virusX.passwordBro;
 
 import android.os.Bundle;
 
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,5 +21,4 @@ public class PrivacyFragment extends Fragment {
         Objects.requireNonNull(getActivity()).setTitle("Privacy Statement");
         return inflater.inflate(R.layout.fragment_privacy, container, false);
     }
-
 }

@@ -2,13 +2,17 @@
 <resources>
     <!--    dark theme colors-->
     <color name="primaryColor">#1B262C</color>
-    <color name="primaryColorDark">#1B2620</color>
+    <color name="primaryColorDark">#1B262C</color>
     <color name="backgroundColor">#2D2D2D</color>
-    <color name="primaryAccent">#2A57C6</color>
+    <color name="primaryAccent">#FF5E6C</color>
     <color name="textColor">#FFFFFF</color>
-    <color name="tintColor">#2295EF</color>
-    <color name="buttonColor">#2196F3</color>
-    <color name="overlayColor">#33FFFFFF</color>
-    <color name="selectedItemColor">#332196F3</color>
+    <color name="hintTextColor">#808080</color>
+    <color name="tintColor">#FF5E6C</color>
+    <color name="buttonColor">#FF5E6C</color>
+    <color name="buttonColorGreen">#4CAF50</color>
+    <color name="buttonColorRed">#D11A2A</color>
+    <color name="buttonColorNeutral">#29C7AC</color>
+    <color name="overlayColor">#66FF5E6C</color>
+    <color name="selectedItemColor">#33FF5E6C</color>
     <color name="errorColor">#FF0033</color>
 </resources>

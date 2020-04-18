@@ -111,4 +111,6 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="creating_backup">Creating Backup</string>
+    <string name="backing_up_data">Backing up Data</string>
 </resources>
