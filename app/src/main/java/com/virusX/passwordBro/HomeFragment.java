@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import com.github.clans.fab.FloatingActionButton;
@@ -30,13 +30,13 @@ import libs.mjn.prettydialog.PrettyDialogCallback;
 public class HomeFragment extends Fragment
         implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
 
+    private static final String TAG = "passwordBro";
     private Intent intent;
     private ArrayList<String> nameList, passwordList, usernameList;
     private ArrayList<Integer> IDList;
     private ArrayAdapter arrayAdapter;
     private ListView listView;
     private FloatingActionMenu fab;
-    private FloatingActionButton fabGenerate,fabAdd;
     private View backgroundDimmer;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -47,8 +47,8 @@ public class HomeFragment extends Fragment
 
         listView = view.findViewById(R.id.listView);
         fab = view.findViewById(R.id.fab);
-        fabGenerate = view.findViewById(R.id.fabGenerate);
-        fabAdd = view.findViewById(R.id.fabAdd);
+        FloatingActionButton fabGenerate = view.findViewById(R.id.fabGenerate);
+        FloatingActionButton fabAdd = view.findViewById(R.id.fabAdd);
         backgroundDimmer = view.findViewById(R.id.background_dimmer);
         TextView homeSubtitle = view.findViewById(R.id.homeSubtitle);
 
@@ -56,10 +56,6 @@ public class HomeFragment extends Fragment
         nameList = new ArrayList<>();
         passwordList = new ArrayList<>();
         usernameList = new ArrayList<>();
-
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
-        final String theme = sharedPreferences.getString("theme", "light");
 
         arrayAdapter = new ArrayAdapter<String>
                 (Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, nameList){
@@ -72,7 +68,6 @@ public class HomeFragment extends Fragment
                 return view;
             }
         };
-        listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener(HomeFragment.this);
         listView.setOnItemLongClickListener(HomeFragment.this);
@@ -84,19 +79,18 @@ public class HomeFragment extends Fragment
         } else {
             homeSubtitle.setText(R.string.home_subtitle);
         }
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+        backgroundDimmer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
+                fab.toggle(true);
+            }
+        });
         fabGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getContext(), GenerateActivity.class);
                 startActivity(intent);
-                listView.setAdapter(null);
                 fab.toggle(true);
             }
         });
@@ -106,7 +100,6 @@ public class HomeFragment extends Fragment
                 intent = new Intent(getContext(), EditActivity.class);
                 intent.putExtra("addRecord", true);
                 startActivity(intent);
-                listView.setAdapter(null);
                 fab.toggle(true);
             }
         });
@@ -122,13 +115,14 @@ public class HomeFragment extends Fragment
                 }
             }
         });
+        return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
         checkAccount();
-        listView.setAdapter(arrayAdapter);
+        listView.setAdapter(null);
         nameList.clear();
         passwordList.clear();
         IDList.clear();
@@ -182,10 +176,10 @@ public class HomeFragment extends Fragment
                 passwordList.add(data.getString(2));
                 usernameList.add(data.getString(3));
             }
-            arrayAdapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        listView.setAdapter(arrayAdapter);
     }
 
     @Override

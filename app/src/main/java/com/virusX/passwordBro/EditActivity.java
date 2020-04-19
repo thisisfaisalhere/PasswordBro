@@ -2,13 +2,11 @@ package com.virusX.passwordBro;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
@@ -19,7 +17,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 
 import java.util.Objects;
 
@@ -30,7 +27,6 @@ public class EditActivity extends AppCompatActivity {
     private EditText editTextName, editTextPass, editTextUser;
     private DatabaseHelper databaseHelper;
     private Handler handler;
-    private ProgressBar progressBar;
     private int position;
 
     @Override
@@ -58,7 +54,6 @@ public class EditActivity extends AppCompatActivity {
         Button buttonSave = findViewById(R.id.buttonSave);
         Button buttonCancel = findViewById(R.id.buttonCancel);
         Button buttonDelete = findViewById(R.id.buttonDelete);
-        progressBar = findViewById(R.id.editPgBar);
 
         if(addRecord) {
             setTitle("Add record");
@@ -125,7 +120,6 @@ public class EditActivity extends AppCompatActivity {
                 final String name = editTextName.getText().toString();
                 final String pass = editTextPass.getText().toString();
                 final String user = editTextUser.getText().toString();
-                progressBar.setVisibility(View.VISIBLE);
                 if(name.equals("") || pass.equals("") || user.equals("")) {
                     Toasty.error(EditActivity.this, "Field is empty",
                             Toasty.LENGTH_SHORT, true).show();
@@ -144,7 +138,6 @@ public class EditActivity extends AppCompatActivity {
                         }
                     }, 1000);
                 }
-                progressBar.setVisibility(View.GONE);
                 finish();
             }
         });
@@ -152,7 +145,6 @@ public class EditActivity extends AppCompatActivity {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -161,7 +153,6 @@ public class EditActivity extends AppCompatActivity {
                                 "Deleted successfully", Toasty.LENGTH_SHORT, true).show();
                     }
                 }, 1000);
-                progressBar.setVisibility(View.GONE);
                 finish();
             }
         });

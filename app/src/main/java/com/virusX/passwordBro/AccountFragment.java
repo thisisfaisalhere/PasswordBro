@@ -99,7 +99,27 @@ public class AccountFragment extends Fragment {
         backupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickBackupBtn(v);
+                progressBar.setVisibility(View.VISIBLE);
+                textView.setText(R.string.creating_backup);
+                helper = new DataBackupHelper(getContext());
+                final boolean result = helper.createBackup();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(result) {
+                            textView.setText(R.string.backing_up_data);
+                            helper.backupData();
+                            currentTime = Calendar.getInstance().getTime();
+                        } else {
+                            Toasty.error(Objects.requireNonNull(getContext()),
+                                    "An error occurred", Toasty.LENGTH_SHORT, true).show();
+                            textView.setText("");
+                        }
+                    }
+                },1000);
+                textView.setText(String.format("Last backup Completed at: %s", currentTime));
+                progressBar.setVisibility(View.GONE);
             }
         });
 
@@ -150,29 +170,5 @@ public class AccountFragment extends Fragment {
 
             }
         });
-    }
-
-    private void onClickBackupBtn(View v) {
-        progressBar.setVisibility(View.VISIBLE);
-        textView.setText(R.string.creating_backup);
-        helper = new DataBackupHelper(getContext());
-        final boolean result = helper.createBackup();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if(result) {
-                    textView.setText(R.string.backing_up_data);
-                    helper.backupData();
-                    currentTime = Calendar.getInstance().getTime();
-                } else {
-                    Toasty.error(Objects.requireNonNull(getContext()),
-                            "An error occurred", Toasty.LENGTH_SHORT, true).show();
-                    textView.setText("");
-                }
-            }
-        },1000);
-        textView.setText(String.format("Last backup Completed at: %s", currentTime));
-        progressBar.setVisibility(View.GONE);
     }
 }
