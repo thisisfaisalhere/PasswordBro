@@ -1,11 +1,14 @@
 package com.virusX.passwordBro;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import java.util.ArrayList;
 
 class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
@@ -63,5 +66,32 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 + " SET " + COL1 + "='" + name + "', "
                 + COL2 + "='" + pass + "', " + COL3 + "='" + username + "' WHERE ID=" + position);
         Log.d(TAG, "DatabaseHelper: row update " + position);
+    }
+
+    boolean matchDataSet(ArrayList<String> dataList) {
+        int returnValue = -1;
+        Cursor data = getData();
+        if(data != null && data.getCount() > 0) {
+            for(int i = 0; i < dataList.size(); i = i+3) {
+                Log.d(TAG, "matchDataSet: matching");
+                String service = dataList.get(i);
+                String key = dataList.get(i + 1);
+                String user = dataList.get(i + 2);
+                SQLiteDatabase db = this.getWritableDatabase();
+                String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL1 + "='" + service + "'" ;
+                @SuppressLint("Recycle") Cursor cursor = db.rawQuery(query, null);
+                if(cursor == null) {
+                    addData(service, key, user);
+                    returnValue++;
+                }
+                data.moveToNext();
+            }
+        } else {
+            for(int i = 0; i < dataList.size(); i=i+3) {
+                addData(dataList.get(i), dataList.get(i + 1), dataList.get(i + 2));
+                returnValue++;
+            }
+        }
+        return returnValue != -1;
     }
 }

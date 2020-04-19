@@ -96,6 +96,7 @@ public class HomeFragment extends Fragment
             public void onClick(View v) {
                 intent = new Intent(getContext(), GenerateActivity.class);
                 startActivity(intent);
+                listView.setAdapter(null);
                 fab.toggle(true);
             }
         });
@@ -103,7 +104,9 @@ public class HomeFragment extends Fragment
             @Override
             public void onClick(View v) {
                 intent = new Intent(getContext(), EditActivity.class);
+                intent.putExtra("addRecord", true);
                 startActivity(intent);
+                listView.setAdapter(null);
                 fab.toggle(true);
             }
         });
@@ -192,6 +195,7 @@ public class HomeFragment extends Fragment
         intent.putExtra("password", passwordList.get(position));
         intent.putExtra("username", usernameList.get(position));
         intent.putExtra("position", IDList.get(position));
+        intent.putExtra("addRecord", false);
         startActivity(intent);
     }
 

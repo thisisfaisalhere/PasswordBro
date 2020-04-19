@@ -47,14 +47,8 @@ public class EditActivity extends AppCompatActivity {
         String receivedName = receivedIntentData.getStringExtra("name");
         String receivedPass = receivedIntentData.getStringExtra("password");
         String receivedUsername = receivedIntentData.getStringExtra("username");
-        boolean fromMain = receivedIntentData.getBooleanExtra("fromMain", false);
+        boolean addRecord = receivedIntentData.getBooleanExtra("addRecord", false);
         position = receivedIntentData.getIntExtra("position", -1);
-
-        if(fromMain) {
-            setTitle("Add record");
-        }else {
-            setTitle(receivedName + "\'s details");
-        }
 
         editTextName = findViewById(R.id.editTextName);
         editTextPass = findViewById(R.id.editTextPass);
@@ -66,8 +60,11 @@ public class EditActivity extends AppCompatActivity {
         Button buttonDelete = findViewById(R.id.buttonDelete);
         progressBar = findViewById(R.id.editPgBar);
 
-        if(fromMain) {
+        if(addRecord) {
+            setTitle("Add record");
             buttonDelete.setVisibility(View.GONE);
+        }else {
+            setTitle(receivedName + "\'s details");
         }
 
         databaseHelper = new DatabaseHelper(this);

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.parse.DeleteCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -13,11 +15,16 @@ import com.parse.SaveCallback;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import es.dmoral.toasty.Toasty;
 
@@ -26,10 +33,18 @@ class DataBackupHelper {
     private static final String TAG = "passwordBro";
     @SuppressLint("SdCardPath")
     private static final String dirPath = "/data/data/" + MainActivity.PACKAGE_NAME + "/backup";
+    private String backupFileName, retrieveFileName = "retrievedFile.csv";
+    private static final String pathSeparator = "/";
+    private ParseUser parseUser;
 
-
+    @SuppressLint("SimpleDateFormat")
     DataBackupHelper(Context context) {
         this.context = context;
+        Date calendar = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        String date = dateFormat.format(calendar);
+        backupFileName = "backup_" + date +".csv";
+        parseUser = ParseUser.getCurrentUser();
     }
 
     boolean createBackup() {
@@ -38,7 +53,7 @@ class DataBackupHelper {
         if (!exportDir.exists()) {
             exportDir.mkdirs();
         }
-        File file = new File(exportDir, "db.csv");
+        File file = new File(exportDir, backupFileName);
         try {
             CSVWriter csvWriter = new CSVWriter(new FileWriter(file));
             Cursor data = databaseHelper.getData();
@@ -65,11 +80,9 @@ class DataBackupHelper {
     }
 
     void backupData() {
-        String fileContent = getFileContent();
+        String fileContent = getFileContent(dirPath + pathSeparator + backupFileName);
         byte[] data = fileContent.getBytes();
-        String fileName = "backup-" + Calendar.getInstance().getTime() + ".csv";
-        ParseFile file = new ParseFile(fileName, data);
-        ParseUser parseUser = ParseUser.getCurrentUser();
+        ParseFile file = new ParseFile(backupFileName, data);
         parseUser.put("backupData", file);
         parseUser.saveInBackground(new SaveCallback() {
             @Override
@@ -86,35 +99,137 @@ class DataBackupHelper {
         });
     }
 
-    private String getFileContent() {
+    private String getFileContent(String fileLocation) {
         String lineStr;
         StringBuilder fileContent = new StringBuilder();
-        String file = dirPath + "/db.csv";
 
         try {
-            FileReader fileReader = new FileReader(file);
+            FileReader fileReader = new FileReader(fileLocation);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             while((lineStr = bufferedReader.readLine()) != null) {
                 fileContent.append(lineStr).append("\n");
             }
             bufferedReader.close();
-            Log.d(TAG, "getFileContent: " + "Successfully got the content of '" + file + "'");
+            Log.d(TAG, "getFileContent: " + "Successfully got the content of '" + fileLocation + "'");
         } catch(FileNotFoundException ex) {
-            Log.d(TAG, "getFileContent: " + "Unable to open a file '" + file + "'");
+            Log.d(TAG, "getFileContent: " + "Unable to open a file '" + fileLocation + "'");
         } catch(IOException ex) {
-            Log.d(TAG, "getFileContent: " + "Error reading a file '" + file + "'");
+            Log.d(TAG, "getFileContent: " + "Error reading a file '" + fileLocation + "'");
         }
         return fileContent.toString();
     }
 
     void retrieveData() {
+        ParseFile parseFile = parseUser.getParseFile("backupData");
+        assert parseFile != null;
+        parseFile.getDataInBackground(new GetDataCallback() {
+            @Override
+            public void done(byte[] data, ParseException e) {
+                if(e == null) {
+                    File expoDir = new File(dirPath);
+                    if(!expoDir.exists()) expoDir.mkdir();
+                    File retrievedFile = new File(expoDir, retrieveFileName);
+                    OutputStream outputStream;
+                    try {
+                        outputStream = new FileOutputStream(retrievedFile);
+                        outputStream.write(data);
+                        outputStream.close();
+                        Log.d(TAG, "done: writing to file complete");
+                        matchDataSet();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                } else {
+                    Log.d(TAG, "done: " + e.getMessage());
+                }
+            }
+        });
+    }
 
+    private void matchDataSet() {
+        Log.d(TAG, "matchDataSet: matching init");
+        String fileContent = getFileContent(dirPath + pathSeparator + retrieveFileName);
+        ArrayList<Character> singleData = new ArrayList<>();
+        ArrayList<String> dataList = new ArrayList<>();
+        for(int i = 0; i < fileContent.length(); i++) {
+            char ch = fileContent.charAt(i);
+            if(ch != ',' && ch != '\n') {
+                singleData.add(ch);
+            } else {
+                StringBuilder stringBuilder = new StringBuilder();
+                for(Character c: singleData) stringBuilder.append(c);
+                dataList.add(stringBuilder.toString());
+                singleData.clear();
+            }
+        }
+        DatabaseHelper helper = new DatabaseHelper(context);
+        if(helper.matchDataSet(dataList)) {
+            Toasty.success(context, "Retrieving Data Successfully Completed",
+                    Toasty.LENGTH_SHORT, true).show();
+        } else {
+            Toasty.info(context, "Nothing to retrieve",
+                    Toasty.LENGTH_SHORT, true).show();
+        }
     }
 
     void deleteBackup() {
+        parseUser.remove("backupData");
+        parseUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null) {
+                    Toasty.info(context, "Successfully Deleted Backup Data",
+                            Toasty.LENGTH_SHORT, true).show();
+                } else {
+                    Toasty.error(context, "An error occurred",
+                            Toasty.LENGTH_SHORT, true).show();
+                    Log.d(TAG, "done: " + e.getMessage());
+                }
+            }
+        });
     }
 
     void deleteAccount() {
+        parseUser.deleteInBackground(new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    ParseUser.getCurrentUser();
+                    ParseUser.logOut();
+                    Toasty.info(context, "Account Deleted.",
+                            Toasty.LENGTH_SHORT, true).show();
+                } else {
+                    Toasty.error(context, e.getMessage() + "",
+                            Toasty.LENGTH_SHORT, true).show();
+                }
+            }
+        });
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean deleteDir(File dir) throws NullPointerException {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            int i = 0;
+            assert children != null;
+            while (i < children.length) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+                i++;
+            }
+            return dir.delete();
+        } else if (dir != null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
     }
 }

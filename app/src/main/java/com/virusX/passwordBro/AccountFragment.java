@@ -122,7 +122,7 @@ public class AccountFragment extends Fragment {
                 final PrettyDialog prettyDialog = new PrettyDialog(Objects.requireNonNull(getContext()));
                 prettyDialog.setIcon(R.drawable.ic_error)
                         .setTitle("Alert")
-                        .setMessage(getString(R.string.delete_2))
+                        .setMessage(getString(R.string.delete))
                         .addButton("Delete Account",
                                 R.color.pdlg_color_white,
                                 R.color.pdlg_color_red,

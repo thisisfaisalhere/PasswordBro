@@ -86,7 +86,6 @@
     <string name="delete_account">Delete Account</string>
     <string name="logout">Logout</string>
     <string name="delete">Do you really want to Delete your Backup?\nThis step is irreversible and I will not be able to provide any assistance</string>
-    <string name="delete_2">Do you really want to Delete your Account?\nThis step is irreversible and I will not be able to provide any assistance\n</string>
 
     <!-- security question-->
     <string name="security_questions_title">Backup Questions</string>
