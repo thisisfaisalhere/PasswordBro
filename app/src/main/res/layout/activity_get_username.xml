@@ -73,7 +73,7 @@
         android:layout_marginBottom="30dp"
         android:background="#009688"
         android:onClick="getBtnTapped"
-        android:text="@string/continueBtn"
+        android:text="@string/send_recovery_email"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

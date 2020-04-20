@@ -124,35 +124,25 @@ public class EditActivity extends AppCompatActivity {
                     Toasty.error(EditActivity.this, "Field is empty",
                             Toasty.LENGTH_SHORT, true).show();
                 } else {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(position == -1 && check[0]) {
-                                databaseHelper.addData(name, pass, user);
-                                check[0] = false;
-                            } else if (position != -1) {
-                                databaseHelper.updateDate(position, name, pass, user);
-                            }
-                            Toasty.success(EditActivity.this,
-                                    "Saved successfully", Toasty.LENGTH_SHORT, true).show();
-                        }
-                    }, 1000);
+                    if(position == -1 && check[0]) {
+                        databaseHelper.addData(name, pass, user);
+                        check[0] = false;
+                    } else if (position != -1) {
+                        databaseHelper.updateDate(position, name, pass, user);
+                    }
+                    Toasty.success(EditActivity.this,
+                            "Saved successfully", Toasty.LENGTH_SHORT, true).show();
+                    finish();
                 }
-                finish();
             }
         });
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        databaseHelper.deleteData(position);
-                        Toasty.success(EditActivity.this,
-                                "Deleted successfully", Toasty.LENGTH_SHORT, true).show();
-                    }
-                }, 1000);
+                databaseHelper.deleteData(position);
+                Toasty.success(EditActivity.this,
+                        "Deleted successfully", Toasty.LENGTH_SHORT, true).show();
                 finish();
             }
         });

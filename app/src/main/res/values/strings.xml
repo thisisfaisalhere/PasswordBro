@@ -86,30 +86,19 @@
     <string name="delete_account">Delete Account</string>
     <string name="logout">Logout</string>
     <string name="delete">Do you really want to Delete your Backup?\nThis step is irreversible and I will not be able to provide any assistance</string>
-
-    <!-- security question-->
-    <string name="security_questions_title">Backup Questions</string>
-    <string name="security_question_subtitle">Fill out the Questions Below\n\nThis will come in handy if you forget Password Bro\'s password</string>
-    <string name="security_question_subtitle_2">Answer these questions to make sure its really you</string>
-    <string name="question_1">Your Mother\'s Father\'s name</string>
-    <string name="question_2">Your Hobby</string>
-    <string name="question_3">Your First pet name</string>
-    <string name="question_4">Your Guilty Pleasure</string>
-    <string name="question_5">Place you call Home</string>
-    <string name="ice_cream">Ice Cream</string>
-    <string name="chocolate">Chocolate</string>
-    <string name="continueBtn">continue</string>
+    <string name="delete_ac">Do you really want to Delete your Account?\nIt will also delete your backup\nThis step is irreversible and I will not be able to provide any assistance</string>
     <string name="check">check</string>
     <string name="email">Email e.g. example@example.com</string>
-    <string name="backup_now">backup now</string>
-    <string name="add_record">Add Record</string>
     <string name="hint_3">email/username</string>
-    <string name="text_img">text img</string>
     <string name="show_password">show password</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
     <string name="creating_backup">Creating Backup</string>
-    <string name="backing_up_data">Backing up Data</string>
+    <string name="backup_created">Successfully created Backup</string>
+    <string name="sending_data">Sending Data</string>
+    <string name="backup_successful">Backup Successful</string>
+    <string name="text">Text</string>
+    <string name="send_recovery_email">Send Recovery Email</string>
+    <string name="backup_now">Backup now</string>
+    <string name="getting_data">Getting Data</string>
+    <string name="get_data_complete">Getting Data Complete</string>
+    <string name="checking_data">Checking for redundancy in data</string>
 </resources>

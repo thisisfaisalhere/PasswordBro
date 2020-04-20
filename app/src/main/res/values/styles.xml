@@ -48,7 +48,7 @@
         <item name="fab_size">mini</item>
         <item name="fab_showAnimation">@anim/jump_from_down</item>
         <item name="fab_hideAnimation">@anim/jump_to_down</item>
-        <item name="fab_shadowColor">#878484</item>
+<!--        <item name="fab_shadowColor">#878484</item>-->
         <item name="fab_colorNormal">#FFB805</item>
         <item name="fab_colorPressed">#F2AB00</item>
         <item name="fab_colorRipple">#D99200</item>

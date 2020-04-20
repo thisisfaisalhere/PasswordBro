@@ -176,6 +176,7 @@ public class HomeFragment extends Fragment
                 passwordList.add(data.getString(2));
                 usernameList.add(data.getString(3));
             }
+            arrayAdapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
         }

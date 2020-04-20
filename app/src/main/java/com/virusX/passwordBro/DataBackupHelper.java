@@ -1,9 +1,13 @@
 package com.virusX.passwordBro;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.parse.DeleteCallback;
 import com.parse.GetDataCallback;
@@ -36,6 +40,8 @@ class DataBackupHelper {
     private String backupFileName, retrieveFileName = "retrievedFile.csv";
     private static final String pathSeparator = "/";
     private ParseUser parseUser;
+    private ProgressBar progressBar;
+    private TextView textView;
 
     @SuppressLint("SimpleDateFormat")
     DataBackupHelper(Context context) {
@@ -45,9 +51,13 @@ class DataBackupHelper {
         String date = dateFormat.format(calendar);
         backupFileName = "backup_" + date +".csv";
         parseUser = ParseUser.getCurrentUser();
+        textView = ((Activity)context).findViewById(R.id.acFrgmntTxt);
+        progressBar = ((Activity)context).findViewById(R.id.acFrgmntPBar);
     }
 
     boolean createBackup() {
+        progressBar.setVisibility(View.VISIBLE);
+        textView.setText(R.string.creating_backup);
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         File exportDir = new File(dirPath);
         if (!exportDir.exists()) {
@@ -73,6 +83,7 @@ class DataBackupHelper {
             csvWriter.close();
             data.close();
             Log.d(TAG, "createBackup: done");
+            textView.setText(R.string.backup_created);
             return true;
         } catch (IOException e) {
             return false;
@@ -80,6 +91,7 @@ class DataBackupHelper {
     }
 
     void backupData() {
+        textView.setText(R.string.sending_data);
         String fileContent = getFileContent(dirPath + pathSeparator + backupFileName);
         byte[] data = fileContent.getBytes();
         ParseFile file = new ParseFile(backupFileName, data);
@@ -95,8 +107,11 @@ class DataBackupHelper {
                     Toasty.error(context, "An Error occurred",
                             Toasty.LENGTH_LONG, true).show();
                 }
+                progressBar.setVisibility(View.GONE);
+                textView.setText("");
             }
         });
+
     }
 
     private String getFileContent(String fileLocation) {
@@ -121,6 +136,8 @@ class DataBackupHelper {
     }
 
     void retrieveData() {
+        progressBar.setVisibility(View.VISIBLE);
+        textView.setText(R.string.getting_data);
         ParseFile parseFile = parseUser.getParseFile("backupData");
         assert parseFile != null;
         parseFile.getDataInBackground(new GetDataCallback() {
@@ -136,6 +153,7 @@ class DataBackupHelper {
                         outputStream.write(data);
                         outputStream.close();
                         Log.d(TAG, "done: writing to file complete");
+                        textView.setText(R.string.get_data_complete);
                         matchDataSet();
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -143,12 +161,14 @@ class DataBackupHelper {
                 } else {
                     Log.d(TAG, "done: " + e.getMessage());
                 }
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
 
     private void matchDataSet() {
         Log.d(TAG, "matchDataSet: matching init");
+        textView.setText(R.string.checking_data);
         String fileContent = getFileContent(dirPath + pathSeparator + retrieveFileName);
         ArrayList<Character> singleData = new ArrayList<>();
         ArrayList<String> dataList = new ArrayList<>();
@@ -171,6 +191,7 @@ class DataBackupHelper {
             Toasty.info(context, "Nothing to retrieve",
                     Toasty.LENGTH_SHORT, true).show();
         }
+        textView.setText("");
     }
 
     void deleteBackup() {
