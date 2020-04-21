@@ -101,4 +101,7 @@
     <string name="getting_data">Getting Data</string>
     <string name="get_data_complete">Getting Data Complete</string>
     <string name="checking_data">Checking for redundancy in data</string>
+    <string name="no_details_found">No details of last Backup found</string>
+    <string name="last_backup_failed">Last Backup Failed</string>
+    <string name="no_data_found">No data found</string>
 </resources>

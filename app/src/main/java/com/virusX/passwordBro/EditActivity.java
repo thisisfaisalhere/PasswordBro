@@ -8,7 +8,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -26,7 +25,6 @@ public class EditActivity extends AppCompatActivity {
 
     private EditText editTextName, editTextPass, editTextUser;
     private DatabaseHelper databaseHelper;
-    private Handler handler;
     private int position;
 
     @Override
@@ -63,7 +61,6 @@ public class EditActivity extends AppCompatActivity {
         }
 
         databaseHelper = new DatabaseHelper(this);
-        handler = new Handler();
 
         editTextName.setText(receivedName);
         editTextPass.setText(receivedPass);

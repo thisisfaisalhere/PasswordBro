@@ -1,5 +1,8 @@
 package com.virusX.passwordBro;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -14,6 +17,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.parse.ParseUser;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
@@ -24,6 +32,10 @@ public class AccountFragment extends Fragment {
 
     private DataBackupHelper helper;
     private Button restoreBackup, deleteBackup, delAccount, logoutBtn, backupBtn;
+    private SharedPreferences sharedPreferences;
+    private static final String prefName = "lastBackupDetails";
+    private TextView textView;
+    private String date, text;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
@@ -38,9 +50,23 @@ public class AccountFragment extends Fragment {
         TextView nickName = view.findViewById(R.id.nickNameTxt);
         logoutBtn = view.findViewById(R.id.logoutBtn);
         backupBtn = view.findViewById(R.id.backupBtn);
+        textView = view.findViewById(R.id.acFragmentTxt);
+
+        Date calendar = Calendar.getInstance().getTime();
+        @SuppressLint("SimpleDateFormat")
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:MM");
+        date = dateFormat.format(calendar);
+
+        sharedPreferences = Objects.requireNonNull(getContext())
+                .getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        text = sharedPreferences.getString("details", "");
+
+        if(text.equals(""))
+            textView.setText(R.string.no_details_found);
+        else
+            textView.setText(text);
 
         String text = "Nickname: " + ParseUser.getCurrentUser().getUsername();
-
         nickName.setText(text);
         return view;
     }
@@ -71,6 +97,10 @@ public class AccountFragment extends Fragment {
                                     @Override
                                     public void onClick() {
                                         helper.deleteBackup();
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString("details", "Backup deleted on: " + date);
+                                        text = "Backup deleted on: " + date ;
+                                        editor.apply();
                                         prettyDialog.dismiss();
                                     }
                                 })
@@ -90,6 +120,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 helper = new DataBackupHelper(getContext());
+                final SharedPreferences.Editor editor = sharedPreferences.edit();
                 final boolean result = helper.createBackup();
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -97,12 +128,17 @@ public class AccountFragment extends Fragment {
                     public void run() {
                         if(result) {
                             helper.backupData();
+                            editor.putString("details", "Last Backup: " + date);
+                            text = "Last Backup: " + date;
                         } else {
                             Toasty.error(Objects.requireNonNull(getContext()),
-                                    "An error occurred", Toasty.LENGTH_SHORT, true).show();
+                                    "An error occurred while creating Backup", Toasty.LENGTH_SHORT, true).show();
+                            editor.putString("details", "Last Backup Failed");
+                            text = "Last Backup Failed";
                         }
                     }
-                },1000);
+                }, 1000);
+                editor.apply();
             }
         });
 
@@ -150,9 +186,11 @@ public class AccountFragment extends Fragment {
                                         prettyDialog.dismiss();
                                     }
                                 }).show();
-
-
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("details", "");
+                editor.apply();
             }
         });
+        textView.setText(text);
     }
 }

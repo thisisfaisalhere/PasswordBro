@@ -51,8 +51,8 @@ class DataBackupHelper {
         String date = dateFormat.format(calendar);
         backupFileName = "backup_" + date +".csv";
         parseUser = ParseUser.getCurrentUser();
-        textView = ((Activity)context).findViewById(R.id.acFrgmntTxt);
-        progressBar = ((Activity)context).findViewById(R.id.acFrgmntPBar);
+        textView = ((Activity)context).findViewById(R.id.acFragmentTxt);
+        progressBar = ((Activity)context).findViewById(R.id.acFragmentPBar);
     }
 
     boolean createBackup() {
@@ -140,30 +140,36 @@ class DataBackupHelper {
         textView.setText(R.string.getting_data);
         ParseFile parseFile = parseUser.getParseFile("backupData");
         assert parseFile != null;
-        parseFile.getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] data, ParseException e) {
-                if(e == null) {
-                    File expoDir = new File(dirPath);
-                    if(!expoDir.exists()) expoDir.mkdir();
-                    File retrievedFile = new File(expoDir, retrieveFileName);
-                    OutputStream outputStream;
-                    try {
-                        outputStream = new FileOutputStream(retrievedFile);
-                        outputStream.write(data);
-                        outputStream.close();
-                        Log.d(TAG, "done: writing to file complete");
-                        textView.setText(R.string.get_data_complete);
-                        matchDataSet();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+        try {
+            parseFile.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    if(e == null) {
+                        File expoDir = new File(dirPath);
+                        if(!expoDir.exists()) expoDir.mkdir();
+                        File retrievedFile = new File(expoDir, retrieveFileName);
+                        OutputStream outputStream;
+                        try {
+                            outputStream = new FileOutputStream(retrievedFile);
+                            outputStream.write(data);
+                            outputStream.close();
+                            Log.d(TAG, "done: writing to file complete");
+                            textView.setText(R.string.get_data_complete);
+                            matchDataSet();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        Log.d(TAG, "done: " + e.getMessage());
                     }
-                } else {
-                    Log.d(TAG, "done: " + e.getMessage());
+                    progressBar.setVisibility(View.GONE);
                 }
-                progressBar.setVisibility(View.GONE);
-            }
-        });
+            });
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            textView.setText(R.string.no_data_found);
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     private void matchDataSet() {
