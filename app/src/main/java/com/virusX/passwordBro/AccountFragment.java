@@ -1,8 +1,6 @@
 package com.virusX.passwordBro;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -18,12 +16,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.parse.ParseUser;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
-
 import es.dmoral.toasty.Toasty;
 import libs.mjn.prettydialog.PrettyDialog;
 import libs.mjn.prettydialog.PrettyDialogCallback;
@@ -32,17 +24,15 @@ public class AccountFragment extends Fragment {
 
     private DataBackupHelper helper;
     private Button restoreBackup, deleteBackup, delAccount, logoutBtn, backupBtn;
-    private SharedPreferences sharedPreferences;
-    private static final String prefName = "lastBackupDetails";
     private TextView textView;
-    private String date, text;
+    private String text;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_account, container, false);
 
-        Objects.requireNonNull(getActivity()).setTitle("Account Details");
+        requireActivity().setTitle("Account Details");
 
         restoreBackup = view.findViewById(R.id.restoreBackupBtn);
         deleteBackup = view.findViewById(R.id.deleteBackupBtn);
@@ -52,16 +42,7 @@ public class AccountFragment extends Fragment {
         backupBtn = view.findViewById(R.id.backupBtn);
         textView = view.findViewById(R.id.acFragmentTxt);
 
-        Date calendar = Calendar.getInstance().getTime();
-        @SuppressLint("SimpleDateFormat")
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:MM");
-        date = dateFormat.format(calendar);
-
-        sharedPreferences = Objects.requireNonNull(getContext())
-                .getSharedPreferences(prefName, Context.MODE_PRIVATE);
-        text = sharedPreferences.getString("details", "");
-
-        if(text.equals(""))
+        if (text.equals(""))
             textView.setText(R.string.no_details_found);
         else
             textView.setText(text);
@@ -86,7 +67,7 @@ public class AccountFragment extends Fragment {
         deleteBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final PrettyDialog prettyDialog = new PrettyDialog(Objects.requireNonNull(getContext()));
+                final PrettyDialog prettyDialog = new PrettyDialog(requireContext());
                 prettyDialog.setIcon(R.drawable.ic_error)
                         .setTitle("Alert")
                         .setMessage(getString(R.string.delete))
@@ -97,10 +78,6 @@ public class AccountFragment extends Fragment {
                                     @Override
                                     public void onClick() {
                                         helper.deleteBackup();
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putString("details", "Backup deleted on: " + date);
-                                        text = "Backup deleted on: " + date ;
-                                        editor.apply();
                                         prettyDialog.dismiss();
                                     }
                                 })
@@ -120,38 +97,36 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 helper = new DataBackupHelper(getContext());
-                final SharedPreferences.Editor editor = sharedPreferences.edit();
                 final boolean result = helper.createBackup();
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if(result) {
+                        if (result) {
                             helper.backupData();
-                            editor.putString("details", "Last Backup: " + date);
-                            text = "Last Backup: " + date;
                         } else {
-                            Toasty.error(Objects.requireNonNull(getContext()),
+                            Toasty.error(requireContext(),
                                     "An error occurred while creating Backup", Toasty.LENGTH_SHORT, true).show();
-                            editor.putString("details", "Last Backup Failed");
                             text = "Last Backup Failed";
                         }
                     }
                 }, 1000);
-                editor.apply();
             }
         });
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ProgressDialog progressDialog = new ProgressDialog(getContext());
+                progressDialog.setMessage("Logging user out...");
                 ParseUser.logOut();
-                Toasty.info(Objects.requireNonNull(getContext()), "User Logged out",
+                Toasty.info(requireContext(), "User Logged out",
                         Toasty.LENGTH_SHORT, true).show();
                 FragmentManager fragmentManager =
-                        Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+                        requireActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragment_container,
                         new HomeFragment()).commit();
+                progressDialog.dismiss();
             }
         });
 
@@ -159,7 +134,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 helper = new DataBackupHelper(getContext());
-                final PrettyDialog prettyDialog = new PrettyDialog(Objects.requireNonNull(getContext()));
+                final PrettyDialog prettyDialog = new PrettyDialog(requireContext());
                 prettyDialog.setIcon(R.drawable.ic_error)
                         .setTitle("Alert")
                         .setMessage(getString(R.string.delete_ac))
@@ -169,12 +144,15 @@ public class AccountFragment extends Fragment {
                                 new PrettyDialogCallback() {
                                     @Override
                                     public void onClick() {
+                                        ProgressDialog progressDialog = new ProgressDialog(getContext());
+                                        progressDialog.setMessage("Deleting Account");
                                         helper.deleteAccount();
                                         FragmentManager fragmentManager =
-                                                Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+                                                requireActivity().getSupportFragmentManager();
                                         fragmentManager.beginTransaction().replace(R.id.fragment_container,
                                                 new HomeFragment()).commit();
                                         prettyDialog.dismiss();
+                                        progressDialog.dismiss();
                                     }
                                 })
                         .addButton("Cancel",
@@ -186,9 +164,6 @@ public class AccountFragment extends Fragment {
                                         prettyDialog.dismiss();
                                     }
                                 }).show();
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("details", "");
-                editor.apply();
             }
         });
         textView.setText(text);

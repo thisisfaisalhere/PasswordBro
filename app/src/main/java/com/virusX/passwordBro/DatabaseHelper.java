@@ -54,13 +54,13 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    void deleteData(int position){
+    void deleteData(int position) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE ID=" + position);
         Log.d(TAG, "DatabaseHelper: row deleted " + position);
     }
 
-    void updateDate(int position, String name, String pass, String username){
+    void updateDate(int position, String name, String pass, String username) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE " + TABLE_NAME
                 + " SET " + COL1 + "='" + name + "', "
@@ -71,23 +71,23 @@ class DatabaseHelper extends SQLiteOpenHelper {
     boolean matchDataSet(ArrayList<String> dataList) {
         int returnValue = -1;
         Cursor data = getData();
-        if(data != null && data.getCount() > 0) {
-            for(int i = 0; i < dataList.size(); i = i+3) {
+        if (data != null && data.getCount() > 0) {
+            for (int i = 0; i < dataList.size(); i = i + 3) {
                 Log.d(TAG, "matchDataSet: matching");
                 String service = dataList.get(i);
                 String key = dataList.get(i + 1);
                 String user = dataList.get(i + 2);
                 SQLiteDatabase db = this.getWritableDatabase();
-                String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL1 + "='" + service + "'" ;
+                String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COL1 + "='" + service + "'";
                 @SuppressLint("Recycle") Cursor cursor = db.rawQuery(query, null);
-                if(cursor == null) {
+                if (cursor == null) {
                     addData(service, key, user);
                     returnValue++;
                 }
                 data.moveToNext();
             }
         } else {
-            for(int i = 0; i < dataList.size(); i=i+3) {
+            for (int i = 0; i < dataList.size(); i = i + 3) {
                 addData(dataList.get(i), dataList.get(i + 1), dataList.get(i + 2));
                 returnValue++;
             }

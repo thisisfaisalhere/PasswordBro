@@ -15,20 +15,23 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
+
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.parse.ParseUser;
+
 import java.util.ArrayList;
-import java.util.Objects;
+
 import es.dmoral.toasty.Toasty;
 import libs.mjn.prettydialog.PrettyDialog;
 import libs.mjn.prettydialog.PrettyDialogCallback;
 
 public class HomeFragment extends Fragment
-        implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
+        implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private static final String TAG = "passwordBro";
     private Intent intent;
@@ -40,10 +43,10 @@ public class HomeFragment extends Fragment
     private View backgroundDimmer;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        Objects.requireNonNull(getActivity()).setTitle("Home");
+        requireActivity().setTitle("Home");
 
         listView = view.findViewById(R.id.listView);
         fab = view.findViewById(R.id.fab);
@@ -58,10 +61,10 @@ public class HomeFragment extends Fragment
         usernameList = new ArrayList<>();
 
         arrayAdapter = new ArrayAdapter<String>
-                (Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, nameList){
+                (requireContext(), android.R.layout.simple_list_item_1, nameList) {
             @NonNull
             @Override
-            public View getView(int position, View convertView, @NonNull ViewGroup parent){
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView textView = view.findViewById(android.R.id.text1);
                 textView.setTextColor(getContext().getColor(R.color.textColor));
@@ -74,7 +77,7 @@ public class HomeFragment extends Fragment
 
         addDataToList();
 
-        if(nameList.size() == 0) {
+        if (nameList.size() == 0) {
             homeSubtitle.setText(R.string.home_subtitle_2);
         } else {
             homeSubtitle.setText(R.string.home_subtitle);
@@ -106,7 +109,7 @@ public class HomeFragment extends Fragment
         fab.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
             @Override
             public void onMenuToggle(boolean opened) {
-                if(opened) {
+                if (opened) {
                     backgroundDimmer.setVisibility(View.VISIBLE);
                     backgroundDimmer.animate().alpha(1).setDuration(300);
                 } else {
@@ -132,11 +135,11 @@ public class HomeFragment extends Fragment
 
     private void checkAccount() {
         final SharedPreferences pref =
-                PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
+                PreferenceManager.getDefaultSharedPreferences(requireContext());
         boolean backupPref = pref.getBoolean("backup", false);
         ParseUser user = ParseUser.getCurrentUser();
-        if(backupPref && user == null) {
-            final PrettyDialog prettyDialog = new PrettyDialog(getContext());
+        if (backupPref && user == null) {
+            final PrettyDialog prettyDialog = new PrettyDialog(requireContext());
             prettyDialog.setTitle("Alert!!")
                     .setIcon(R.drawable.ic_error)
                     .setMessage("Cannot backup. No user Account Found..")
@@ -197,7 +200,7 @@ public class HomeFragment extends Fragment
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         ClipboardManager clipboard = (ClipboardManager)
-                Objects.requireNonNull(getContext()).getSystemService(Context.CLIPBOARD_SERVICE);
+                requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
 
         String pass = passwordList.get(position);
 
@@ -205,7 +208,7 @@ public class HomeFragment extends Fragment
         try {
             assert clipboard != null;
             clipboard.setPrimaryClip(clip);
-            Toasty.info(getContext(), "Password Copied to Clipboard",
+            Toasty.info(requireContext(), "Password Copied to Clipboard",
                     Toasty.LENGTH_SHORT, true).show();
         } catch (Exception e) {
             e.printStackTrace();

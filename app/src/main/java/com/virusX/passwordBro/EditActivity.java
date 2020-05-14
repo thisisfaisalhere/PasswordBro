@@ -1,8 +1,5 @@
 package com.virusX.passwordBro;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -16,6 +13,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
@@ -53,10 +53,10 @@ public class EditActivity extends AppCompatActivity {
         Button buttonCancel = findViewById(R.id.buttonCancel);
         Button buttonDelete = findViewById(R.id.buttonDelete);
 
-        if(addRecord) {
+        if (addRecord) {
             setTitle("Add record");
             buttonDelete.setVisibility(View.GONE);
-        }else {
+        } else {
             setTitle(receivedName + "\'s details");
         }
 
@@ -70,7 +70,7 @@ public class EditActivity extends AppCompatActivity {
         editTextPass.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                     try {
                         InputMethodManager inputMethodManager =
                                 (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -117,11 +117,11 @@ public class EditActivity extends AppCompatActivity {
                 final String name = editTextName.getText().toString();
                 final String pass = editTextPass.getText().toString();
                 final String user = editTextUser.getText().toString();
-                if(name.equals("") || pass.equals("") || user.equals("")) {
+                if (name.equals("") || pass.equals("") || user.equals("")) {
                     Toasty.error(EditActivity.this, "Field is empty",
                             Toasty.LENGTH_SHORT, true).show();
                 } else {
-                    if(position == -1 && check[0]) {
+                    if (position == -1 && check[0]) {
                         databaseHelper.addData(name, pass, user);
                         check[0] = false;
                     } else if (position != -1) {

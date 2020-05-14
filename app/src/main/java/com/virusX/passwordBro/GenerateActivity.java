@@ -19,14 +19,18 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 
-public class GenerateActivity extends AppCompatActivity{
+public class GenerateActivity extends AppCompatActivity {
 
+    private static final String med = "med_length";
+    private static final String easy = "easy_length";
+    private static final String hard = "hard_length";
     private TextView generatedPass;
     private int strength;
     private boolean checked = false;
@@ -36,9 +40,6 @@ public class GenerateActivity extends AppCompatActivity{
     private ProgressBar progressBar;
     private Handler handler;
     private Button generateBtn;
-    private static final String med = "med_length";
-    private static final String easy = "easy_length";
-    private static final String hard = "hard_length";
     private int easyLen;
     private int medLen;
     private int hardLen;
@@ -60,10 +61,12 @@ public class GenerateActivity extends AppCompatActivity{
         generatedPass = findViewById(R.id.generatedPass);
         final ImageButton copyBtn = findViewById(R.id.copyBtn);
         serviceNameEdt = findViewById(R.id.serviceNameEdt);
-        Button saveBtn = findViewById(R.id.saveBtn);
+        final Button saveBtn = findViewById(R.id.saveBtn);
         usernameHintEdt = findViewById(R.id.usernameHintEdt);
         progressBar = findViewById(R.id.generatePgBar);
         handler = new Handler();
+
+        saveBtn.setEnabled(false);
 
         length();
 
@@ -93,7 +96,7 @@ public class GenerateActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 generatedPass.setText("");
-                if(!checked) {
+                if (!checked) {
                     Toasty.info(GenerateActivity.this, "Choose strength first",
                             Toasty.LENGTH_SHORT, true).show();
                 } else {
@@ -104,6 +107,9 @@ public class GenerateActivity extends AppCompatActivity{
                             Generate generate = new Generate(strength, easyLen, medLen, hardLen);
                             password = generate.generate();
                             generatedPass.setText(password);
+                            saveBtn.setEnabled(true);
+                            saveBtn.setBackgroundResource(R.color.buttonColor);
+                            saveBtn.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.textColor));
                             generateBtn.setText(getString(R.string.generate_btn_2));
                             copyBtn.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.GONE);
@@ -133,7 +139,7 @@ public class GenerateActivity extends AppCompatActivity{
         usernameHintEdt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                     try {
                         InputMethodManager inputMethodManager =
                                 (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -153,14 +159,14 @@ public class GenerateActivity extends AppCompatActivity{
             public void onClick(View v) {
                 String serviceName = serviceNameEdt.getText().toString();
                 String username = usernameHintEdt.getText().toString();
-                if(serviceName.equals("")) {
+                if (serviceName.equals("")) {
                     Toasty.info(GenerateActivity.this,
                             "Enter the name of Service for future Reference",
                             Toasty.LENGTH_SHORT, true).show();
                 } else {
                     databaseHelper = new DatabaseHelper(GenerateActivity.this);
                     boolean result = databaseHelper.addData(serviceName, password, username);
-                    if(result) {
+                    if (result) {
                         Toasty.success(GenerateActivity.this,
                                 "Data Saved Successfully", Toasty.LENGTH_SHORT,
                                 true).show();
@@ -185,7 +191,7 @@ public class GenerateActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean isNumber(String s){
+    private boolean isNumber(String s) {
         for (int i = 0; i < s.length(); i++) {
             if (!Character.isDigit(s.charAt(i)))
                 return false;
@@ -200,12 +206,12 @@ public class GenerateActivity extends AppCompatActivity{
         String medLenStr = preferences.getString(med, "12").trim();
         String hardLenStr = preferences.getString(hard, "16").trim();
 
-        if(easyLenStr.equals("") || medLenStr.equals("") || hardLenStr.equals("")) {
+        if (easyLenStr.equals("") || medLenStr.equals("") || hardLenStr.equals("")) {
             Toasty.error(this, "Length of password is empty/not valid\nGo to Settings and Enter Valid value",
                     Toasty.LENGTH_LONG, true).show();
             finish();
         } else {
-            if(isNumber(easyLenStr) && isNumber(hardLenStr) && isNumber(medLenStr)) {
+            if (isNumber(easyLenStr) && isNumber(hardLenStr) && isNumber(medLenStr)) {
                 easyLen = Integer.parseInt(easyLenStr);
                 medLen = Integer.parseInt(medLenStr);
                 hardLen = Integer.parseInt(hardLenStr);

@@ -8,17 +8,18 @@ import android.os.CancellationSignal;
 import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.core.content.ContextCompat;
 
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
     private Context context;
 
-    FingerprintHandler(Context context){
+    FingerprintHandler(Context context) {
         this.context = context;
     }
 
-    void startAuth(FingerprintManager fingerprintManager, FingerprintManager.CryptoObject cryptoObject){
+    void startAuth(FingerprintManager fingerprintManager, FingerprintManager.CryptoObject cryptoObject) {
         CancellationSignal cancellationSignal = new CancellationSignal();
         fingerprintManager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
     }
@@ -44,10 +45,10 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     }
 
     private void update(String s, boolean b) {
-        final TextView fingerprintMessage = ((Activity)context).findViewById(R.id.fingerprintMessage);
-        final ImageView fingerprintImg = ((Activity)context).findViewById(R.id.fingerprintImg);
+        final TextView fingerprintMessage = ((Activity) context).findViewById(R.id.fingerprintMessage);
+        final ImageView fingerprintImg = ((Activity) context).findViewById(R.id.fingerprintImg);
         fingerprintMessage.setText(s);
-        if(!b){
+        if (!b) {
             fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.textColor));
             fingerprintImg.setImageResource(R.drawable.ic_error);
             Handler handler = new Handler();

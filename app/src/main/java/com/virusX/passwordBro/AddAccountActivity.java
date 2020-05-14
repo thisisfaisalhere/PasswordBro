@@ -1,8 +1,5 @@
 package com.virusX.passwordBro;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +10,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -27,7 +27,7 @@ public class AddAccountActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
     private TextView forgotPasswordTxt;
-    private EditText usernameEdt,passwordEdt, confirmPasswordEdt, emailEdt;
+    private EditText usernameEdt, passwordEdt, confirmPasswordEdt, emailEdt;
     private CheckBox checkBox;
     private boolean checked;
 
@@ -69,14 +69,14 @@ public class AddAccountActivity extends AppCompatActivity {
 
     public void checked(View view) {
         checked = checkBox.isChecked();
-        if(checked) {
+        if (checked) {
             emailEdt.setVisibility(View.VISIBLE);
             confirmPasswordEdt.setVisibility(View.VISIBLE);
             forgotPasswordTxt.setVisibility(View.GONE);
             confirmPasswordEdt.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View view, int keyCode, KeyEvent event) {
-                    if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                         try {
                             InputMethodManager inputMethodManager =
                                     (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -97,7 +97,7 @@ public class AddAccountActivity extends AppCompatActivity {
             passwordEdt.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View view, int keyCode, KeyEvent event) {
-                    if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                         try {
                             InputMethodManager inputMethodManager =
                                     (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -124,21 +124,21 @@ public class AddAccountActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Adding Account...");
 
-        if(username.equals("") || password.equals("")) {
+        if (username.equals("") || password.equals("")) {
             Toasty.error(this, "username/password cannot be empty",
-                    Toasty.LENGTH_SHORT ,true).show();
+                    Toasty.LENGTH_SHORT, true).show();
         } else {
-            if(checked) {
-                if(confirmPassword.equals("")) {
+            if (checked) {
+                if (confirmPassword.equals("")) {
                     Toasty.error(this, "confirm password cannot be empty",
-                            Toasty.LENGTH_SHORT ,true).show();
+                            Toasty.LENGTH_SHORT, true).show();
                 } else {
-                    if(!confirmPassword.equals(password)) {
+                    if (!confirmPassword.equals(password)) {
                         Toasty.error(this, "Password and confirm password did not matched",
-                                Toasty.LENGTH_SHORT ,true).show();
-                    } else if(!mail.contains("@")) {
+                                Toasty.LENGTH_SHORT, true).show();
+                    } else if (!mail.contains("@")) {
                         Toasty.error(this, "Invalid email",
-                                Toasty.LENGTH_SHORT ,true).show();
+                                Toasty.LENGTH_SHORT, true).show();
                     } else {
                         try {
                             ParseUser parseUser = new ParseUser();
@@ -171,7 +171,7 @@ public class AddAccountActivity extends AppCompatActivity {
                     ParseUser.logInInBackground(username, password, new LogInCallback() {
                         @Override
                         public void done(ParseUser user, ParseException e) {
-                            if(user != null && e == null) {
+                            if (user != null && e == null) {
                                 Toasty.success(AddAccountActivity.this, "Account Added Successfully",
                                         Toasty.LENGTH_SHORT, true).show();
                                 transitionToNextActivity();

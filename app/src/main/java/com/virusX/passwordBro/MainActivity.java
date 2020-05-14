@@ -1,9 +1,7 @@
 package com.virusX.passwordBro;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,24 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.preference.PreferenceManager;
 
 import com.google.android.material.navigation.NavigationView;
 import com.parse.ParseUser;
-
-import java.util.Objects;
 
 import libs.mjn.prettydialog.PrettyDialog;
 import libs.mjn.prettydialog.PrettyDialogCallback;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout drawer;
-    public static final String TAG = "passwordBro";
     public static String PACKAGE_NAME;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new HomeFragment()).commit();
                 break;
             case R.id.nav_account:
-                if(ParseUser.getCurrentUser() == null) {
+                if (ParseUser.getCurrentUser() == null) {
                     final PrettyDialog prettyDialog = new PrettyDialog(this);
                     prettyDialog.setIcon(R.drawable.ic_warning)
                             .setTitle("Alert!!")
@@ -137,8 +129,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0)
-        {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             if (item.getItemId() == android.R.id.home) {
                 onBackPressed();
                 return true;

@@ -33,12 +33,12 @@ import java.util.Date;
 import es.dmoral.toasty.Toasty;
 
 class DataBackupHelper {
-    private Context context;
     private static final String TAG = "passwordBro";
     @SuppressLint("SdCardPath")
     private static final String dirPath = "/data/data/" + MainActivity.PACKAGE_NAME + "/backup";
-    private String backupFileName, retrieveFileName = "retrievedFile.csv";
     private static final String pathSeparator = "/";
+    private Context context;
+    private String backupFileName, retrieveFileName = "retrievedFile.csv";
     private ParseUser parseUser;
     private ProgressBar progressBar;
     private TextView textView;
@@ -49,10 +49,10 @@ class DataBackupHelper {
         Date calendar = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         String date = dateFormat.format(calendar);
-        backupFileName = "backup_" + date +".csv";
+        backupFileName = "backup_" + date + ".csv";
         parseUser = ParseUser.getCurrentUser();
-        textView = ((Activity)context).findViewById(R.id.acFragmentTxt);
-        progressBar = ((Activity)context).findViewById(R.id.acFragmentPBar);
+        textView = ((Activity) context).findViewById(R.id.acFragmentTxt);
+        progressBar = ((Activity) context).findViewById(R.id.acFragmentPBar);
     }
 
     boolean createBackup() {
@@ -69,7 +69,7 @@ class DataBackupHelper {
             Cursor data = databaseHelper.getData();
             ArrayList<String> dataList = new ArrayList<>();
             try {
-                while(data.moveToNext()) {
+                while (data.moveToNext()) {
                     dataList.add(data.getString(1));
                     dataList.add(data.getString(2));
                     dataList.add(data.getString(3));
@@ -99,7 +99,7 @@ class DataBackupHelper {
         parseUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if(e == null) {
+                if (e == null) {
                     Toasty.success(context, "Backup Successful",
                             Toasty.LENGTH_SHORT, true).show();
                     Log.d(TAG, "done: backup successful");
@@ -122,14 +122,14 @@ class DataBackupHelper {
             FileReader fileReader = new FileReader(fileLocation);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            while((lineStr = bufferedReader.readLine()) != null) {
+            while ((lineStr = bufferedReader.readLine()) != null) {
                 fileContent.append(lineStr).append("\n");
             }
             bufferedReader.close();
             Log.d(TAG, "getFileContent: " + "Successfully got the content of '" + fileLocation + "'");
-        } catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             Log.d(TAG, "getFileContent: " + "Unable to open a file '" + fileLocation + "'");
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             Log.d(TAG, "getFileContent: " + "Error reading a file '" + fileLocation + "'");
         }
         return fileContent.toString();
@@ -144,9 +144,9 @@ class DataBackupHelper {
             parseFile.getDataInBackground(new GetDataCallback() {
                 @Override
                 public void done(byte[] data, ParseException e) {
-                    if(e == null) {
+                    if (e == null) {
                         File expoDir = new File(dirPath);
-                        if(!expoDir.exists()) expoDir.mkdir();
+                        if (!expoDir.exists()) expoDir.mkdir();
                         File retrievedFile = new File(expoDir, retrieveFileName);
                         OutputStream outputStream;
                         try {
@@ -178,19 +178,19 @@ class DataBackupHelper {
         String fileContent = getFileContent(dirPath + pathSeparator + retrieveFileName);
         ArrayList<Character> singleData = new ArrayList<>();
         ArrayList<String> dataList = new ArrayList<>();
-        for(int i = 0; i < fileContent.length(); i++) {
+        for (int i = 0; i < fileContent.length(); i++) {
             char ch = fileContent.charAt(i);
-            if(ch != ',' && ch != '\n') {
+            if (ch != ',' && ch != '\n') {
                 singleData.add(ch);
             } else {
                 StringBuilder stringBuilder = new StringBuilder();
-                for(Character c: singleData) stringBuilder.append(c);
+                for (Character c : singleData) stringBuilder.append(c);
                 dataList.add(stringBuilder.toString());
                 singleData.clear();
             }
         }
         DatabaseHelper helper = new DatabaseHelper(context);
-        if(helper.matchDataSet(dataList)) {
+        if (helper.matchDataSet(dataList)) {
             Toasty.success(context, "Retrieving Data Successfully Completed",
                     Toasty.LENGTH_SHORT, true).show();
         } else {
@@ -205,7 +205,7 @@ class DataBackupHelper {
         parseUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if(e == null) {
+                if (e == null) {
                     Toasty.info(context, "Successfully Deleted Backup Data",
                             Toasty.LENGTH_SHORT, true).show();
                 } else {

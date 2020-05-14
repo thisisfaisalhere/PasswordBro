@@ -6,19 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.fragment.app.Fragment;
 
-import java.util.Objects;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 public class ShareFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-            ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_share, container, false);
-        Objects.requireNonNull(getActivity()).setTitle("Share");
+        requireActivity().setTitle("Share");
         Button shareBtn = view.findViewById(R.id.shareBtn);
 
         shareBtn.setOnClickListener(new View.OnClickListener() {

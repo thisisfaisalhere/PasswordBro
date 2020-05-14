@@ -1,17 +1,14 @@
 package com.virusX.passwordBro;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 
 class CSVWriter {
 
-    private PrintWriter pw;
-
     private static final char DEFAULT_SEPARATOR = ',';
-
     private static final String DEFAULT_LINE_END = "\n";
+    private PrintWriter pw;
 
     CSVWriter(Writer writer) {
         this.pw = new PrintWriter(writer);
@@ -19,9 +16,9 @@ class CSVWriter {
 
     void writeNext(ArrayList<String> dataList) {
         StringBuilder stringBuilder = new StringBuilder();
-        for(int i = 0; i < dataList.size(); i++) {
+        for (int i = 0; i < dataList.size(); i++) {
             stringBuilder.append(dataList.get(i));
-            if(i < dataList.size() - 1) {
+            if (i < dataList.size() - 1) {
                 stringBuilder.append(DEFAULT_SEPARATOR);
             }
         }
@@ -29,11 +26,11 @@ class CSVWriter {
         pw.write(stringBuilder.toString());
     }
 
-    void flush() throws IOException {
+    void flush() {
         pw.flush();
     }
 
-    void close() throws IOException {
+    void close() {
         pw.flush();
         pw.close();
     }

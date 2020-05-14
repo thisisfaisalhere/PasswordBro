@@ -1,9 +1,5 @@
 package com.virusX.passwordBro;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -19,6 +15,10 @@ import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -64,7 +64,7 @@ public class FingerPrintAuthActivity extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     private void nextAction() {
-        if(!lockPref) {
+        if (!lockPref) {
             startActivity(intent);
             finish();
         } else {
@@ -72,28 +72,28 @@ public class FingerPrintAuthActivity extends AppCompatActivity {
             splashTile.setText(getString(R.string.splash_title));
             fingerprintImg.setImageResource(R.drawable.ic_fingerprint);
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
                 FingerprintManager fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
                 KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
 
                 assert fingerprintManager != null;
-                if(!fingerprintManager.isHardwareDetected()){
+                if (!fingerprintManager.isHardwareDetected()) {
                     fingerprintMessage.setText(getString(R.string.fingerprint_error_1));
                 } else if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.USE_FINGERPRINT)
-                        != PackageManager.PERMISSION_GRANTED){
+                        != PackageManager.PERMISSION_GRANTED) {
                     fingerprintMessage.setText(getString(R.string.fingerprint_error_2));
                 } else {
                     assert keyguardManager != null;
-                    if (!keyguardManager.isKeyguardSecure()){
+                    if (!keyguardManager.isKeyguardSecure()) {
                         fingerprintMessage.setText(getString(R.string.fingerprint_error_3));
-                    } else if (!fingerprintManager.hasEnrolledFingerprints()){
+                    } else if (!fingerprintManager.hasEnrolledFingerprints()) {
                         fingerprintMessage.setText(getString(R.string.fingerprint_error_4));
                     } else {
                         fingerprintMessage.setText(getString(R.string.fingerprint_success));
                         generateKey();
-                        if (cipherInit()){
+                        if (cipherInit()) {
                             FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
                             FingerprintHandler fingerprintHandler = new FingerprintHandler(this);
                             fingerprintHandler.startAuth(fingerprintManager, cryptoObject);
