@@ -222,4 +222,17 @@ public class GenerateActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    public void generateLayoutTapped(View view) {
+        try {
+            InputMethodManager inputMethodManager =
+                    (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            assert inputMethodManager != null;
+            inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus())
+                    .getWindowToken(), 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

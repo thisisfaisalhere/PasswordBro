@@ -42,11 +42,6 @@ public class AccountFragment extends Fragment {
         backupBtn = view.findViewById(R.id.backupBtn);
         textView = view.findViewById(R.id.acFragmentTxt);
 
-        if (text.equals(""))
-            textView.setText(R.string.no_details_found);
-        else
-            textView.setText(text);
-
         String text = "Nickname: " + ParseUser.getCurrentUser().getUsername();
         nickName.setText(text);
         return view;

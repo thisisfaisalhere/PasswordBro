@@ -49,14 +49,14 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         final ImageView fingerprintImg = ((Activity) context).findViewById(R.id.fingerprintImg);
         fingerprintMessage.setText(s);
         if (!b) {
-            fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.textColor));
+            fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.errorColor));
             fingerprintImg.setImageResource(R.drawable.ic_error);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     fingerprintMessage.setText(context.getString(R.string.fingerprint_success));
-                    fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.errorColor));
+                    fingerprintMessage.setTextColor(ContextCompat.getColor(context, R.color.textColor));
                     fingerprintImg.setImageResource(R.drawable.ic_fingerprint);
                 }
             }, 1000);

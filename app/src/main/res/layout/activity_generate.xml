@@ -8,8 +8,10 @@
     tools:context=".GenerateActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/generateLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="generateLayoutTapped">
 
         <TextView
             android:id="@+id/generate_subtitle"
