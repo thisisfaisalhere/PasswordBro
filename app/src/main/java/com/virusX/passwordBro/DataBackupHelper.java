@@ -38,7 +38,7 @@ class DataBackupHelper {
     private static final String dirPath = "/data/data/" + MainActivity.PACKAGE_NAME + "/backup";
     private static final String pathSeparator = "/";
     private Context context;
-    private String backupFileName, retrieveFileName = "retrievedFile.csv";
+    private String backupFileName, retrieveFileName = "retrievedFile";
     private ParseUser parseUser;
     private ProgressBar progressBar;
     private TextView textView;
@@ -49,7 +49,7 @@ class DataBackupHelper {
         Date calendar = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         String date = dateFormat.format(calendar);
-        backupFileName = "backup_" + date + ".csv";
+        backupFileName = "backup_" + date;
         parseUser = ParseUser.getCurrentUser();
         textView = ((Activity) context).findViewById(R.id.acFragmentTxt);
         progressBar = ((Activity) context).findViewById(R.id.acFragmentPBar);
@@ -106,6 +106,7 @@ class DataBackupHelper {
                 } else {
                     Toasty.error(context, "An Error occurred",
                             Toasty.LENGTH_LONG, true).show();
+                    e.printStackTrace();
                 }
                 progressBar.setVisibility(View.GONE);
                 textView.setText("");
